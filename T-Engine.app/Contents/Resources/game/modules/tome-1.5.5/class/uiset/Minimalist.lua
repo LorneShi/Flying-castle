@@ -336,6 +336,9 @@ function _M:init()
 
 	self.buffs_base = UI:makeFrame("ui/icon-frame/frame", 40, 40)
 	self:initialize_resources()
+
+	--sll 设置字体，用于显示常用技能快捷键文字
+	self.font = core.display.newFont(fontname or "/data/font/DroidSansMono.ttf", fontsize or 10)
 end
 
 function _M:isLocked()
@@ -368,7 +371,8 @@ end
 function _M:resetPlaces()
 	local w, h = core.display.size()
 
-	local th = 52
+	-- local th = 52
+	local th = 32 --sll 修改技能icon框的大小
 	if config.settings.tome.hotkey_icons then th = (8 + config.settings.tome.hotkey_icons_size) * config.settings.tome.hotkey_icons_rows end
 	local hup = h - th
 
@@ -381,7 +385,9 @@ function _M:resetPlaces()
 		gamelog = {x=0, y=hup - 210, w=math.floor(w/2), h=200, scale=1, a=1},
 		chatlog = {x=math.floor(w/2), y=hup - 210, w=math.floor(w/2), h=200, scale=1, a=1},
 		mainicons = {x=w - tb_bg[6] * 0.5, y=h - tb_bg[7] * 6 * 0.5 - 5, scale=1, a=1},
-		hotkeys = {x=10, y=h - th, w=w-60, h=th, scale=1, a=1},
+		-- hotkeys = {x=10, y=h - th, w=w-60, h=th, scale=1, a=1},
+		hotkeys = {x=(w - 800) / 2 + 114, y=h - th - 8, w=380, h=th, scale=1, a=1}, --sll 修改技能栏的位置、大小
+		toolbar = {x=(w - 800) / 2, y=h - 101, w=800, h=101, scale=1, a=1} --sll 设置底部工具栏的位置、大小
 	}
 end
 
@@ -503,7 +509,8 @@ function _M:setupMinimap(level)
 end
 
 function _M:resizeIconsHotkeysToolbar()
-	local h = 52
+	-- local h = 52
+	local h = 32 --sll 修改技能栏的大小
 	if config.settings.tome.hotkey_icons then h = (8 + config.settings.tome.hotkey_icons_size) * config.settings.tome.hotkey_icons_rows end
 
 	local oldstop = self.map_h_stop_up or (game.h - h)
@@ -550,6 +557,14 @@ function _M:handleResolutionChange(w, h, ow, oh)
 		if d.x > w2 then d.x = d.x + w - ow end
 		if d.y > h2 then d.y = d.y + h - oh end
 	end
+
+	--sll toolbar始终居中显示
+	self.places.toolbar.x = (w - 800) / 2
+	self.places.toolbar.y = h - 101
+
+	--sll 技能栏固定位置显示
+	self.places.hotkeys.x = self.places.toolbar.x + 114
+	self.places.hotkeys.y = self.places.toolbar.y + 58
 
 	print("minimalist:handleResolutionChange: toggling UI to refresh")
 	-- Toggle the UI to refresh the changes
@@ -1449,7 +1464,7 @@ function _M:displayParty(scale, bx, by)
 						p = (game.player == a) and portrait_lev or portrait_unsel_lev
 					end
 					p[1]:toScreenFull(x, y, p[6], p[7], p[2], p[3])
-					-- Display turns remaining on summon's portrait � Marson
+					-- Display turns remaining on summon's portrait — Marson
 					if a.summon_time and a.name ~= "shadow" then
 						local gtxt = self.party[a].txt_summon_time
 						if not gtxt or self.party[a].cur_summon_time ~= a.summon_time then
@@ -1748,17 +1763,18 @@ function _M:displayHotkeys(scale, bx, by)
 	local hkeys = self.hotkeys_display
 	local ox, oy = hkeys.display_x, hkeys.display_y
 
-	hk5[1]:toScreenFull(0, 0, self.places.hotkeys.w, self.places.hotkeys.h, hk5[2], hk5[3])
+	--sll 去掉原技能栏边框显示
+	-- hk5[1]:toScreenFull(0, 0, self.places.hotkeys.w, self.places.hotkeys.h, hk5[2], hk5[3])
 
-	hk8[1]:toScreenFull(0, -hk8[7], self.places.hotkeys.w, hk8[7], hk8[2], hk8[3])
-	hk2[1]:toScreenFull(0, self.places.hotkeys.h, self.places.hotkeys.w, hk2[7], hk2[2], hk2[3])
-	hk4[1]:toScreenFull(-hk4[6], 0, hk4[6], self.places.hotkeys.h, hk4[2], hk4[3])
-	hk6[1]:toScreenFull(self.places.hotkeys.w, 0, hk6[6], self.places.hotkeys.h, hk6[2], hk6[3])
+	-- hk8[1]:toScreenFull(0, -hk8[7], self.places.hotkeys.w, hk8[7], hk8[2], hk8[3])
+	-- hk2[1]:toScreenFull(0, self.places.hotkeys.h, self.places.hotkeys.w, hk2[7], hk2[2], hk2[3])
+	-- hk4[1]:toScreenFull(-hk4[6], 0, hk4[6], self.places.hotkeys.h, hk4[2], hk4[3])
+	-- hk6[1]:toScreenFull(self.places.hotkeys.w, 0, hk6[6], self.places.hotkeys.h, hk6[2], hk6[3])
 
-	hk7[1]:toScreenFull(-hk7[6], -hk7[6], hk7[6], hk7[7], hk7[2], hk7[3])
-	hk9[1]:toScreenFull(self.places.hotkeys.w, -hk9[6], hk9[6], hk9[7], hk9[2], hk9[3])
-	hk1[1]:toScreenFull(-hk7[6], self.places.hotkeys.h, hk1[6], hk1[7], hk1[2], hk1[3])
-	hk3[1]:toScreenFull(self.places.hotkeys.w, self.places.hotkeys.h, hk3[6], hk3[7], hk3[2], hk3[3])
+	-- hk7[1]:toScreenFull(-hk7[6], -hk7[6], hk7[6], hk7[7], hk7[2], hk7[3])
+	-- hk9[1]:toScreenFull(self.places.hotkeys.w, -hk9[6], hk9[6], hk9[7], hk9[2], hk9[3])
+	-- hk1[1]:toScreenFull(-hk7[6], self.places.hotkeys.h, hk1[6], hk1[7], hk1[2], hk1[3])
+	-- hk3[1]:toScreenFull(self.places.hotkeys.w, self.places.hotkeys.h, hk3[6], hk3[7], hk3[2], hk3[3])
 
 	hkeys.orient = self.sizes.hotkeys and self.sizes.hotkeys.orient or "down"
 	hkeys.display_x, hkeys.display_y = 0, 0
@@ -1939,6 +1955,346 @@ function _M:displayToolbar(scale, bx, by)
 	self:computePadding("mainicons", bx, by, bx + x * scale, by + y * scale)
 end
 
+--------------------------------------------------------------------------------
+--sll 主界面底部工具栏--start
+--------------------------------------------------------------------------------
+-- 底部工具栏背景图
+local bottomToolbar_bg = {imageLoader("toolbar/toolbar-bg.png"):glTexture()}
+-- 技能栏背景图
+local skillbar_bg = {imageLoader("playerframe/back.png"):glTexture()}
+-- 常用技能栏背景图
+local commonSkillbar_bg = {imageLoader("playerframe/back.png"):glTexture()}
+-- 常用工具栏背景图
+local commonToolbar_bg = {imageLoader("playerframe/back.png"):glTexture()}
+
+local rest = {imageLoader("toolbar/rest.png"):glTexture()}
+local auto_explore = {imageLoader("toolbar/auto_explore.png"):glTexture()}
+local portal = {imageLoader("toolbar/portal.png"):glTexture()}
+
+local equipment_btn_img = {imageLoader("toolbar/equipment.png"):glTexture()}
+local skill_btn_img = {imageLoader("toolbar/skill.png"):glTexture()}
+local task_btn_img = {imageLoader("toolbar/task.png"):glTexture()}
+local settings_btn_img = {imageLoader("toolbar/settings.png"):glTexture()}
+
+local experience = {imageLoader("toolbar/experience.png"):glTexture()}
+local experience_levelup = {imageLoader("toolbar/experience_levelup.png"):glTexture()}
+
+-- 显示底部工具栏背景
+function _M:displayBottomToolbarBg(scale, bx, by)
+	bottomToolbar_bg[1]:toScreenFull(0.0, 
+									0.0, 
+									bottomToolbar_bg[6], 
+									bottomToolbar_bg[7], 
+									bottomToolbar_bg[2], 
+									bottomToolbar_bg[3])
+
+	if not game.mouse:updateZone("bottomToolbarBg", 
+								bx, 
+								by, 
+								self.places.toolbar.w, 
+								self.places.toolbar.h, 
+								nil, 
+								scale) then
+		game.mouse:unregisterZone("bottomToolbarBg")
+
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			print("--sll---desc_fct")
+		end		
+
+		game.mouse:registerZone(bx, 
+								by, 
+								self.places.toolbar.w, 
+								self.places.toolbar.h, 
+								desc_fct, 
+								nil, 
+								"bottomToolbarBg", 
+								true, 
+								scale)
+	end
+end
+
+-- 显示技能栏
+function _M:displaySkillbar(scale, bx, by)
+
+end
+
+-- 显示常用技能栏
+function _M:displayCommonSkillbar(scale, bx, by)
+	-- Toolbar icons
+	local x, y = 483, 58
+	local orient = "down"
+
+	-- 显示图标
+	rest[1]:toScreenFull(x, 
+						y, 
+						rest[6], 
+						rest[7], 
+						rest[2], 
+						rest[3], 
+						self.tbbuttons.rest, 
+						self.tbbuttons.rest, 
+						self.tbbuttons.rest, 
+						1)
+	if not game.mouse:updateZone("rest", bx + x * scale, by +y*scale, rest[6], rest[7], nil, scale) then
+		game.mouse:unregisterZone("rest")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.rest = 0.7 return else self.tbbuttons.rest = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "rest")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("REST") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, rest[6], rest[7], desc_fct, nil, "rest", true, scale)
+	end
+
+	-- 显示快捷键文字
+	self.font:setStyle("bold")
+	local ks = game.key:formatKeyString(game.key:findBoundKeys("REST"))
+	ks = string.upper(ks)
+	local key = self.font:draw(ks, self.font:size(ks), colors.ANTIQUE_WHITE.r, colors.ANTIQUE_WHITE.g, colors.ANTIQUE_WHITE.b, true)[1]
+	self.font:setStyle("normal")
+	key._tex:toScreenFull(x + rest[6] - key.w, y + (rest[7] - key.h) / 2, key.w, key.h, key._tex_w, key._tex_h)
+
+	x, y = self:toolbarOrientStep(orient, bx, by, scale, x, y, rest[6], rest[7])
+	x = x + 6
+
+	auto_explore[1]:toScreenFull(x, 
+						y, 
+						auto_explore[6], 
+						auto_explore[7], 
+						auto_explore[2], 
+						auto_explore[3], 
+						self.tbbuttons.auto_explore, 
+						self.tbbuttons.auto_explore, 
+						self.tbbuttons.auto_explore, 
+						1)
+	if not game.mouse:updateZone("auto_explore", bx + x * scale, by +y*scale, auto_explore[6], auto_explore[7], nil, scale) then
+		game.mouse:unregisterZone("auto_explore")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.auto_explore = 0.7 return else self.tbbuttons.auto_explore = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "auto explore")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("RUN_AUTO") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, auto_explore[6], auto_explore[7], desc_fct, nil, "auto_explore", true, scale)
+	end	
+
+	self.font:setStyle("bold")
+	local ks = game.key:formatKeyString(game.key:findBoundKeys("RUN_AUTO"))
+	ks = string.upper(ks)
+	local key = self.font:draw(ks, self.font:size(ks), colors.ANTIQUE_WHITE.r, colors.ANTIQUE_WHITE.g, colors.ANTIQUE_WHITE.b, true)[1]
+	self.font:setStyle("normal")
+	key._tex:toScreenFull(x + auto_explore[6] - key.w, y + (auto_explore[7] - key.h) / 2, key.w, key.h, key._tex_w, key._tex_h)
+
+	x, y = self:toolbarOrientStep(orient, bx, by, scale, x, y, auto_explore[6], auto_explore[7])	
+	x = x + 6
+
+	portal[1]:toScreenFull(x, 
+						y, 
+						portal[6], 
+						portal[7], 
+						portal[2], 
+						portal[3], 
+						self.tbbuttons.portal, 
+						self.tbbuttons.portal, 
+						self.tbbuttons.portal, 
+						1)
+	if not game.mouse:updateZone("portal", bx + x * scale, by +y*scale, portal[6], portal[7], nil, scale) then
+		game.mouse:unregisterZone("portal")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.portal = 0.7 return else self.tbbuttons.portal = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "portal")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("RUN_AUTO") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, portal[6], portal[7], desc_fct, nil, "portal", true, scale)
+	end	
+
+	self.font:setStyle("bold")
+	local ks = game.key:formatKeyString(game.key:findBoundKeys("RUN_AUTO"))
+	ks = string.upper(ks)
+	local key = self.font:draw(ks, self.font:size(ks), colors.ANTIQUE_WHITE.r, colors.ANTIQUE_WHITE.g, colors.ANTIQUE_WHITE.b, true)[1]
+	self.font:setStyle("normal")
+	key._tex:toScreenFull(x + auto_explore[6] - key.w, y + (auto_explore[7] - key.h) / 2, key.w, key.h, key._tex_w, key._tex_h)
+end
+
+-- 显示常用工具栏
+function _M:displayCommonToolbar(scale, bx, by)
+	-- Toolbar icons
+	local x, y = 600, 56
+	local orient = "down"
+
+	equipment_btn_img[1]:toScreenFull(x, 
+									y, 
+									equipment_btn_img[6], 
+									equipment_btn_img[7], 
+									equipment_btn_img[2], 
+									equipment_btn_img[3], 
+									self.tbbuttons.equipment, 
+									self.tbbuttons.equipment, 
+									self.tbbuttons.equipment, 
+									1)
+	if not game.mouse:updateZone("equipment", bx + x * scale, by +y*scale, equipment_btn_img[6], equipment_btn_img[7], nil, scale) then
+		game.mouse:unregisterZone("equipment")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.equipment = 0.7 return else self.tbbuttons.equipment = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "equipment")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("SHOW_INVENTORY") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, equipment_btn_img[6], equipment_btn_img[7], desc_fct, nil, "equipment", true, scale)
+	end
+	x, y = self:toolbarOrientStep(orient, bx, by, scale, x, y, equipment_btn_img[6], equipment_btn_img[7])
+
+	skill_btn_img[1]:toScreenFull(x, 
+									y, 
+								  	skill_btn_img[6], 
+								  	skill_btn_img[7], 
+								  	skill_btn_img[2], 
+									skill_btn_img[3], 
+									self.tbbuttons.skill, 
+									self.tbbuttons.skill, 
+									self.tbbuttons.skill, 
+									1)
+	if not game.mouse:updateZone("skill", bx + x * scale, by +y*scale, skill_btn_img[6], skill_btn_img[7], nil, scale) then
+		game.mouse:unregisterZone("skill")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.skill = 0.7 return else self.tbbuttons.skill = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "skill")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("USE_TALENTS") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, skill_btn_img[6], skill_btn_img[7], desc_fct, nil, "skill", true, scale)
+	end
+	x, y = self:toolbarOrientStep(orient, bx, by, scale, x, y, skill_btn_img[6], skill_btn_img[7])	
+
+	task_btn_img[1]:toScreenFull(x, 
+									y, 
+								  	task_btn_img[6], 
+								  	task_btn_img[7], 
+								  	task_btn_img[2], 
+									task_btn_img[3], 
+									self.tbbuttons.task, 
+									self.tbbuttons.task, 
+									self.tbbuttons.task, 
+									1)
+	if not game.mouse:updateZone("task", bx + x * scale, by +y*scale, task_btn_img[6], task_btn_img[7], nil, scale) then
+		game.mouse:unregisterZone("task")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.task = 0.7 return else self.tbbuttons.task = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "task")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("SHOW_QUESTS") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, task_btn_img[6], task_btn_img[7], desc_fct, nil, "task", true, scale)
+	end
+	x, y = self:toolbarOrientStep(orient, bx, by, scale, x, y, task_btn_img[6], task_btn_img[7])	
+
+	settings_btn_img[1]:toScreenFull(x, 
+									y, 
+								  	settings_btn_img[6], 
+								  	settings_btn_img[7], 
+								  	settings_btn_img[2], 
+									settings_btn_img[3], 
+									self.tbbuttons.settings, 
+									self.tbbuttons.settings, 
+									self.tbbuttons.settings, 
+									1)
+	if not game.mouse:updateZone("settings", bx + x * scale, by +y*scale, settings_btn_img[6], settings_btn_img[7], nil, scale) then
+		game.mouse:unregisterZone("settings")
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.tbbuttons.settings = 0.7 return else self.tbbuttons.settings = 1 end
+			game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "settings")
+			if button == "left" and not xrel and not yrel and event == "button" then 
+				game.key:triggerVirtual("EXIT") 
+				if self.showMoreSkills == true then
+					self.showMoreSkills = false
+				else
+					self.showMoreSkills = true
+				end
+			end
+		end
+		game.mouse:registerZone(bx + x * scale, by +y*scale, settings_btn_img[6], settings_btn_img[7], desc_fct, nil, "settings", true, scale)
+	end
+end
+
+-- 显示经验条
+function _M:displayExperiencebar(scale, bx, by)
+	local player = game.player
+	local x, y = 110, 47
+	if player.unused_stats > 0 or player.unused_talents > 0 or player.unused_generics > 0 or player.unused_talents_types > 0 then
+		local glow = (1+math.sin(core.game.getTime() / 500)) / 2 * 100 + 120
+		experience_levelup[1]:toScreenFull(x, y - 1, experience_levelup[6], experience_levelup[7], experience_levelup[2], experience_levelup[3], 1, 1, 1, glow / 255)
+	end
+
+	local cur_exp, max_exp = player.exp, player:getExpChart(player.level+1)
+	local p = math.min(1, math.max(0, cur_exp / max_exp))
+	experience[1]:toScreenPrecise(x, 
+								y, 
+								experience[6] * p, 
+								experience[7], 
+								0, 
+								p * 1/experience[4], 
+								0, 
+								1/experience[5])
+end
+
+-- 显示底部工具栏——sll
+function _M:displayBottomToolbar(scale, bx, by)
+	-- 显示底部工具栏背景
+	self:displayBottomToolbarBg(scale, bx, by)
+
+	-- 显示技能栏（0——9的技能位）
+	self:displaySkillbar(scale, bx, by)
+
+	-- 显示常用技能栏（所有技能，自动探索，休息，传送）
+	self:displayCommonSkillbar(scale, bx, by)
+
+	-- 显示常用工具栏（人物，装备，技能，成就，任务，设置）
+	self:displayCommonToolbar(scale, bx, by)
+
+	-- 显示经验条
+	self:displayExperiencebar(scale, bx, by)
+end
+--------------------------------------------------------------------------------
+--sll 主界面底部工具栏--end
+--------------------------------------------------------------------------------
+
 function _M:display(nb_keyframes)
 	local d = core.display
 	self.now = core.game.getTime()
@@ -2001,17 +2357,31 @@ function _M:display(nb_keyframes)
 	d.glScale()
 	d.glTranslate(-self.places.party.x, -self.places.party.y, -0)
 
-	-- Hotkeys
+	--sll 去掉原技能栏
+	-- -- Hotkeys
+	-- d.glTranslate(self.places.hotkeys.x, self.places.hotkeys.y, 0)
+	-- self:displayHotkeys(1, self.places.hotkeys.x, self.places.hotkeys.y)
+	-- d.glTranslate(-self.places.hotkeys.x, -self.places.hotkeys.y, -0)
+
+	--sll 去掉原工具栏
+	-- -- Main icons
+	-- d.glTranslate(self.places.mainicons.x, self.places.mainicons.y, 0)
+	-- d.glScale(self.places.mainicons.scale * 0.5, self.places.mainicons.scale * 0.5, self.places.mainicons.scale * 0.5)
+	-- self:displayToolbar(self.places.mainicons.scale * 0.5, self.places.mainicons.x, self.places.mainicons.y)
+	-- d.glScale()
+	-- d.glTranslate(-self.places.mainicons.x, -self.places.mainicons.y, -0)
+
+	--sll 新底部工具栏
+	d.glTranslate(self.places.toolbar.x, self.places.toolbar.y, 0.0)
+	d.glScale(self.places.toolbar.scale, self.places.toolbar.scale, self.places.toolbar.scale)
+	self:displayBottomToolbar(self.places.toolbar.scale, self.places.toolbar.x, self.places.toolbar.y)
+	d.glScale()
+	d.glTranslate(-self.places.toolbar.x, -self.places.toolbar.y, -0)
+
+	--sll 原技能栏移到最顶层
 	d.glTranslate(self.places.hotkeys.x, self.places.hotkeys.y, 0)
 	self:displayHotkeys(1, self.places.hotkeys.x, self.places.hotkeys.y)
 	d.glTranslate(-self.places.hotkeys.x, -self.places.hotkeys.y, -0)
-
-	-- Main icons
-	d.glTranslate(self.places.mainicons.x, self.places.mainicons.y, 0)
-	d.glScale(self.places.mainicons.scale * 0.5, self.places.mainicons.scale * 0.5, self.places.mainicons.scale * 0.5)
-	self:displayToolbar(self.places.mainicons.scale * 0.5, self.places.mainicons.x, self.places.mainicons.y)
-	d.glScale()
-	d.glTranslate(-self.places.mainicons.x, -self.places.mainicons.y, -0)
 
 	-- Display border indicators when possible
 	if self.ui_moving and self.sizes[self.ui_moving] then
