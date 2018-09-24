@@ -245,7 +245,11 @@ function _M:pickupFloor(i, vocal, no_sort)
 				slot = self:itemPosition(self.INVEN_INVEN, newo, true) or 1
 				local letter = ShowPickupFloor:makeKeyChar(slot)
 
+				--sll 显示拾取物品的名字
 				if vocal then game.logSeen(self, "%s picks up (%s.): %s%s.", self.name:capitalize(), letter, num>1 and ("%d "):format(num) or "", o:getName{do_color=true, no_count = true}) end
+				local name = o:getName{do_color=true, no_count = true}
+				local sx, sy = game.level.map:getTileToScreen(self.x, self.y, true)
+				game.flyers:add(sx, sy - game.level.map.tile_h / 2, 100, rng.float(-0.1, 0.1), rng.float(-0.5,-0.8), name, colors.simple(colors.OLIVE_DRAB))			
 				return inven[slot], num
 			else
 				if vocal then game.logSeen(self, "%s has no room for: %s.", self.name:capitalize(), o:getName{do_color=true}) end
