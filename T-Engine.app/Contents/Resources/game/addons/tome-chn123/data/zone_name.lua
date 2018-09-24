@@ -148,3 +148,17 @@ zoneName["Kruk Pride"] = "克鲁克部落"
 zoneName["Ureslak's Host"] = "乌瑞斯拉克沉睡处"
 zoneName["Vaporous Emporium"] = "蒸汽商场"
 zoneName["Yetis Cave"] = "雪人洞穴"
+
+--------------------------------------------------------------------------------
+--sll 移动城堡各区域名--start
+--------------------------------------------------------------------------------
+
+zoneName["Yu Yue Castle"] = "羽月城堡"
+zoneName["Moonlight town"] = "月色镇"
+zoneName["Mozu prison"] = "魔族监狱"
+zoneName["Grain transport channel"] = "粮运通道"
+zoneName["Secret little black house"] = "秘密小黑屋"
+
+--------------------------------------------------------------------------------
+--sll 移动城堡各区域名--start
+--------------------------------------------------------------------------------

@@ -513,6 +513,13 @@ gridCHN["statue of Shasshhiy'Kaish"] = "恶魔雕像：莎西·凯希"
 gridCHN["statue of Walrog"] = "恶魔雕像：乌尔罗格"
 gridCHN["statue of Harkor'Zun"] = "恶魔雕像：哈克祖"
 
+--sll 移动城堡入口点翻译
+gridCHN["Yu Yue Castle"] = "羽月城堡"
+gridCHN["Moonlight town"] = "月色镇"
+gridCHN["Mozu prison"] = "魔族监狱"
+gridCHN["Grain transport channel"] = "粮运通道"
+gridCHN["Secret little black house"] = "秘密小黑屋"
+
 function getLineTooltipGridCHN(line)
     if line:find(" %(") then
         local f,e = line:find(" %(")

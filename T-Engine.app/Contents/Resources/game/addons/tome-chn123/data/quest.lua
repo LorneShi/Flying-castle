@@ -10,6 +10,30 @@ function questCHN:getquestname(name)
 			end
 			return qname
 end
+
+--------------------------------------------------------------------------------
+--sll 移动城堡任务翻译--start
+--------------------------------------------------------------------------------
+questCHN["The beast within forest"] = {
+name = " 森 林 中 的 野 兽 ",
+description = function(desc)
+	desc = string.gsub(desc,"You met a half%-mad lumberjack fleeing a small village, rambling about an untold horror lurking there, slaughtering people."," 你 遇 到 了 一 个 吓 得 魂 飞 魄 散 的 伐 木 工 人 从 一 个 小 村 庄 里 跑 出 来， 大 声 喊 着 有 个 没 见 过 的 吓 人 的 东 西 在 里 面 杀 人。 ")
+	desc = string.gsub(desc," lumberjacks have died."," 个 伐 木 工 人 死 了。 ")
+	return desc
+end}
+
+questCHN["Blacksmith gifts"] = {
+name = " 铁 匠 的 礼 物 ",
+description = function(desc)
+	desc = string.gsub(desc,"You met a novice mage who was tasked to collect an arcane powered artifact."," 你 碰 到 了 一 个 法 师 学 徒， 他 被 指 派 去 搜 集 一 件 充 满 奥 术 力 量 的 神 器。 ")
+	desc = string.gsub(desc,"He asked for your help, should you collect some that you do not need."," 他 请 求 你 的 帮 助， 你 能 帮 他 搜 集 一 点 么。 ")
+	desc = string.gsub(desc,"Collect an artifact arcane powered item."," 搜 集 一 件 充 满 奥 术 力 量 的 神 器。 ")
+	return desc
+end}
+--------------------------------------------------------------------------------
+--sll 移动城堡任务翻译--end
+--------------------------------------------------------------------------------
+
 questCHN["Hidden treasure"] = {
 name = " 隐 藏 的 财 宝 ",
 description = function(desc)

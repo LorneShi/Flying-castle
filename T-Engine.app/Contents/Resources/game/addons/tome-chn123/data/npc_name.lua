@@ -118,6 +118,19 @@ function npcCHN:getDesc(name, desc)
 	end
 end
 
+--------------------------------------------------------------------------------
+--sll 移动城堡NPC翻译--start
+--------------------------------------------------------------------------------
+npcNameCHN["Village head"] = "村长"
+npcDescCHN["Manager of Moonlight Town"] = "月色镇管理者。"
+
+npcNameCHN["Blacksmith"] = "铁匠"
+npcDescCHN["The first blacksmith in the mainland"] = "大陆第一铁匠。"
+
+--------------------------------------------------------------------------------
+--sll 移动城堡NPC翻译--start
+--------------------------------------------------------------------------------
+
 npcNameCHN["shadow"] = "阴影"
 npcNameCHN["will o' the wisp"] = "鬼火"
 --蚂蚁(ant)

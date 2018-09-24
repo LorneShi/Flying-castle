@@ -506,6 +506,42 @@ end
 newEntity{ base="PLAINS", define_as = "TOWN", notice = true, change_level=1, glow=true, display='*', color={r=255, g=255, b=255}, back_color=colors.DARK_GREEN, nice_tiler=false }
 newEntity{ base="JUNGLE_PLAINS", define_as = "JUNGLE_TOWN", notice = true, change_level=1, glow=true, display='*', color={r=255, g=255, b=255}, back_color=colors.DARK_GREEN, nice_tiler=false }
 
+--------------------------------------------------------------------------------
+--sll 移动城堡个点入口定义--start
+--------------------------------------------------------------------------------
+newEntity{ base="TOWN", define_as = "YU_YUE_CASTLE",
+	name = "Yu Yue Castle", add_mos = {{image="terrain/village_01.png"}},
+	desc = "Yu Yue Castle",
+	change_zone="yu-yue-castle",
+}
+
+newEntity{ base="TOWN", define_as = "MOONLIGHT_TOWN",
+	name = "Moonlight town", add_mos = {{image="terrain/village_01.png"}},
+	desc = "Moonlight town",
+	change_zone="moonlight-town",
+}
+
+newEntity{ base="TOWN", define_as = "MOZU_PRISON",
+	name = "Mozu prison", add_mos = {{image="terrain/town1.png"}},
+	desc = "Mozu prison",
+	change_zone="mozu-prison",
+}
+
+newEntity{ base="TOWN", define_as = "GRAIN_TRANSPORT_CHANNEL",
+	name = "Grain transport channel", add_mos = {{image="terrain/village_01.png"}},
+	desc = "Grain transport channel",
+	change_zone="grain_transport_channel",
+}
+
+newEntity{ base="TOWN", define_as = "SECRET_LITTLE_BLACK_HOUSE",
+	name = "Secret little black house", add_mos = {{image="terrain/village_01.png"}},
+	desc = "Secret little black house",
+	change_zone="secret-little-black-house",
+}
+--------------------------------------------------------------------------------
+--sll 移动城堡个点入口定义--end
+--------------------------------------------------------------------------------
+
 newEntity{ base="TOWN", define_as = "TOWN_DERTH",
 	name = "Derth (Town)", add_mos = {{image="terrain/village_01.png"}},
 	desc = "A quiet town at the crossroads of the north",
