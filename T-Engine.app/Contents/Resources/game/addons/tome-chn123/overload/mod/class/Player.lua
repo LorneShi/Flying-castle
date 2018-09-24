@@ -256,6 +256,12 @@ function _M:describeFloor(x, y, force)
 		local obj = game.level.map:getObject(x, y, i)
 		while obj do
 			local desc = true
+
+			--sll 自动拾取物品
+			if self:pickupFloor(i, true) then 
+				desc = false 
+			end	
+
 			if obj.auto_pickup and self:pickupFloor(i, true) then desc = false end
 			if desc and self:attr("has_transmo") and obj.__transmo == nil then
 				obj.__transmo_pre = true
