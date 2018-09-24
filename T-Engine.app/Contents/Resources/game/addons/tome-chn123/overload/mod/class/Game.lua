@@ -105,7 +105,8 @@ function _M:runReal()
 	local flyfont, flysize = FontPackage:getFont("flyer")
 	self.tooltip = Tooltip.new(self.uiset.init_font_mono, self.uiset.init_size_mono, {255,255,255}, {30,30,30,230})
 	self.tooltip2 = Tooltip.new(self.uiset.init_font_mono, self.uiset.init_size_mono, {255,255,255}, {30,30,30,230})
-	self.flyers = FlyingText.new(flyfont, flysize, flyfont, flysize + 3)
+	-- self.flyers = FlyingText.new(flyfont, flysize, flyfont, flysize + 3)
+	self.flyers = FlyingText.new(flyfont, flysize + 20, flyfont, flysize + 25)--sll 修改显示的技能名大小
 	self.flyers:enableShadow(0.6)
 	game:setFlyingText(self.flyers)
 
