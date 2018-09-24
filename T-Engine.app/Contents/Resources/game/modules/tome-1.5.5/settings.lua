@@ -48,7 +48,8 @@ if type(config.settings.tome.rest_before_explore) == "nil" then config.settings.
 if type(config.settings.tome.lore_popup) == "nil" then config.settings.tome.lore_popup = true end
 if type(config.settings.tome.auto_hotkey_object) == "nil" then config.settings.tome.auto_hotkey_object = true end
 if type(config.settings.tome.visual_hotkeys) == "nil" then config.settings.tome.visual_hotkeys = true end
-if type(config.settings.tome.talents_flyers) == "nil" then config.settings.tome.talents_flyers = false end
+-- if type(config.settings.tome.talents_flyers) == "nil" then config.settings.tome.talents_flyers = false end
+if type(config.settings.tome.talents_flyers) == "nil" then config.settings.tome.talents_flyers = true end --sll 默认开启显示技能名及图标
 if type(config.settings.tome.immediate_melee_keys) == "nil" then config.settings.tome.immediate_melee_keys = true end
 if type(config.settings.tome.immediate_melee_keys_auto) == "nil" then config.settings.tome.immediate_melee_keys_auto = true end
 if type(config.settings.tome.allow_online_events) == "nil" then config.settings.tome.allow_online_events = true end
