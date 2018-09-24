@@ -2340,7 +2340,7 @@ function _M:setupMouse(reset)
 				if not self.gestures:isGesturing() then
 					if not xrel and not yrel then
 						-- Handle Use menu
-						self:mouseRightClick(mx, my, extra)
+						-- self:mouseRightClick(mx, my, extra)--sll 屏蔽游戏中的右键菜单
 						return
 					end
 				else
