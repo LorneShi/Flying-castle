@@ -338,10 +338,10 @@ function _M:onMouse(button, mx, my, click, on_over, on_click)
 	local a = self.actor
 
 	if button == "wheelup" and click then
-		a:prevHotkeyPage()
+		-- a:prevHotkeyPage() --sll 去掉滚动鼠标中键切换技能栏技能行功能
 		return
 	elseif button == "wheeldown" and click then
-		a:nextHotkeyPage()
+		-- a:nextHotkeyPage() --sll 去掉滚动鼠标中键切换技能栏技能行功能
 		return
 	elseif button == "drag-end" then
 		local drag = game.mouse.dragged.payload
