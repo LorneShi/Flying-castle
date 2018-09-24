@@ -1134,6 +1134,12 @@ function _M:changeLevelReal(lev, zone, params)
 		end
 
 		-- Check if there is already an actor at that location, if so move it
+		-- sll 切换楼层后，玩家显示在偏离入口x - 1的位置，解决多次弹出切换楼层提示
+		if x == 0 then
+			x = 2
+		elseif x > 1 then
+			x = x - 1
+		end
 		x = x or 1 y = y or 1
 		local blocking_actor = self.level.map(x, y, engine.Map.ACTOR)
 		if blocking_actor then

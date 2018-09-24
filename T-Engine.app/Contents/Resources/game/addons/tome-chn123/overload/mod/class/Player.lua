@@ -280,6 +280,18 @@ function _M:describeFloor(x, y, force)
 		game.logPlayer(self, "#YELLOW_GREEN#这里是“"..(gridCHN[g.name] or g.name).."”，（按下'<', '>'或右键使用）")
 		local sx, sy = game.level.map:getTileToScreen(x, y)
 		game.flyers:add(sx, sy, 60, 0, -1.5, ("地图切换 (%s)!"):format(gridCHN[g.name] or g.name), colors.simple(colors.YELLOW_GREEN), true)
+
+		--sll 玩家移动到楼层入口处自动切换楼层，并弹出提示
+		local change_level_check = function()
+			require("engine.ui.Dialog"):yesnoPopup("", "确定要去下一层吗？", function(ret)
+				if ret then 
+					game.key:triggerVirtual("CHANGE_LEVEL")
+				end
+			end)
+			return true
+		end		
+
+		change_level_check()		
 	end
 end
 

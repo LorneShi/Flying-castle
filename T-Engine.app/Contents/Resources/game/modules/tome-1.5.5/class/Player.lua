@@ -280,6 +280,18 @@ function _M:describeFloor(x, y, force)
 		game.logPlayer(self, "#YELLOW_GREEN#There is "..g.name:a_an().." here (press '<', '>' or right click to use).")
 		local sx, sy = game.level.map:getTileToScreen(x, y, true)
 		game.flyers:add(sx, sy, 60, 0, -1.5, ("Level change (%s)!"):format(g.name), colors.simple(colors.YELLOW_GREEN), true)
+
+		--sll 玩家移动到楼层入口处自动切换楼层，并弹出提示
+		local change_level_check = function()
+			require("engine.ui.Dialog"):yesnoPopup("", "Go down to the next floor?", function(ret)
+				if ret then 
+					game.key:triggerVirtual("CHANGE_LEVEL")
+				end
+			end)
+			return true
+		end		
+
+		change_level_check()		
 	end
 end
 
