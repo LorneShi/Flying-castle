@@ -17,11 +17,6 @@
 -- Nicolas Casalini "DarkGod"
 -- darkgod@te4.org
 
-fs.mount("/Volumes/Backup/软件/ZeroBraneStudio.app/Contents/ZeroBraneStudio/lualibs/mobdebug", "/", true)
-package.path = package.path .. ";/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio/lualibs/?/?.lua;/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio/lualibs/?.lua;;";
-package.cpath = package.cpath .. ";/Applications/ZeroBraneStudio.app/Contents/ZeroBraneStudio/bin/clibs/?.dylib;;";
-require("mobdebug").start()
-
 require "engine.class"
 local Base = require "engine.ui.Base"
 local Focusable = require "engine.ui.Focusable"
@@ -172,82 +167,53 @@ function _M:generateEquipDollFrames()
 	if doll.doll_x and doll.doll_y and doll.doll_x>0 and doll.doll_y>0 then
 		max_w, max_h = doll.doll_x + (doll.doll_w or doll.w*2.6), doll.doll_y + (doll.doll_h or doll.h*2.6)
 	end
-
-	local test_i = 1
+	
 	for k, v in pairs(doll.list) do
 		local inven = self.actor:getInven(k)
 		if inven then
-			local test_j = 1
 			for item, def in ipairs(v) do
 				if item > inven.max then break end
-				local frame = EquipDollFrame.new{
-					actor=self.actor, 
-					inven=inven, 
-					name_pos=def.text, 
-					name_justify=def.text_justify, 
-					name_y_shift_max=def.name_y_line_shift_max, 
-					item=item, 
-					w=48, 
-					h=48, 
-					iw=42, 
-				 	ih=42, 
-					ix=3, 
-					iy=3,
-					bg=doll.itemframe, 
-					bg_sel=doll.itemframe_sel, 
-					drag_enable=self.drag_enable, 
-					font=self.font}
+				local frame = EquipDollFrame.new{actor=self.actor, inven=inven, name_pos=def.text, name_justify=def.text_justify, name_y_shift_max=def.name_y_line_shift_max, item=item, w=doll.w, h=doll.h, iw=doll.iw, ih=doll.ih, ix=doll.ix, iy=doll.iy, bg=doll.itemframe, bg_sel=doll.itemframe_sel, bg_empty=self.actor.inven_def[inven.name].infos and self.actor.inven_def[inven.name].infos.equipdoll_back, drag_enable=self.drag_enable, font=self.font}
 				frame.doll_select = true
 				frame.actorWear = function(_, ...) if self.actorWear then self.actorWear(frame, ...) end end
 				frame.fct=function(button, event) if frame:getItem() and self.fct then self.fct({inven=inven, item=item, object=frame:getItem()}, button, event) end end
 				frame.filter = self.filter
 				frame.on_focus_change=function(status) local ui = self.focus_ui if self.on_select and ui then self.on_select(ui, ui.ui.inven, ui.ui.item, ui.ui:getItem()) end end
-				uis[#uis+1] = {x=test_j * 48, y=(test_i - 1) * 48 + 5, ui=frame, _weight=def.weight}
+				uis[#uis+1] = {x=def.x, y=def.y, ui=frame, _weight=def.weight}
 
-				-- if self.subobject and (not self.subobject_restrict_slots or (self.subobject_restrict_slots[inven.name] and self.subobject_restrict_slots[inven.name] >= item)) then
-				-- 	local frame = EquipDollFrame.new{actor=self.actor, inven=inven, name_pos=def.text, name_justify=def.text_justify, name_y_shift_max=def.name_y_line_shift_max, item=item, w=math.ceil(doll.w/2), h=math.ceil(doll.h/2), iw=math.ceil(doll.iw/2), ih=math.ceil(doll.ih/2), ix=math.floor(doll.ix/2), iy=math.floor(doll.iy/2), bg=doll.itemframe, bg_sel=doll.itemframe_sel, bg_empty=self.actor.inven_def[inven.name].infos and self.actor.inven_def[inven.name].infos.equipdoll_back, drag_enable=self.drag_enable, subobject=self.subobject, font=self.font}
-				-- 	frame.doll_select = true
-				-- 	frame.secondary = true
-				-- 	frame.no_name = true
-				-- 	frame.actorWear = function(_, ...) if self.actorWear then self.actorWear(frame, ...) end end
-				-- 	frame.fct=function(button, event) if frame:getItem() and self.fct then self.fct({inven=inven, item=item, object=frame:getItem()}, button, event) end end
-				-- 	frame.filter = self.filter
-				-- 	frame.on_focus_change=function(status) local ui = self.focus_ui if self.on_select and ui then self.on_select(ui, ui.ui.inven, ui.ui.item, ui.ui:getItem()) end end
+				if self.subobject and (not self.subobject_restrict_slots or (self.subobject_restrict_slots[inven.name] and self.subobject_restrict_slots[inven.name] >= item)) then
+					local frame = EquipDollFrame.new{actor=self.actor, inven=inven, name_pos=def.text, name_justify=def.text_justify, name_y_shift_max=def.name_y_line_shift_max, item=item, w=math.ceil(doll.w/2), h=math.ceil(doll.h/2), iw=math.ceil(doll.iw/2), ih=math.ceil(doll.ih/2), ix=math.floor(doll.ix/2), iy=math.floor(doll.iy/2), bg=doll.itemframe, bg_sel=doll.itemframe_sel, bg_empty=self.actor.inven_def[inven.name].infos and self.actor.inven_def[inven.name].infos.equipdoll_back, drag_enable=self.drag_enable, subobject=self.subobject, font=self.font}
+					frame.doll_select = true
+					frame.secondary = true
+					frame.no_name = true
+					frame.actorWear = function(_, ...) if self.actorWear then self.actorWear(frame, ...) end end
+					frame.fct=function(button, event) if frame:getItem() and self.fct then self.fct({inven=inven, item=item, object=frame:getItem()}, button, event) end end
+					frame.filter = self.filter
+					frame.on_focus_change=function(status) local ui = self.focus_ui if self.on_select and ui then self.on_select(ui, ui.ui.inven, ui.ui.item, ui.ui:getItem()) end end
 
-				-- 	local dsx, dsy = doll.w + 3, 3
-				-- 	if def.subshift == "up" then dsx, dsy = 0, -math.ceil(doll.h/2) - 3
-				-- 	elseif def.subshift == "bottom" then dsx, dsy = 0, doll.h + 3
-				-- 	elseif def.subshift == "left" then dsx, dsy = -math.ceil(doll.w/2) - 3, 3
-				-- 	end
+					local dsx, dsy = doll.w + 3, 3
+					if def.subshift == "up" then dsx, dsy = 0, -math.ceil(doll.h/2) - 3
+					elseif def.subshift == "bottom" then dsx, dsy = 0, doll.h + 3
+					elseif def.subshift == "left" then dsx, dsy = -math.ceil(doll.w/2) - 3, 3
+					end
 
-				-- 	uis[#uis+1] = {x=def.x + dsx, y=def.y + dsy, ui=frame, _weight=def.weight}
-				-- end
+					uis[#uis+1] = {x=def.x + dsx, y=def.y + dsy, ui=frame, _weight=def.weight}
+				end
 
-				max_w = math.max(test_j * 48, max_w)
-				max_h = math.max((test_i - 1) * 48 + 5, max_h)
-
-				test_j = test_j + 1
+				max_w = math.max(def.x, max_w)
+				max_h = math.max(def.y, max_h)
 			end
-
-			test_i = test_i + 1
 		end
 	end
 
-	-- table.sort(uis, function(a,b) return a._weight < b._weight end)
+	table.sort(uis, function(a,b) return a._weight < b._weight end)
 
-	self.w = max_w + math.floor(48 * 2.6)
-	self.h = max_h + math.floor(48 * 2.6)
+	self.w = max_w + math.floor(doll.w * 2.6)
+	self.h = max_h + math.floor(doll.h * 2.6)
 
 	self.chars = {}
 	for i, ui in ipairs(uis) do
 		ui.y = ui.y + self.base_doll_y
-		ui.ui.mouse.delegate_offset_x = ui.x
-		ui.ui.mouse.delegate_offset_y = ui.y
-		self.chars[self:makeKeyChar(i)] = ui
-	end
-
-	for i, ui in ipairs(uis) do
-		ui.y = ui.y + 60 
 		ui.ui.mouse.delegate_offset_x = ui.x
 		ui.ui.mouse.delegate_offset_y = ui.y
 		self.chars[self:makeKeyChar(i)] = ui

@@ -64,7 +64,6 @@ function _M:generate()
 	if self.bg_empty then self.bg_empty = self:getUITexture(self.bg_empty) end
 
 	self.mouse:registerZone(0, 0, self.w, self.h, function(button, x, y, xrel, yrel, bx, by, event)
-		print("+++++++++++++++++++++++")
 		if button == "left" and event == "button" then self:onUse(button, event) end
 		if event == "motion" and button == "left" and self:getItem() then self:onDrag(self.inven, self.item, self:getItem())
 		elseif button == "drag-end" and self.drag_enable then

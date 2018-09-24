@@ -92,10 +92,6 @@ function _M:generateList()
 
 			else
 				local t = cols[s][i]
-				print("______________")
-				for k,v in pairs(t) do
-					print(k,v)
-				end
 				if t.display_entity then t.display_entity:getMapObjects(game.uiset.hotkeys_display_icons.tiles, {}, 1) end
 
 				n[#n+1] = {
