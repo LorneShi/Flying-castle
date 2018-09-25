@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="2">
  <tileset firstgid="1" name="dg_grounds32" tilewidth="64" tileheight="64" tilecount="180" columns="9">
   <properties>
    <property name="id" value="DEEP_WATER"/>
   </properties>
-  <image source="../资源/dg_grounds32.gif" width="576" height="1280"/>
+  <image source="../../../../../../../../../地图编辑/资源/dg_grounds32.gif" width="576" height="1280"/>
   <tile id="9">
    <properties>
     <property name="id" value="PLAINS"/>
@@ -27,7 +27,7 @@
   </tile>
  </tileset>
  <tileset firstgid="181" name="World_B" tilewidth="64" tileheight="64" tilecount="225" columns="15">
-  <image source="../资源/World_B.png" width="998" height="998"/>
+  <image source="../../../../../../../../../地图编辑/资源/World_B.png" width="998" height="998"/>
   <tile id="8">
    <properties>
     <property name="id" value="MAP_1_3"/>
@@ -90,7 +90,7 @@
   </tile>
  </tileset>
  <tileset firstgid="406" name="numbers" tilewidth="64" tileheight="64" tilecount="36" columns="6">
-  <image source="../资源/numbers.png" width="384" height="384"/>
+  <image source="../../../../../../../../../地图编辑/资源/numbers.png" width="384" height="384"/>
   <tile id="0">
    <properties>
     <property name="id" value="YU_YUE_CASTLE"/>
@@ -117,7 +117,7 @@
    </properties>
   </tile>
  </tileset>
- <layer id="5" name="Terrain" width="50" height="50">
+ <layer id="7" name="Terrain" width="50" height="50">
   <data encoding="csv">
 14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
 14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,
@@ -171,4 +171,12 @@
 14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14
 </data>
  </layer>
+ <objectgroup id="6" name="addSpot#pops">
+  <object id="1" name="Start: Allied" x="190.03" y="1469.82" width="64" height="64">
+   <properties>
+    <property name="subtype" value="&quot;allied&quot;"/>
+    <property name="type" value="&quot;playerpop&quot;"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

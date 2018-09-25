@@ -530,7 +530,7 @@ newEntity{ base="TOWN", define_as = "MOZU_PRISON",
 newEntity{ base="TOWN", define_as = "GRAIN_TRANSPORT_CHANNEL",
 	name = "Grain transport channel", add_mos = {{image="terrain/village_01.png"}},
 	desc = "Grain transport channel",
-	change_zone="grain_transport_channel",
+	change_zone="grain-transport-channel",
 }
 
 newEntity{ base="TOWN", define_as = "SECRET_LITTLE_BLACK_HOUSE",

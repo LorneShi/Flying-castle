@@ -103,7 +103,7 @@ defineTile('rel-tunnel', "REL_TUNNEL")
 defineTile('yu-yue-castle', "YU_YUE_CASTLE")
 defineTile('moonlight-town', "MOONLIGHT_TOWN")
 defineTile('mozu-prison', "MOZU_PRISON")
-defineTile('grain_transport_channel', "GRAIN_TRANSPORT_CHANNEL")
+defineTile('grain-transport-channel', "GRAIN_TRANSPORT_CHANNEL")
 defineTile('secret-little-black-house', "SECRET_LITTLE_BLACK_HOUSE")
 --------------------------------------------------------------------------------
 --sll 移动城堡个入口点tile定义--end

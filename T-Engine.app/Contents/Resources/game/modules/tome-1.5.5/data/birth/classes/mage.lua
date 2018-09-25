@@ -199,24 +199,27 @@ newBirthDescriptor{
 	},
 	copy = {
 		-- Mages start in angolwen
-		class_start_check = function(self)
-			if self.descriptor.world == "Maj'Eyal" and (self.descriptor.race == "Human" or self.descriptor.race == "Elf" or self.descriptor.race == "Halfling" or (self.descriptor.race == "Giant" and self.descriptor.subrace == "Ogre")) and not self._forbid_start_override then
-				self.archmage_race_start_quest = self.starting_quest
-				self.default_wilderness = {"zone-pop", "angolwen-portal"}
-				self.starting_zone = "town-angolwen"
-				self.starting_quest = "start-archmage"
-				self.starting_intro = "archmage"
-				self.faction = "angolwen"
-				self:learnTalent(self.T_TELEPORT_ANGOLWEN, true, nil, {no_unlearn=true})
-			end
-			self:triggerHook{"BirthStartZone:archmage"}
-		end,
+		-- class_start_check = function(self)
+		-- 	if self.descriptor.world == "Maj'Eyal" and (self.descriptor.race == "Human" or self.descriptor.race == "Elf" or self.descriptor.race == "Halfling" or (self.descriptor.race == "Giant" and self.descriptor.subrace == "Ogre")) and not self._forbid_start_override then
+		-- 		self.archmage_race_start_quest = self.starting_quest
+		-- 		self.default_wilderness = {"zone-pop", "angolwen-portal"}
+		-- 		self.starting_zone = "town-angolwen"
+		-- 		self.starting_quest = "start-archmage"
+		-- 		self.starting_intro = "archmage"
+		-- 		self.faction = "angolwen"
+		-- 		self:learnTalent(self.T_TELEPORT_ANGOLWEN, true, nil, {no_unlearn=true})
+		-- 	end
+		-- 	self:triggerHook{"BirthStartZone:archmage"}
+		-- end,
 
 		max_life = 90,
 		resolvers.equipbirth{ id=true,
 			{type="weapon", subtype="staff", name="elm staff", autoreq=true, ego_chance=-1000},
 			{type="armor", subtype="cloth", name="linen robe", autoreq=true, ego_chance=-1000},
 		},
+		default_wilderness = {"playerpop", "allied"},
+		starting_zone = "mozu-prison",	
+		starting_intro = "Archmage",	
 	},
 	copy_add = {
 		life_rating = -4,
