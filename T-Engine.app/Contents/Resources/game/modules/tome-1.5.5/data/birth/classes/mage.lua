@@ -125,7 +125,7 @@ newBirthDescriptor{
 newBirthDescriptor{
 	type = "subclass",
 	name = "Archmage",
-	locked = function() return profile.mod.allow_build.mage end,
+	-- locked = function() return profile.mod.allow_build.mage end,--sll 默认解锁元素法师
 	locked_desc = "Hated, harrowed, hunted, hidden... Our ways are forbidden, but our cause is just. In our veiled valley we find solace from the world's wrath, free to study our arts. Only through charity and friendship can you earn our trust.",
 	desc = {
 		"An Archmage devotes his whole life to the study of magic above anything else.",
