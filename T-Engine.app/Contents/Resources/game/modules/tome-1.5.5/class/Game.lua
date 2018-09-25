@@ -1089,7 +1089,26 @@ function _M:changeLevelReal(lev, zone, params)
 
 	-- place the player on the level
 	if self.zone.wilderness then -- Move back to old wilderness position
-		self.player:move(self.player.wild_x, self.player.wild_y, true)
+		--sll 解决从关卡切换到大地图时，重复弹出提示进入问题
+		-- self.player:move(self.player.wild_x, self.player.wild_y, true)
+		local x, y = self.player.wild_x, self.player.wild_y
+		if self.player:canMove(x + 1, y) then
+			x = x + 1
+		elseif self.player:canMove(x - 1, y) then
+			x = x - 1
+		elseif self.player:canMove(x, y + 1) then
+			y = y + 1
+		elseif self.player:canMove(x, y - 1) then
+			y = y - 1
+		elseif self.player:canMove(x + 1, y + 1) then
+			x = x + 1
+			y = y + 1
+		elseif self.player:canMove(x - 1, y - 1) then
+			x = x - 1
+			y = y - 1
+		end
+
+		self.player:move(x, y, true)
 		self.player.last_wilderness = self.zone.short_name
 	else
 		local x, y = nil, nil
