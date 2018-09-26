@@ -1387,7 +1387,10 @@ function _M:updateZoneName()
 	local name
 	if self.zone.display_name then
 		name = self.zone.display_name()
-		if name == "Maj'Eyal" then name = "马基埃亚尔"
+		if name == "Maj'Eyal" then
+			name = "马基埃亚尔"
+		elseif name == "Holy Light City" then--添加圣光城大地图区域
+			name = "圣光城"
 		else
 			name = name:gsub("Yiilkgur, the Sher'Tul Fortress","伊克格 夏·图尔堡垒"):gsub("Control Room","控制室"):gsub("Storage Room","储藏室"):gsub("Portal Room","传送室"):gsub("Exploratory Farportal","探险传送门"):gsub("Library of Lost Mysteries","失落的秘密图书馆")
 		end

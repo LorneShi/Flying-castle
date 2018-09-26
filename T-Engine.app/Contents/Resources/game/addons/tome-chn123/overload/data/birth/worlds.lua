@@ -63,6 +63,33 @@ end
 Birther.default_eyal_descriptors = default_eyal_descriptors
 
 -- Player worlds/campaigns
+--sll 添加圣光城战役
+newBirthDescriptor{
+	type = "world",
+	name = "Holy Light City",
+	display_name = " 圣光城 : 卓 越 时 代 ",
+	selection_default = config.settings.tome.default_birth and config.settings.tome.default_birth.campaign == "Holy Light City",
+	desc =
+	{
+		"    马 基 埃 亚 尔 的 人： 人 类、 半 身 人 、 精 灵 和 矮 人 再 次 繁 荣 起 来， 世 界 已 经 保 持 了 超 过 一 百 年 的 和 平。 ",
+		"    你 是 一 位 冒 险 者， 出 发 去 寻 找 失 落 的 宝 藏 和 荣 耀。 在 世 界 的 阴 影 之 下 究 竟 潜 伏 着 什 么 呢？ ",
+	},
+	descriptor_choices = default_eyal_descriptors{},
+	game_state = {
+		campaign_name = "maj-eyal",
+		__allow_rod_recall = true,
+		__allow_transmo_chest = true,
+		grab_online_event_zone = function() return "wilderness-1" end,
+		grab_online_event_spot = function(zone, level)
+			local find = {type="world-encounter", subtype="maj-eyal"}
+			local where = game.level:pickSpotRemove(find)
+			while where and (game.level.map:checkAllEntities(where.x, where.y, "block_move") or not game.level.map:checkAllEntities(where.x, where.y, "can_encounter")) do where = game.level:pickSpotRemove(find) end
+			local x, y = mod.class.Encounter:findSpot(where)
+			return x, y
+		end,
+	},
+}
+
 newBirthDescriptor{
 	type = "world",
 	name = "Maj'Eyal",

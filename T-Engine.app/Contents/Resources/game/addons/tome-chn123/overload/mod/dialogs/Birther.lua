@@ -331,6 +331,7 @@ end
 function _M:makeDefault()
 	self:setDescriptor("sex", "Female")
 	self:setDescriptor("world", "Maj'Eyal")
+	self:setDescriptor("world", "Holy Light City")--sll 添加圣光城战役选择
 	-- self:setDescriptor("world", "Infinite")
 	self:setDescriptor("difficulty", "Normal")
 	self:setDescriptor("permadeath", "Adventure")

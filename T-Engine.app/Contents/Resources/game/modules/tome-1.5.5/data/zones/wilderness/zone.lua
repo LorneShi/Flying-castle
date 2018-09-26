@@ -18,7 +18,7 @@
 -- darkgod@te4.org
 
 return {
-	name = "World of Eyal",
+	name = "Futu continent",
 	display_name = function(x, y) return game.level and game.level.map.attrs(x or game.player.x, y or game.player.y, "zonename") or "Eyal" end,
 	variable_zone_name = true,
 	level_range = {1, 1},
@@ -38,57 +38,58 @@ return {
 			map = "wilderness/great-wilderness",
 		},
 	},
-	-- post_nicer_tiles = function(level)
-	-- 	for _, z in ipairs(level.custom_zones) do
-	-- 		if z.type == "zonename" then
-	-- 			for x = z.x1, z.x2 do for y = z.y1, z.y2 do
-	-- 				game.level.map.attrs(x, y, "zonename", z.subtype)
-	-- 				if z.subtype == "Tar'Eyal" then
-	-- 					game.level.map.attrs(x, y, "block_fortress", true)
-	-- 				end
-	-- 			end end
-	-- 		elseif z.type == "world-encounter" then
-	-- 			for x = z.x1, z.x2 do for y = z.y1, z.y2 do
-	-- 				if not game.level.map.attrs(x, y, "world-encounter") then game.level.map.attrs(x, y, "world-encounter", {}) end
-	-- 				game.level.map.attrs(x, y, "world-encounter")[z.subtype] = true
-	-- 			end end
-	-- 		elseif z.type == "block_fortress" then
-	-- 			for x = z.x1, z.x2 do for y = z.y1, z.y2 do
-	-- 				game.level.map.attrs(x, y, "block_fortress", true)
-	-- 			end end
-	-- 		end
-	-- 	end
+	post_nicer_tiles = function(level)
+		for _, z in ipairs(level.custom_zones) do
+			if z.type == "zonename" then
+				for x = z.x1, z.x2 do for y = z.y1, z.y2 do
+					game.level.map.attrs(x, y, "zonename", z.subtype)
+					if z.subtype == "Tar'Eyal" then
+						game.level.map.attrs(x, y, "block_fortress", true)
+					end
+				end end
+			elseif z.type == "world-encounter" then
+				for x = z.x1, z.x2 do for y = z.y1, z.y2 do
+					if not game.level.map.attrs(x, y, "world-encounter") then game.level.map.attrs(x, y, "world-encounter", {}) end
+					game.level.map.attrs(x, y, "world-encounter")[z.subtype] = true
+				end end
+			elseif z.type == "block_fortress" then
+				for x = z.x1, z.x2 do for y = z.y1, z.y2 do
+					game.level.map.attrs(x, y, "block_fortress", true)
+				end end
+			end
+		end
 
-	-- 	-- The shield protecting the sorcerer hideout
-	-- 	local spot = level:pickSpot{type="zone-pop", subtype="high-peak"}
-	-- 	local p = level.map:particleEmitter(spot.x, spot.y, 3, "istari_shield_map")
+		--sll 会报错
+		-- The shield protecting the sorcerer hideout
+		-- local spot = level:pickSpot{type="zone-pop", subtype="high-peak"}
+		-- local p = level.map:particleEmitter(spot.x, spot.y, 3, "istari_shield_map")
 
-	-- 	-- Place immediate "encounters"
-	-- 	local function place_list(list)
-	-- 		for i = 1, #list do
-	-- 			local e = list[i]
-	-- 			if e.immediate then
-	-- 				e = e:clone()
-	-- 				e:resolve() e:resolve(nil, true)
-	-- 				local where = game.level:pickSpotRemove{type=e.immediate[1], subtype=e.immediate[2]}
-	-- 				while where and (game.level.map:checkAllEntities(where.x, where.y, "block_move") or not game.level.map:checkAllEntities(where.x, where.y, "can_encounter")) do where = game.level:pickSpotRemove{type=e.immediate[1], subtype=e.immediate[2]} end
-	-- 				if e:check("on_encounter", where) then
-	-- 					e:added()
-	-- 					print("[Encounter] Immediate set", e.name, where.x, where.y)
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 	end
-	-- 	for i, name in ipairs(level.data.auto_placelists or {}) do
-	-- 		place_list(game.level:getEntitiesList(name))
-	-- 	end
+		-- Place immediate "encounters"
+		local function place_list(list)
+			for i = 1, #list do
+				local e = list[i]
+				if e.immediate then
+					e = e:clone()
+					e:resolve() e:resolve(nil, true)
+					local where = game.level:pickSpotRemove{type=e.immediate[1], subtype=e.immediate[2]}
+					while where and (game.level.map:checkAllEntities(where.x, where.y, "block_move") or not game.level.map:checkAllEntities(where.x, where.y, "can_encounter")) do where = game.level:pickSpotRemove{type=e.immediate[1], subtype=e.immediate[2]} end
+					if e:check("on_encounter", where) then
+						e:added()
+						print("[Encounter] Immediate set", e.name, where.x, where.y)
+					end
+				end
+			end
+		end
+		for i, name in ipairs(level.data.auto_placelists or {}) do
+			place_list(game.level:getEntitiesList(name))
+		end
 
-	-- 	-- Create the glow
-	-- 	level.entrance_glow = require("engine.Particles").new("starglow", 1, {})
+		-- Create the glow
+		level.entrance_glow = require("engine.Particles").new("starglow", 1, {})
 
-	-- 	-- Only run once
-	-- 	level.data.post_nicer_tiles = nil
-	-- end,
+		-- Only run once
+		level.data.post_nicer_tiles = nil
+	end,
 	on_enter_list = {},
 	on_enter = function(_, _, newzone)
 		if game.player.level >= 14 and game.player.level <= 22 and not game.player:hasQuest("lightning-overload") and game:isCampaign("Maj'Eyal") then

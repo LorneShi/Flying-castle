@@ -42,6 +42,7 @@ newBirthDescriptor{
 		world =
 		{
 			["Maj'Eyal"] = "allow",
+			["Holy Light City"] = "allow",--sll 添加圣光城战役
 			Infinite = "allow",
 			Arena = "allow",
 		},

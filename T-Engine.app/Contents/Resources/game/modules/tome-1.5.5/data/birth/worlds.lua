@@ -63,6 +63,35 @@ end
 Birther.default_eyal_descriptors = default_eyal_descriptors
 
 -- Player worlds/campaigns
+--sll 定义圣光城战役选择
+newBirthDescriptor{
+	type = "world",
+	name = "Holy Light City",
+	display_name = "Holy Light City: The Age of Ascendancy",
+	selection_default = config.settings.tome.default_birth and config.settings.tome.default_birth.campaign == "Holy Light City",
+	desc =
+	{
+		"The people of Maj'Eyal: Humans, Halflings, Elves and Dwarves.",
+		"The known world has been at relative peace for over one hundred years, and people are prospering again.",
+		"You are an adventurer, setting out to find lost treasure and glory.",
+		"But what lurks in the shadows of the world?",
+	},
+	descriptor_choices = default_eyal_descriptors{},
+	game_state = {
+		campaign_name = "maj-eyal",
+		__allow_rod_recall = true,
+		__allow_transmo_chest = true,
+		grab_online_event_zone = function() return "wilderness-1" end,
+		grab_online_event_spot = function(zone, level)
+			local find = {type="world-encounter", subtype="maj-eyal"}
+			local where = game.level:pickSpotRemove(find)
+			while where and (game.level.map:checkAllEntities(where.x, where.y, "block_move") or not game.level.map:checkAllEntities(where.x, where.y, "can_encounter")) do where = game.level:pickSpotRemove(find) end
+			local x, y = mod.class.Encounter:findSpot(where)
+			return x, y
+		end,
+	},
+}
+
 newBirthDescriptor{
 	type = "world",
 	name = "Maj'Eyal",
