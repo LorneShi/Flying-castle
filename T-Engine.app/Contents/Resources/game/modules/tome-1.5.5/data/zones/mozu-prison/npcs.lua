@@ -17,253 +17,153 @@
 -- Nicolas Casalini "DarkGod"
 -- darkgod@te4.org
 
-if not currentZone.is_flooded then
-	load("/data/general/npcs/rodent.lua", rarity(5))
-	load("/data/general/npcs/vermin.lua", rarity(2))
-	load("/data/general/npcs/canine.lua", rarity(0))
-	load("/data/general/npcs/troll.lua", rarity(0))
-	load("/data/general/npcs/snake.lua", rarity(3))
-	load("/data/general/npcs/plant.lua", rarity(0))
-	load("/data/general/npcs/swarm.lua", rarity(3))
-	load("/data/general/npcs/bear.lua", rarity(2))
+load("/data/general/npcs/vermin.lua", rarity(5))
+load("/data/general/npcs/rodent.lua", rarity(5))
+load("/data/general/npcs/canine.lua", rarity(6))
+load("/data/general/npcs/snake.lua", rarity(4))
+load("/data/general/npcs/ooze.lua", rarity(3))
+load("/data/general/npcs/jelly.lua", rarity(3))
+load("/data/general/npcs/ant.lua", rarity(4))
+load("/data/general/npcs/thieve.lua", rarity(0))
+load("/data/general/npcs/minotaur.lua", rarity(0))
 
-	load("/data/general/npcs/all.lua", rarity(4, 35))
-else
-	load("/data/general/npcs/vermin.lua", rarity(2))
-	load("/data/general/npcs/troll.lua", rarity(0))
-	load("/data/general/npcs/snake.lua", rarity(3))
-	load("/data/general/npcs/plant.lua", rarity(0))
-	load("/data/general/npcs/swarm.lua", rarity(3))
-	load("/data/general/npcs/bear.lua", rarity(5))
-	-- Aquatics but not squids
-	load("/data/general/npcs/aquatic_critter.lua", function(e) if e.rarity and e.name and e.name:find("squid") then e.rarity=nil end end)
-
-	load("/data/general/npcs/all.lua", rarity(4, 35))
-end
+load("/data/general/npcs/all.lua", rarity(4, 35))
 
 local Talents = require("engine.interface.ActorTalents")
 
-newEntity{ define_as = "TROLL_PROX",
+-- The boss of the maze, no "rarity" field means it will not be randomly generated
+newEntity{ define_as = "HORNED_HORROR",
 	allow_infinite_dungeon = true,
-	type = "giant", subtype = "troll", unique = true,
-	name = "Prox the Mighty",
-	display = "T", color=colors.VIOLET, image="npc/giant_troll_prox_the_mighty.png",
-	resolvers.nice_tile{image="invis.png", add_mos = {{image="npc/giant_troll_prox_the_mighty.png", display_h=2, display_y=-1}}},
-	desc = [[A huge troll, he might move slowly but he does look dangerous nonetheless.]],
-	killer_message = "and eaten raw",
-	level_range = {7, nil}, exp_worth = 2,
-	max_life = 150, life_rating = 15, fixed_rating = true,
-	max_stamina = 85,
-	stats = { str=20, dex=10, cun=8, mag=10, con=20 },
+	type = "horror", subtype = "corrupted", unique = true,
+	name = "Horned Horror",
+	display = "h", color=colors.VIOLET,
+	resolvers.nice_tile{image="invis.png", add_mos = {{image="npc/horror_corrupted_horner_horror.png", display_h=2, display_y=-1}}},
+	desc = [[Some horrible power has twisted this brutish minotaur into something altogether more terrifying. Huge tentacles undulate from its back as it clenches and unclenches its powerful fists.]],
+	killer_message = "and revived as a mindless horror",
+	level_range = {5, nil}, exp_worth = 2,
+	max_life = 125, life_rating = 17, fixed_rating = true,
+	stats = { str=20, dex=20, cun=20, mag=10, wil=10, con=20 },
 	rank = 4,
 	size_category = 4,
 	infravision = 10,
-	instakill_immune = 1,
-	tier1 = true,
 	move_others=true,
-
-	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1, TOOL=1 },
-	resolvers.equip{ {type="weapon", subtype="greatmaul", autoreq=true}, },
-	resolvers.equip{ {type="tool", subtype="misc", defined="LUCKY_FOOT", random_art_replace={chance=70}, autoreq=true}, },
-	resolvers.drops{chance=100, nb=1, {unique=true, not_properties={"lore"}} },
-	resolvers.drops{chance=100, nb=3, {tome_drops="boss"} },
-
-	resolvers.talents{
-		[Talents.T_KNOCKBACK]=1,
-	},
-	resolvers.inscriptions(1, {"movement infusion"}),
-	inc_damage = { all = -40 },
-
-	autolevel = "warrior",
-	ai = "tactical", ai_state = { talent_in=3, ai_move="move_astar", },
-	ai_tactic = resolvers.tactic"melee",
-
-	-- Drop the note when near death (but before death, so that Kill bill achievement is possible)
-	on_takehit = function(self, val)
-		if self.life - val < self.max_life * 0.4 then
-			local n = game.zone:makeEntityByName(game.level, "object", "PROX_NOTE")
-			if n then
-				self.on_takehit = nil
-				game.zone:addEntity(game.level, n, "object", self.x, self.y)
-				game.logSeen(self, "Prox staggers for a moment. A note seems to drop at his feet.")
-			end
-		end
-		return val
-	end,
-
-	on_die = function(self, who)
-		--force the note to drop if it hasn't dropped already (such as if he died via drowning)
-		if self.on_takehit then
-			local n = game.zone:makeEntityByName(game.level, "object", "PROX_NOTE")
-			if n then
-				self.on_takehit = nil
-				game.zone:addEntity(game.level, n, "object", self.x, self.y)
-			end
-		end
-		game.state:activateBackupGuardian("ALUIN", 2, 35, "... and we thought the trollmire was safer now!")
-		game.player:resolveSource():setQuestStatus("start-allied", engine.Quest.COMPLETED, "trollmire")
-	end,
-}
-
-newEntity{ define_as = "TROLL_SHAX",
-	allow_infinite_dungeon = true,
-	type = "giant", subtype = "troll", unique = true,
-	name = "Shax the Slimy",
-	display = "T", color=colors.VIOLET, image="npc/giant_troll_prox_the_mighty.png",
-	resolvers.nice_tile{image="invis.png", add_mos = {{image="npc/giant_troll_shax_the_slimy.png", display_h=2, display_y=-1}}},
-	desc = [[A huge troll, he seems to be adapted to aquatic life.]],
-	killer_message = "and eaten raw",
-	level_range = {7, nil}, exp_worth = 2,
-	max_life = 150, life_rating = 15, fixed_rating = true,
-	max_stamina = 85,
-	stats = { str=20, dex=10, cun=8, mag=25, con=20 },
-	rank = 4,
-	size_category = 4,
-	infravision = 10,
-	instakill_immune = 1,
-	tier1 = true,
-	move_others=true,
-
-	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1, TOOL=1 },
-	resolvers.equip{ {type="weapon", subtype="greatmaul", autoreq=true}, },
-	resolvers.equip{ {type="tool", subtype="misc", defined="LUCKY_FOOT", random_art_replace={chance=70}, autoreq=true}, },
-	resolvers.drops{chance=100, nb=1, {unique=true, not_properties={"lore"}} },
-	resolvers.drops{chance=100, nb=3, {tome_drops="boss"} },
-
-	resolvers.talents{
-		[Talents.T_WATER_BOLT]=3,
-	},
-	resolvers.inscriptions(1, {"movement infusion"}),
-	inc_damage = { all = -40 },
-
-	autolevel = "warrior",
-	ai = "tactical", ai_state = { talent_in=3, ai_move="move_astar", },
-	ai_tactic = resolvers.tactic"melee",
-
-	-- Drop the note when near death (but before death, so that Kill bill achievement is possible)
-	on_takehit = function(self, val)
-		if self.life - val < self.max_life * 0.4 then
-			local n = game.zone:makeEntityByName(game.level, "object", "PROX_NOTE")
-			if n then
-				self.on_takehit = nil
-				game.zone:addEntity(game.level, n, "object", self.x, self.y)
-				game.logSeen(self, "Shax staggers for a moment. A note seems to drop at his feet.")
-			end
-		end
-		return val
-	end,
-
-	on_die = function(self, who)
-		--force the note to drop if it hasn't dropped already (such as if he died via drowning)
-		if self.on_takehit then
-			local n = game.zone:makeEntityByName(game.level, "object", "PROX_NOTE")
-			if n then
-				self.on_takehit = nil
-				game.zone:addEntity(game.level, n, "object", self.x, self.y)
-			end
-		end
-		game.state:activateBackupGuardian("ALUIN", 2, 35, "... and we thought the trollmire was safer now!")
-		game.player:resolveSource():setQuestStatus("start-allied", engine.Quest.COMPLETED, "trollmire")
-		game.player:resolveSource():setQuestStatus("start-allied", engine.Quest.COMPLETED, "trollmire-flooded")
-	end,
-}
-
-newEntity{ define_as = "TROLL_BILL",
-	allow_infinite_dungeon = true,
-	type = "giant", subtype = "troll", unique = true,
-	name = "Bill the Stone Troll",
-	display = "T", color=colors.VIOLET, image="npc/troll_bill.png",
-	resolvers.nice_tile{image="invis.png", add_mos = {{image="npc/troll_bill.png", display_h=2, display_y=-1}}},
-	desc = [[Big, brawny, powerful and with a taste for Halfling.
-He is wielding a small tree trunk and lumbering toward you.
-This is the troll the notes spoke about, no doubt.]],
-	killer_message = "and clobbered into soup",
-	level_range = {7, nil}, exp_worth = 2,
-	max_life = 250, life_rating = 18, fixed_rating = true,
-	max_stamina = 85,
-	stats = { str=25, dex=10, cun=8, mag=10, con=20 },
-	rank = 4,
-	size_category = 4,
-	infravision = 10,
-	instakill_immune = 1,
-	move_others=true,
-
-	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1 },
-	resolvers.equip{ {type="weapon", subtype="greatmaul", defined="GREATMAUL_BILL_TRUNK", random_art_replace={chance=75}, autoreq=true}, },
-	resolvers.drops{chance=100, nb=3, {tome_drops="boss"} },
-	resolvers.drops{chance=100, nb=1, {defined="TRANSMO_CHEST"} },
-
-	resolvers.talents{
-		[Talents.T_RUSH]=4,
-		[Talents.T_KNOCKBACK]=3,
-	},
-	resolvers.inscriptions(1, {"wild infusion", "heroism infusion"}),
-
-	autolevel = "warrior",
-	ai = "tactical", ai_state = { talent_in=3, ai_move="move_astar", },
-	ai_tactic = resolvers.tactic"melee",
-
-	on_die = function(self, who)
-		game.player:resolveSource():setQuestStatus("trollmire-treasure", engine.Quest.COMPLETED)
-		if who and game:getPlayer(true).level == (game:getPlayer(true).start_level or 1) then
-			world:gainAchievement("KILL_BILL", game.player)
-		end
-	end,
-}
-
-newEntity{ define_as = "ALUIN",
-	allow_infinite_dungeon = true,
-	type = "humanoid", subtype = "human", unique = true,
-	name = "Aluin the Fallen",
-	display = "p", color=colors.VIOLET,
-	desc = [[His once-shining armour now dull and bloodstained, this Sun Paladin has given in to despair.]],
-	level_range = {35, nil}, exp_worth = 3,
-	max_life = 350, life_rating = 23, fixed_rating = true,
-	hate_regen = 100,
-	stats = { str=25, dex=10, cun=8, mag=10, con=20 },
-	rank = 4,
-	size_category = 3,
-	infravision = 10,
 	instakill_immune = 1,
 	blind_immune = 1,
-	see_invisible = 30,
-	move_others=true,
+	no_breath = 1,
 
-	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1 },
+	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1, HANDS=1, },
 	resolvers.equip{
-		{type="weapon", subtype="waraxe", force_drop=true, tome_drops="boss", autoreq=true},
-		{type="armor", subtype="shield", defined="SANGUINE_SHIELD", random_art_replace={chance=65}, autoreq=true},
-		{type="armor", subtype="massive", force_drop=true, tome_drops="boss", autoreq=true},
+		{type="armor", subtype="hands", defined="STORM_BRINGER_GAUNTLETS", random_art_replace={chance=75}, autoreq=true},
 	},
-	resolvers.drops{chance=100, nb=3, {tome_drops="boss"} },
+	resolvers.drops{chance=100, nb=5, {tome_drops="boss"} },
 
+	combat_mindpower = 20,
 	resolvers.talents{
-		[Talents.T_ARMOUR_TRAINING]=5,
-		[Talents.T_WEAPON_COMBAT]={base=3, every=10, max=5},
-		[Talents.T_WEAPONS_MASTERY]={base=3, every=10, max=5},
-		[Talents.T_RUSH]={base=4, every=7, max=6},
-
-		[Talents.T_BLINDSIDE]={base=4, every=7, max=6},
-		[Talents.T_GLOOM]={base=4, every=7, max=6},
-		[Talents.T_WEAKNESS]={base=4, every=7, max=6},
-		[Talents.T_DISMAY]={base=4, every=7, max=6},
-		[Talents.T_SANCTUARY]={base=4, every=7, max=6},
-
-		[Talents.T_CHANT_OF_LIGHT]={base=5, every=7, max=7},
-		[Talents.T_SEARING_LIGHT]={base=5, every=7, max=7},
-		[Talents.T_MARTYRDOM]={base=5, every=7, max=7},
-		[Talents.T_BARRIER]={base=5, every=7, max=7},
-		[Talents.T_WEAPON_OF_LIGHT]={base=5, every=7, max=7},
-		[Talents.T_CRUSADE]={base=8, every=7, max=10},
-		[Talents.T_FIREBEAM]={base=7, every=7, max=9},
-
-		[Talents.T_ARCANE_MIGHT] = 1,
-		[Talents.T_IRRESISTIBLE_SUN] = 1,
+		[Talents.T_ARMOUR_TRAINING]={base=3, every=9, max=4},
+		[Talents.T_UNARMED_MASTERY]={base=2, every=6, max=5},
+		[Talents.T_UPPERCUT]={base=2, every=6, max=5},
+		[Talents.T_DOUBLE_STRIKE]={base=2, every=6, max=5},
+		[Talents.T_SPINNING_BACKHAND]={base=1, every=6, max=5},
+		[Talents.T_FLURRY_OF_FISTS]={base=1, every=6, max=5},
+		[Talents.T_TENTACLE_GRAB]={base=1, every=6, max=5},
 	},
-	resolvers.sustains_at_birth(),
 
-	autolevel = "warriormage",
+	autolevel = "warrior",
 	ai = "tactical", ai_state = { talent_in=1, ai_move="move_astar", },
 	ai_tactic = resolvers.tactic"melee",
-	resolvers.inscriptions(4, {}),
+	resolvers.inscriptions(1, {"invisibility rune"}),
+
+	on_die = function(self, who)
+		game.state:activateBackupGuardian("NIMISIL", 2, 40, "Have you hard about the patrol that disappeared in the maze in the west?")
+		game.player:resolveSource():grantQuest("starter-zones")
+		game.player:resolveSource():setQuestStatus("starter-zones", engine.Quest.COMPLETED, "maze")
+		game.player:resolveSource():setQuestStatus("starter-zones", engine.Quest.COMPLETED, "maze-horror")
+	end,
+}
+
+-- The boss of the maze, no "rarity" field means it will not be randomly generated
+newEntity{ define_as = "MINOTAUR_MAZE",
+	allow_infinite_dungeon = true,
+	type = "giant", subtype = "minotaur", unique = true,
+	name = "Minotaur of the Labyrinth",
+	display = "H", color=colors.VIOLET,
+	resolvers.nice_tile{image="invis.png", add_mos = {{image="npc/giant_minotaur_minotaur_of_the_labyrinth.png", display_h=2, display_y=-1}}},
+	desc = [[A fearsome bull-headed monster, he swings a mighty axe as he curses all who defy him.]],
+	killer_message = "and hung on a wall-spike",
+	level_range = {5, nil}, exp_worth = 2,
+	max_life = 125, life_rating = 17, fixed_rating = true,
+	max_stamina = 200,
+	stats = { str=25, dex=10, cun=8, mag=20, wil=20, con=20 },
+	rank = 4,
+	size_category = 4,
+	infravision = 10,
+	move_others=true,
+	instakill_immune = 1,
+
+	body = { INVEN = 10, MAINHAND=1, OFFHAND=1, BODY=1, HEAD=1, },
+	resolvers.equip{
+		{type="weapon", subtype="battleaxe", force_drop=true, tome_drops="boss", autoreq=true},
+		{type="armor", subtype="head", defined="HELM_OF_GARKUL", random_art_replace={chance=75}, autoreq=true},
+	},
+	resolvers.drops{chance=100, nb=5, {tome_drops="boss"} },
+
+	resolvers.talents{
+		[Talents.T_ARMOUR_TRAINING]={base=1, every=9, max=4},
+		[Talents.T_STAMINA_POOL]={base=1, every=6, max=5},
+		[Talents.T_WARSHOUT]={base=1, every=6, max=5},
+		[Talents.T_STUNNING_BLOW]={base=1, every=6, max=5},
+		[Talents.T_SUNDER_ARMOUR]={base=1, every=6, max=5},
+		[Talents.T_SUNDER_ARMS]={base=1, every=6, max=5},
+		[Talents.T_CRUSH]={base=1, every=6, max=5},
+	},
+
+	autolevel = "warrior",
+	ai = "tactical", ai_state = { talent_in=1, ai_move="move_astar", },
+	ai_tactic = resolvers.tactic"melee",
+	resolvers.inscriptions(2, "infusion"),
+
+	on_die = function(self, who)
+		game.state:activateBackupGuardian("NIMISIL", 2, 40, "Have you hard about the patrol that disappeared in the maze in the west?")
+		game.player:resolveSource():grantQuest("starter-zones")
+		game.player:resolveSource():setQuestStatus("starter-zones", engine.Quest.COMPLETED, "maze")
+	end,
+}
+
+newEntity{ base = "BASE_NPC_SPIDER", define_as = "NIMISIL",
+	unique = true,
+	allow_infinite_dungeon = true,
+	name = "Nimisil", color=colors.VIOLET,
+	desc = [[Covered by eerie luminescent growths and protuberances, this spider now haunts the maze's silent passageways.]],
+	level_range = {5, nil}, exp_worth = 3,
+	max_life = 260, life_rating = 21, fixed_rating = true,
+	rank = 4,
+	negative_regen = 40,
+	positive_regen = 40,
+
+	move_others=true,
+	instakill_immune = 1,
+
+	resolvers.drops{chance=100, nb=5, {tome_drops="boss"} },
+	resolvers.drops{chance=100, nb=1, {defined="LUNAR_SHIELD", random_art_replace={chance=75}} },
+
+	combat_armor = 25, combat_def = 33,
+
+	combat = {dam=80, atk=30, apr=15, dammod={mag=1.1}, damtype=DamageType.ARCANE},
+
+	autolevel = "caster",
+	ai = "tactical", ai_state = { talent_in=1, ai_move="move_astar", },
+	resolvers.inscriptions(5, {}),
+	inc_damage = {all=40},
+
+	resolvers.talents{
+		[Talents.T_SPIDER_WEB]={base=5, every=5, max=7},
+		[Talents.T_LAY_WEB]={base=5, every=5, max=7},
+		[Talents.T_PHASE_DOOR]={base=5, every=5, max=7},
+
+		[Talents.T_HYMN_OF_MOONLIGHT]={base=5, every=5, max=7},
+		[Talents.T_MOONLIGHT_RAY]={base=5, every=5, max=7},
+		[Talents.T_SHADOW_BLAST]={base=5, every=5, max=7},
+
+		[Talents.T_SEARING_LIGHT]={base=5, every=5, max=7},
+	},
 }

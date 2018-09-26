@@ -520,6 +520,10 @@ gridCHN["Mozu prison"] = "魔族监狱"
 gridCHN["Grain transport channel"] = "粮运通道"
 gridCHN["Secret little black house"] = "秘密小黑屋"
 
+--sll 魔族监狱出口提示
+gridCHN["Back to the moonlight town"] = "回到月色镇"
+
+
 function getLineTooltipGridCHN(line)
     if line:find(" %(") then
         local f,e = line:find(" %(")

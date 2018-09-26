@@ -18,65 +18,42 @@
 -- darkgod@te4.org
 
 load("/data/general/grids/basic.lua")
-load("/data/general/grids/forest.lua")
-load("/data/general/grids/autumn_forest.lua")
-load("/data/general/grids/water.lua")
 
-local grass_editer = { method="borders_def", def="grass"}
-
-newEntity{ base = "FLOOR", define_as = "DIRT",
-	name="dirt road",
-	display='.', image="terrain/stone_road1.png",
-	special_minimap = colors.DARK_GREY,
+newEntity{
+	define_as = "QUICK_EXIT",
+	name = "teleporting circle to the surface", image = "terrain/maze_floor.png", add_displays = {class.new{image="terrain/maze_teleport.png"}},
+	display = '>', color_r=255, color_g=0, color_b=255,
+	notice = true, show_tooltip = true,
+	change_level = 1, change_zone = "wilderness",
 }
 
 newEntity{
-	define_as = "STEW",
-	type = "wall", subtype = "grass",
-	name = "troll stew", image = "terrain/grass.png", add_mos={{image="terrain/troll_stew.png"}},
-	display = '~', color=colors.LIGHT_RED, back_color=colors.RED,
-	does_block_move = true,
+	define_as = "BACK_MOONLIGHT_TOWN",
+	name = "Back to the moonlight town", 
+	image = "terrain/maze_floor.png", 
+	add_displays = {class.new{image="terrain/maze_teleport.png"}},
+	display = '>', 
+	color_r=255, color_g=0, color_b=255,
+	notice = true, 
+	show_tooltip = true,
+	change_level = 1, 
+	change_zone = "moonlight-town",
+}
+
+local cracks_editer = {method="borders_def", def="blackcracks"}
+
+newEntity{
+	define_as = "CRACKS",
+	type = "wall", subtype = "cracks",
+	name = "huge crack in the floor", image = "terrain/cracks/ground_9_01.png",
+	display = '.', color=colors.BLACK, back_color=colors.BLACK,
+	nice_editer = cracks_editer,
 	pass_projectile = true,
-	nice_editer = grass_editer,
+	block_move = function(self, x, y, who, act)
+		if not who or not act or not who.player then return true end
+		require("engine.ui.Dialog"):yesnoLongPopup("Crack in the floor", "This area appears to have been hit by a huge tremor, breaking the floor in a huge crack.\nYou think you can jump to the level below.", 400, function(ret) if ret then
+			game:changeLevel(game.level.level + 1)
+		end end, "Jump", "Stay")
+		return true
+	end,
 }
-
-local grass_editer = { method="borders_def", def="grass"}
-
-newEntity{
-	define_as = "BOGTREE",
-	type = "wall", subtype = "water",
-	name = "tree",
-	image = "terrain/tree.png",
-	display = '#', color=colors.LIGHT_GREEN, back_color=colors.DARK_BLUE,
-	always_remember = true,
-	can_pass = {pass_tree=1},
-	does_block_move = true,
-	block_sight = true,
-	dig = "BOGWATER",
-	nice_tiler = { method="replace", base={"BOGTREE", 100, 1, 20}},
-	shader = "water",
-}
-for i = 1, 20 do
-	newEntity(class:makeNewTrees({base="BOGTREE", define_as = "BOGTREE"..i, image = "terrain/water_grass_5_1.png"}, {
-		{"small_willow", {"shadow", "trunk", "foliage_bare"}},
-		{"small_willow_moss", {"shadow", "trunk", "foliage_bare"}},
-		{"willow", {tall=-1, "shadow", "trunk", "foliage_bare"}},
-		{"willow_moss", {tall=-1, "shadow", "trunk", "foliage_bare"}},
-		{"small_willow", {"shadow", "trunk", "foliage_spring"}},
-		{"small_willow_moss", {"shadow", "trunk", "foliage_spring"}},
-		{"willow", {tall=-1, "shadow", "trunk", "foliage_spring"}},
-		{"willow_moss", {tall=-1, "shadow", "trunk", "foliage_spring"}},
-	}, 1))
-end
-
-newEntity{ base="WATER_BASE",
-	define_as = "BOGWATER",
-	name = "bog water",
-	image="terrain/water_grass_5_1.png",
-}
-
-newEntity{ base="BOGWATER",
-	define_as = "BOGWATER_MISC",
-	nice_tiler = { method="replace", base={"BOGWATER_MISC", 100, 1, 7}},
-}
-for i = 1, 7 do newEntity{ base="BOGWATER_MISC", define_as = "BOGWATER_MISC"..i, add_displays={class.new{image="terrain/misc_bog"..i..".png"}}} end

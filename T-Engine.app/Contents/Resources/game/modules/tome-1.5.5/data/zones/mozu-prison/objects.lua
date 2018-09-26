@@ -22,17 +22,14 @@ load("/data/general/objects/objects-maj-eyal.lua")
 for i = 1, 2 do
 newEntity{ base = "BASE_LORE",
 	define_as = "NOTE"..i,
-	name = "tattered paper scrap", lore="trollmire-note-"..i,
-	desc = [[A paper scrap, left by an adventurer.]],
+	name = "torn diary page", lore="maze-note-"..i,
+	desc = [[A diary, left by an adventurer.]],
 	rarity = false,
-	encumberance = 0,
 }
 end
 
-newEntity{ base = "BASE_LORE",
-	define_as = "PROX_NOTE",
-	name = "tattered paper scrap", lore="trollmire-note-3",
-	desc = [[A paper scrap, left by an adventurer.]],
+newEntity{ base = "BASE_LORE", define_as = "NOTE_LEARN_TRAP",
+	name = "the perfect killing device", lore="maze-note-trap", unique=true, no_unique_lore=true,
+	desc = [[Some notes describing how to create poison gas traps, left by an unfortunate rogue.]],
 	rarity = false,
-	encumberance = 0,
 }
