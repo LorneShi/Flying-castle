@@ -377,8 +377,10 @@ function _M:resetPlaces()
 	local hup = h - th
 
 	self.places = {
-		player = {x=0, y=0, scale=1, a=1},
-		resources = {x=0, y=111, scale=1, a=1},
+		-- player = {x=0, y=0, scale=1, a=1},
+		player = {x=10, y=10, scale=1, a=1},--sll 修改角色图像显示位置
+		-- resources = {x=0, y=111, scale=1, a=1},
+		resources = {x=0, y=0, scale=1, a=1},--sll 修改生命条，魔法条显示位置
 		minimap = {x=w - 239, y=0, scale=1, a=1},
 		buffs = {x=w - 40, y=200, scale=1, a=1},
 		party = {x=pf_bg[6], y=0, scale=1, a=1},
@@ -2295,6 +2297,158 @@ end
 --sll 主界面底部工具栏--end
 --------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
+--sll 主界面人物头像--start
+--------------------------------------------------------------------------------
+function _M:displayPlayerFrame(scale, bx, by)
+	local player = game.player
+	if not game.player then return end
+
+	-- 显示背景
+	pf_bg[1]:toScreenFull(pf_bg_x, pf_bg_y, pf_bg[6], pf_bg[7], pf_bg[2], pf_bg[3])
+
+	-- 显示人物图像
+	player:toScreen(nil, 12 + pf_player_x, 15 + pf_player_y, 40, 40)
+
+	-- 显示升级按钮
+	if player.unused_stats > 0 or player.unused_talents > 0 or player.unused_generics > 0 or player.unused_talents_types > 0 then
+		local glow = (1+math.sin(core.game.getTime() / 500)) / 2 * 100 + 120
+		pf_levelup[1]:toScreenFull(pf_levelup_x, 40 + pf_levelup_y, pf_levelup[6], pf_levelup[7], pf_levelup[2], pf_levelup[3], 1, 1, 1, glow / 255)
+	end
+
+	-- 显示人物名字
+	if not self.res.pname or self.res.pname.vc ~= player.name then
+		self.res.pname = {
+			vc = player.name,
+			cur = {core.display.drawStringBlendedNewSurface(font_sha, player.name, 255, 255, 255):glTexture()},
+		}
+	end
+	local dt = self.res.pname.cur
+	dt[1]:toScreenFull(pf_name_x + 100, pf_name_y + 10, dt[6], dt[7], dt[2], dt[3], 0, 0, 0, 0.7)
+	dt[1]:toScreenFull(pf_name_x + 100, pf_name_y + 10, dt[6], dt[7], dt[2], dt[3])
+
+	-- 显示人物等级
+	if not self.res.plevel or self.res.plevel.vc ~= player.level then
+		self.res.plevel = {
+			vc = player.level,
+			cur = {core.display.drawStringBlendedNewSurface(font_sha, player.level, 255, 255, 255):glTexture()},
+		}
+	end
+	local dt = self.res.plevel.cur
+	dt[1]:toScreenFull(pf_level_x + 2 , pf_level_y + 2+45, dt[6], dt[7], dt[2], dt[3], 0, 0, 0, 0.7)
+	dt[1]:toScreenFull(pf_level_x + 2, pf_level_y + 45, dt[6], dt[7], dt[2], dt[3])
+
+	-- 各部件鼠标事件处理
+	if not game.mouse:updateZone("pframe", bx, by, pf_bg[6], pf_bg[7], nil, scale) then
+		game.mouse:unregisterZone("pframe")
+
+		local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+			if event == "out" then self.mhandle.player = nil return
+			else self.mhandle.player = true end
+
+			-- Levelup
+			-- 点击升级按钮，加属性点，加技能点
+			if bx >= 0 and bx <= pf_levelup[6] - 16 and by >= 33 and by <= 20 + pf_levelup[7] and (player.unused_stats > 0 or player.unused_talents > 0 or player.unused_generics > 0 or player.unused_talents_types > 0) then
+				game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "Click to assign stats and talents!")
+				if event == "button" and button == "left" then game.key:triggerVirtual("LEVELUP") end
+			-- 点击角色查看属性
+			elseif bx >= 2 and bx <= 58 and by >= 0 and by <= 52 then
+				game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, "Show character infos")
+				if event == "button" and button == "left" then game.key:triggerVirtual("SHOW_CHARACTER_SHEET") end
+			else
+				game.mouse:delegate(button, mx, my, xrel, yrel, nil, nil, event, "playmap", nil)
+			end
+		end
+		game.mouse:registerZone(bx, by, pf_bg[6], pf_bg[7], desc_fct, nil, "pframe", true, scale)
+	end
+
+	-- Compute how much space to reserve on the side
+	self:computePadding("player", bx, by, bx + pf_bg[6] * scale, by + pf_bg[7] * scale)
+end
+--------------------------------------------------------------------------------
+--sll 主界面人物头像--end
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--sll 生命条，魔法条--start
+--------------------------------------------------------------------------------
+function _M:displayValuebar(scale, bx, by, a)
+	local player = game.player
+	if player then
+		local x, y = 78, 38
+
+		-- 显示生命条
+		if life_sha.shad then life_sha:setUniform("a", a) life_sha.shad:use(true) end
+		local p = math.min(1, math.max(0, player.life / player.max_life))
+		shat[1]:toScreenPrecise(x, y, shat[6] * p, shat[7], 0, p * 1/shat[4], 0, 1/shat[5], life_c[1], life_c[2], life_c[3], a)
+		if life_sha.shad then life_sha.shad:use(false) end
+
+		-- 显示生命值
+		if not self.res.life or self.res.life.vc ~= player.life or self.res.life.vm ~= player.max_life or self.res.life.vr ~= life_regen then
+			local status_text = ("%s/%d"):format(math.round(player.life), math.round(player.max_life))
+
+			self.res.life = {
+				cur = {core.display.drawStringBlendedNewSurface(#status_text*1.1 <= 14 and sfont_sha, status_text, 255, 255, 255):glTexture()}, -- adjust font for space
+			}
+		end
+
+		local dt = self.res.life.cur
+		dt[1]:toScreenFull(x + (shat[6] - dt[6]) / 2, y + (shat[7]-dt[7])/2, dt[6], dt[7], dt[2], dt[3], 0, 0, 0, 0.7 * a)
+		dt[1]:toScreenFull(x + (shat[6] - dt[6]) / 2, y + (shat[7]-dt[7])/2, dt[6], dt[7], dt[2], dt[3], 1, 1, 1, a)
+
+		-- 显示魔法条
+		local vc, vn, vm, vr
+		for res, res_def in ipairs(ActorResource.resources_def) do
+			local rname = res_def.short_name
+			if rname == "mana" then
+				local rgfx = self.res_gfx[rname]
+				local rshad_args = rgfx.shader and rgfx.shader.args
+				local vc, vm = player[res_def.getFunction](player), player[res_def.getMaxFunction](player)
+				local p = 1
+				if vc and vm then
+					p = math.min(1, math.max(0, vc / vm))
+				end	
+
+				if rgfx.shader and rgfx.shader.shad then 
+					rgfx.shader:setUniform("a", a) 
+					rgfx.shader.shad:use(true) 
+				end
+
+				shat[1]:toScreenPrecise(x, y + 11, shat[6] * p, shat[7], 0, p * 1/shat[4], 0, 1/shat[5], rgfx.color[1], rgfx.color[2], rgfx.color[3], a)
+
+				if rgfx.shader and rgfx.shader.shad then 
+					rgfx.shader.shad:use(false) 
+				end
+
+				--显示魔法值
+				if not self.res[rname] 
+					or self.res[rname].vc ~= vc 
+					or self.res[rname].vn ~= vn 
+					or self.res[rname].vm ~= vm 
+					or self.res[rname].vr ~= vr then
+
+					local status_text = util.getval(res_def.status_text, player) or ("%d/%d"):format(vc, vm)
+					status_text = (status_text):format() -- fully resolve format codes (%%)
+					self.res[rname] = {
+						hidable = rname:capitalize(),
+						vc = vc, vn = vn, vm = vm, vr = vr,
+						-- use smaller font if needed for room
+						cur = {core.display.drawStringBlendedNewSurface(#status_text * 1.1 <=14 and sfont_sha, status_text, 255, 255, 255):glTexture()},
+					}
+				end
+				local dt = self.res[rname].cur
+				dt[1]:toScreenFull(x + (shat[6] - dt[6]) / 2, y + 11 + (shat[7] - dt[7]) / 2, dt[6], dt[7], dt[2], dt[3], 0, 0, 0, 0.7 * a)
+				dt[1]:toScreenFull(x + (shat[6] - dt[6]) / 2, y + 11 + (shat[7] - dt[7]) / 2, dt[6], dt[7], dt[2], dt[3], 1, 1, 1, a)	
+
+				break
+			end
+		end
+	end
+end
+--------------------------------------------------------------------------------
+--sll 生命条，魔法条--end
+--------------------------------------------------------------------------------
+
 function _M:display(nb_keyframes)
 	local d = core.display
 	self.now = core.game.getTime()
@@ -2329,19 +2483,21 @@ function _M:display(nb_keyframes)
 		d.glTranslate(-self.places.minimap.x, -self.places.minimap.y, -0)
 	end
 
-	-- Player
-	d.glTranslate(self.places.player.x, self.places.player.y, 0)
-	d.glScale(self.places.player.scale, self.places.player.scale, self.places.player.scale)
-	self:displayPlayer(self.places.player.scale, self.places.player.x, self.places.player.y)
-	d.glScale()
-	d.glTranslate(-self.places.player.x, -self.places.player.y, -0)
+	-- --sll 去掉原角色图像框
+	-- -- Player
+	-- d.glTranslate(self.places.player.x, self.places.player.y, 0)
+	-- d.glScale(self.places.player.scale, self.places.player.scale, self.places.player.scale)
+	-- self:displayPlayer(self.places.player.scale, self.places.player.x, self.places.player.y)
+	-- d.glScale()
+	-- d.glTranslate(-self.places.player.x, -self.places.player.y, -0)
 
-	-- Resources
-	d.glTranslate(self.places.resources.x, self.places.resources.y, 0)
-	d.glScale(self.places.resources.scale, self.places.resources.scale, self.places.resources.scale)
-	self:displayResources(self.places.resources.scale, self.places.resources.x, self.places.resources.y, 1)
-	d.glScale()
-	d.glTranslate(-self.places.resources.x, -self.places.resources.y, -0)
+	--sll 去掉原生命条，魔法条
+	-- -- Resources
+	-- d.glTranslate(self.places.resources.x, self.places.resources.y, 0)
+	-- d.glScale(self.places.resources.scale, self.places.resources.scale, self.places.resources.scale)
+	-- self:displayResources(self.places.resources.scale, self.places.resources.x, self.places.resources.y, 1)
+	-- d.glScale()
+	-- d.glTranslate(-self.places.resources.x, -self.places.resources.y, -0)
 
 	-- Buffs
 	d.glTranslate(self.places.buffs.x, self.places.buffs.y, 0)
@@ -2382,6 +2538,20 @@ function _M:display(nb_keyframes)
 	d.glTranslate(self.places.hotkeys.x, self.places.hotkeys.y, 0)
 	self:displayHotkeys(1, self.places.hotkeys.x, self.places.hotkeys.y)
 	d.glTranslate(-self.places.hotkeys.x, -self.places.hotkeys.y, -0)
+
+	-- 角色图像框
+	d.glTranslate(self.places.player.x, self.places.player.y, 0)
+	d.glScale(self.places.player.scale, self.places.player.scale, self.places.player.scale)
+	self:displayPlayerFrame(self.places.player.scale, self.places.player.x, self.places.player.y)
+	d.glScale()
+	d.glTranslate(-self.places.player.x, -self.places.player.y, -0)
+
+	--sll 生命条，魔法条
+	d.glTranslate(self.places.resources.x, self.places.resources.y, 0)
+	d.glScale(self.places.resources.scale, self.places.resources.scale, self.places.resources.scale)
+	self:displayValuebar(self.places.resources.scale, self.places.resources.x, self.places.resources.y, 1)
+	d.glScale()
+	d.glTranslate(-self.places.resources.x, -self.places.resources.y, -0)	
 
 	-- Display border indicators when possible
 	if self.ui_moving and self.sizes[self.ui_moving] then
