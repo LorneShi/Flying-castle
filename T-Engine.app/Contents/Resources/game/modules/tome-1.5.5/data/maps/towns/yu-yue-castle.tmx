@@ -1717,7 +1717,7 @@
   </tile>
   <tile id="157">
    <properties>
-    <property name="is" value="CASTLE_1_BUILDING_86"/>
+    <property name="id" value="CASTLE_1_BUILDING_86"/>
    </properties>
   </tile>
   <tile id="158">
@@ -2109,102 +2109,102 @@
   <image source="../../../../../../../../../地图编辑/资源/City_TileD.png" width="806" height="832"/>
   <tile id="96">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_113"/>
+    <property name="id" value="CASTLE_1_WALL_113"/>
    </properties>
   </tile>
   <tile id="97">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_114"/>
+    <property name="id" value="CASTLE_1_WALL_114"/>
    </properties>
   </tile>
   <tile id="98">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_115"/>
+    <property name="id" value="CASTLE_1_WALL_115"/>
    </properties>
   </tile>
   <tile id="99">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_116"/>
+    <property name="id" value="CASTLE_1_WALL_116"/>
    </properties>
   </tile>
   <tile id="108">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_119"/>
+    <property name="id" value="CASTLE_1_WALL_119"/>
    </properties>
   </tile>
   <tile id="109">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_120"/>
+    <property name="id" value="CASTLE_1_WALL_120"/>
    </properties>
   </tile>
   <tile id="110">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_121"/>
+    <property name="id" value="CASTLE_1_WALL_121"/>
    </properties>
   </tile>
   <tile id="111">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_122"/>
+    <property name="id" value="CASTLE_1_WALL_122"/>
    </properties>
   </tile>
   <tile id="120">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_125"/>
+    <property name="id" value="CASTLE_1_WALL_125"/>
    </properties>
   </tile>
   <tile id="123">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_128"/>
+    <property name="id" value="CASTLE_1_WALL_128"/>
    </properties>
   </tile>
   <tile id="124">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_129"/>
+    <property name="id" value="CASTLE_1_WALL_129"/>
    </properties>
   </tile>
   <tile id="125">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_130"/>
+    <property name="id" value="CASTLE_1_WALL_130"/>
    </properties>
   </tile>
   <tile id="132">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_131"/>
+    <property name="id" value="CASTLE_1_WALL_131"/>
    </properties>
   </tile>
   <tile id="133">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_132"/>
+    <property name="id" value="CASTLE_1_WALL_132"/>
    </properties>
   </tile>
   <tile id="134">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_133"/>
+    <property name="id" value="CASTLE_1_WALL_133"/>
    </properties>
   </tile>
   <tile id="135">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_134"/>
+    <property name="id" value="CASTLE_1_WALL_134"/>
    </properties>
   </tile>
   <tile id="144">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_137"/>
+    <property name="id" value="CASTLE_1_WALL_137"/>
    </properties>
   </tile>
   <tile id="145">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_138"/>
+    <property name="id" value="CASTLE_1_WALL_138"/>
    </properties>
   </tile>
   <tile id="146">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_139"/>
+    <property name="id" value="CASTLE_1_WALL_139"/>
    </properties>
   </tile>
   <tile id="147">
    <properties>
-    <property name="id" value="CASRLE_1_WALL_140"/>
+    <property name="id" value="CASTLE_1_WALL_140"/>
    </properties>
   </tile>
  </tileset>
@@ -2230,412 +2230,412 @@
   <image source="../../../../../../../../../地图编辑/资源/City_TileD副本.png" width="576" height="640"/>
   <tile id="0">
    <properties>
-    <property name="id" value="CASTLE_1_room_1"/>
+    <property name="id" value="CASTLE_1_ROOM_1"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="id" value="CASTLE_1_room_2"/>
+    <property name="id" value="CASTLE_1_ROOM_2"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="id" value="CASTLE_1_room_3"/>
+    <property name="id" value="CASTLE_1_ROOM_3"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="id" value="CASTLE_1_room_4"/>
+    <property name="id" value="CASTLE_1_ROOM_4"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="id" value="CASTLE_1_room_5"/>
+    <property name="id" value="CASTLE_1_ROOM_5"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
-    <property name="id" value="CASTLE_1_room_6"/>
+    <property name="id" value="CASTLE_1_ROOM_6"/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
-    <property name="id" value="CASTLE_1_room_7"/>
+    <property name="id" value="CASTLE_1_ROOM_7"/>
    </properties>
   </tile>
   <tile id="7">
    <properties>
-    <property name="id" value="CASTLE_1_room_8"/>
+    <property name="id" value="CASTLE_1_ROOM_8"/>
    </properties>
   </tile>
   <tile id="8">
    <properties>
-    <property name="id" value="CASTLE_1_room_9"/>
+    <property name="id" value="CASTLE_1_ROOM_9"/>
    </properties>
   </tile>
   <tile id="9">
    <properties>
-    <property name="id" value="CASTLE_1_room_10"/>
+    <property name="id" value="CASTLE_1_ROOM_10"/>
    </properties>
   </tile>
   <tile id="10">
    <properties>
-    <property name="id" value="CASTLE_1_room_11"/>
+    <property name="id" value="CASTLE_1_ROOM_11"/>
    </properties>
   </tile>
   <tile id="11">
    <properties>
-    <property name="id" value="CASTLE_1_room_12"/>
+    <property name="id" value="CASTLE_1_ROOM_12"/>
    </properties>
   </tile>
   <tile id="12">
    <properties>
-    <property name="id" value="CASTLE_1_room_13"/>
+    <property name="id" value="CASTLE_1_ROOM_13"/>
    </properties>
   </tile>
   <tile id="13">
    <properties>
-    <property name="id" value="CASTLE_1_room_14"/>
+    <property name="id" value="CASTLE_1_ROOM_14"/>
    </properties>
   </tile>
   <tile id="14">
    <properties>
-    <property name="id" value="CASTLE_1_room_15"/>
+    <property name="id" value="CASTLE_1_ROOM_15"/>
    </properties>
   </tile>
   <tile id="15">
    <properties>
-    <property name="id" value="CASTLE_1_room_16"/>
+    <property name="id" value="CASTLE_1_ROOM_16"/>
    </properties>
   </tile>
   <tile id="16">
    <properties>
-    <property name="id" value="CASTLE_1_room_17"/>
+    <property name="id" value="CASTLE_1_ROOM_17"/>
    </properties>
   </tile>
   <tile id="17">
    <properties>
-    <property name="id" value="CASTLE_1_room_18"/>
+    <property name="id" value="CASTLE_1_ROOM_18"/>
    </properties>
   </tile>
   <tile id="18">
    <properties>
-    <property name="id" value="CASTLE_1_room_19"/>
+    <property name="id" value="CASTLE_1_ROOM_19"/>
    </properties>
   </tile>
   <tile id="19">
    <properties>
-    <property name="id" value="CASTLE_1_room_20"/>
+    <property name="id" value="CASTLE_1_ROOM_20"/>
    </properties>
   </tile>
   <tile id="20">
    <properties>
-    <property name="id" value="CASTLE_1_room_21"/>
+    <property name="id" value="CASTLE_1_ROOM_21"/>
    </properties>
   </tile>
   <tile id="21">
    <properties>
-    <property name="id" value="CASTLE_1_room_22"/>
+    <property name="id" value="CASTLE_1_ROOM_22"/>
    </properties>
   </tile>
   <tile id="22">
    <properties>
-    <property name="id" value="CASTLE_1_room_23"/>
+    <property name="id" value="CASTLE_1_ROOM_23"/>
    </properties>
   </tile>
   <tile id="23">
    <properties>
-    <property name="id" value="CASTLE_1_room_24"/>
+    <property name="id" value="CASTLE_1_ROOM_24"/>
    </properties>
   </tile>
   <tile id="24">
    <properties>
-    <property name="id" value="CASTLE_1_room_25"/>
+    <property name="id" value="CASTLE_1_ROOM_25"/>
    </properties>
   </tile>
   <tile id="25">
    <properties>
-    <property name="id" value="CASTLE_1_room_26"/>
+    <property name="id" value="CASTLE_1_ROOM_26"/>
    </properties>
   </tile>
   <tile id="26">
    <properties>
-    <property name="id" value="CASTLE_1_room_27"/>
+    <property name="id" value="CASTLE_1_ROOM_27"/>
    </properties>
   </tile>
   <tile id="27">
    <properties>
-    <property name="id" value="CASTLE_1_room_28"/>
+    <property name="id" value="CASTLE_1_ROOM_28"/>
    </properties>
   </tile>
   <tile id="28">
    <properties>
-    <property name="id" value="CASTLE_1_room_29"/>
+    <property name="id" value="CASTLE_1_ROOM_29"/>
    </properties>
   </tile>
   <tile id="29">
    <properties>
-    <property name="id" value="CASTLE_1_room_30"/>
+    <property name="id" value="CASTLE_1_ROOM_30"/>
    </properties>
   </tile>
   <tile id="30">
    <properties>
-    <property name="id" value="CASTLE_1_room_31"/>
+    <property name="id" value="CASTLE_1_ROOM_31"/>
    </properties>
   </tile>
   <tile id="31">
    <properties>
-    <property name="id" value="CASTLE_1_room_32"/>
+    <property name="id" value="CASTLE_1_ROOM_32"/>
    </properties>
   </tile>
   <tile id="32">
    <properties>
-    <property name="id" value="CASTLE_1_room_33"/>
+    <property name="id" value="CASTLE_1_ROOM_33"/>
    </properties>
   </tile>
   <tile id="33">
    <properties>
-    <property name="id" value="CASTLE_1_room_34"/>
+    <property name="id" value="CASTLE_1_ROOM_34"/>
    </properties>
   </tile>
   <tile id="34">
    <properties>
-    <property name="id" value="CASTLE_1_room_35"/>
+    <property name="id" value="CASTLE_1_ROOM_35"/>
    </properties>
   </tile>
   <tile id="35">
    <properties>
-    <property name="id" value="CASTLE_1_room_36"/>
+    <property name="id" value="CASTLE_1_ROOM_36"/>
    </properties>
   </tile>
   <tile id="36">
    <properties>
-    <property name="id" value="CASTLE_1_room_37"/>
+    <property name="id" value="CASTLE_1_ROOM_37"/>
    </properties>
   </tile>
   <tile id="37">
    <properties>
-    <property name="id" value="CASTLE_1_room_38"/>
+    <property name="id" value="CASTLE_1_ROOM_38"/>
    </properties>
   </tile>
   <tile id="38">
    <properties>
-    <property name="id" value="CASTLE_1_room_39"/>
+    <property name="id" value="CASTLE_1_ROOM_39"/>
    </properties>
   </tile>
   <tile id="39">
    <properties>
-    <property name="id" value="CASTLE_1_room_40"/>
+    <property name="id" value="CASTLE_1_ROOM_40"/>
    </properties>
   </tile>
   <tile id="40">
    <properties>
-    <property name="id" value="CASTLE_1_room_41"/>
+    <property name="id" value="CASTLE_1_ROOM_41"/>
    </properties>
   </tile>
   <tile id="41">
    <properties>
-    <property name="id" value="CASTLE_1_room_42"/>
+    <property name="id" value="CASTLE_1_ROOM_42"/>
    </properties>
   </tile>
   <tile id="42">
    <properties>
-    <property name="id" value="CASTLE_1_room_43"/>
+    <property name="id" value="CASTLE_1_ROOM_43"/>
    </properties>
   </tile>
   <tile id="43">
    <properties>
-    <property name="id" value="CASTLE_1_room_44"/>
+    <property name="id" value="CASTLE_1_ROOM_44"/>
    </properties>
   </tile>
   <tile id="44">
    <properties>
-    <property name="id" value="CASTLE_1_room_45"/>
+    <property name="id" value="CASTLE_1_ROOM_45"/>
    </properties>
   </tile>
   <tile id="45">
    <properties>
-    <property name="id" value="CASTLE_1_room_46"/>
+    <property name="id" value="CASTLE_1_ROOM_46"/>
    </properties>
   </tile>
   <tile id="46">
    <properties>
-    <property name="id" value="CASTLE_1_room_47"/>
+    <property name="id" value="CASTLE_1_ROOM_47"/>
    </properties>
   </tile>
   <tile id="47">
    <properties>
-    <property name="id" value="CASTLE_1_room_48"/>
+    <property name="id" value="CASTLE_1_ROOM_48"/>
    </properties>
   </tile>
   <tile id="48">
    <properties>
-    <property name="id" value="CASTLE_1_room_49"/>
+    <property name="id" value="CASTLE_1_ROOM_49"/>
    </properties>
   </tile>
   <tile id="49">
    <properties>
-    <property name="id" value="CASTLE_1_room_50"/>
+    <property name="id" value="CASTLE_1_ROOM_50"/>
    </properties>
   </tile>
   <tile id="50">
    <properties>
-    <property name="id" value="CASTLE_1_room_51"/>
+    <property name="id" value="CASTLE_1_ROOM_51"/>
    </properties>
   </tile>
   <tile id="51">
    <properties>
-    <property name="id" value="2"/>
+    <property name="id" value="CASTLE_1_ROOM_52"/>
    </properties>
   </tile>
   <tile id="52">
    <properties>
-    <property name="id" value="CASTLE_1_room_53"/>
+    <property name="id" value="CASTLE_1_ROOM_53"/>
    </properties>
   </tile>
   <tile id="53">
    <properties>
-    <property name="id" value="CASTLE_1_room_54"/>
+    <property name="id" value="CASTLE_1_ROOM_54"/>
    </properties>
   </tile>
   <tile id="54">
    <properties>
-    <property name="id" value="CASTLE_1_room_55"/>
+    <property name="id" value="CASTLE_1_ROOM_55"/>
    </properties>
   </tile>
   <tile id="55">
    <properties>
-    <property name="id" value="CASTLE_1_room_56"/>
+    <property name="id" value="CASTLE_1_ROOM_56"/>
    </properties>
   </tile>
   <tile id="56">
    <properties>
-    <property name="id" value="CASTLE_1_room_57"/>
+    <property name="id" value="CASTLE_1_ROOM_57"/>
    </properties>
   </tile>
   <tile id="57">
    <properties>
-    <property name="id" value="CASTLE_1_room_58"/>
+    <property name="id" value="CASTLE_1_ROOM_58"/>
    </properties>
   </tile>
   <tile id="58">
    <properties>
-    <property name="id" value="CASTLE_1_room_59"/>
+    <property name="id" value="CASTLE_1_ROOM_59"/>
    </properties>
   </tile>
   <tile id="59">
    <properties>
-    <property name="id" value="CASTLE_1_room_60"/>
+    <property name="id" value="CASTLE_1_ROOM_60"/>
    </properties>
   </tile>
   <tile id="60">
    <properties>
-    <property name="id" value="CASTLE_1_room_61"/>
+    <property name="id" value="CASTLE_1_ROOM_61"/>
    </properties>
   </tile>
   <tile id="61">
    <properties>
-    <property name="id" value="CASTLE_1_room_62"/>
+    <property name="id" value="CASTLE_1_ROOM_62"/>
    </properties>
   </tile>
   <tile id="62">
    <properties>
-    <property name="id" value="CASTLE_1_room_63"/>
+    <property name="id" value="CASTLE_1_ROOM_63"/>
    </properties>
   </tile>
   <tile id="63">
    <properties>
-    <property name="id" value="CASTLE_1_room_64"/>
+    <property name="id" value="CASTLE_1_ROOM_64"/>
    </properties>
   </tile>
   <tile id="64">
    <properties>
-    <property name="id" value="CASTLE_1_room_65"/>
+    <property name="id" value="CASTLE_1_ROOM_65"/>
    </properties>
   </tile>
   <tile id="65">
    <properties>
-    <property name="id" value="CASTLE_1_room_66"/>
+    <property name="id" value="CASTLE_1_ROOM_66"/>
    </properties>
   </tile>
   <tile id="66">
    <properties>
-    <property name="id" value="CASTLE_1_room_67"/>
+    <property name="id" value="CASTLE_1_ROOM_67"/>
    </properties>
   </tile>
   <tile id="67">
    <properties>
-    <property name="id" value="CASTLE_1_room_68"/>
+    <property name="id" value="CASTLE_1_ROOM_68"/>
    </properties>
   </tile>
   <tile id="68">
    <properties>
-    <property name="id" value="CASTLE_1_room_69"/>
+    <property name="id" value="CASTLE_1_ROOM_69"/>
    </properties>
   </tile>
   <tile id="69">
    <properties>
-    <property name="id" value="CASTLE_1_room_70"/>
+    <property name="id" value="CASTLE_1_ROOM_70"/>
    </properties>
   </tile>
   <tile id="70">
    <properties>
-    <property name="id" value="CASTLE_1_room_71"/>
+    <property name="id" value="CASTLE_1_ROOM_71"/>
    </properties>
   </tile>
   <tile id="71">
    <properties>
-    <property name="id" value="CASTLE_1_room_72"/>
+    <property name="id" value="CASTLE_1_ROOM_72"/>
    </properties>
   </tile>
   <tile id="76">
    <properties>
-    <property name="id" value="CASTLE_1_room_77"/>
+    <property name="id" value="CASTLE_1_ROOM_77"/>
    </properties>
   </tile>
   <tile id="77">
    <properties>
-    <property name="id" value="CASTLE_1_room_78"/>
+    <property name="id" value="CASTLE_1_ROOM_78"/>
    </properties>
   </tile>
   <tile id="78">
    <properties>
-    <property name="id" value="CASTLE_1_room_79"/>
+    <property name="id" value="CASTLE_1_ROOM_79"/>
    </properties>
   </tile>
   <tile id="79">
    <properties>
-    <property name="id" value="CASTLE_1_room_80"/>
+    <property name="id" value="CASTLE_1_ROOM_80"/>
    </properties>
   </tile>
   <tile id="80">
    <properties>
-    <property name="id" value="CASTLE_1_room_81"/>
+    <property name="id" value="CASTLE_1_ROOM_81"/>
    </properties>
   </tile>
   <tile id="85">
    <properties>
-    <property name="id" value="CASTLE_1_room_86"/>
+    <property name="id" value="CASTLE_1_ROOM_86"/>
    </properties>
   </tile>
   <tile id="86">
    <properties>
-    <property name="id" value="CASTLE_1_room_87"/>
+    <property name="id" value="CASTLE_1_ROOM_87"/>
    </properties>
   </tile>
   <tile id="87">
    <properties>
-    <property name="id" value="CASTLE_1_room_88"/>
+    <property name="id" value="CASTLE_1_ROOM_88"/>
    </properties>
   </tile>
   <tile id="88">
    <properties>
-    <property name="id" value="CASTLE_1_room_89"/>
+    <property name="id" value="CASTLE_1_ROOM_89"/>
    </properties>
   </tile>
   <tile id="89">
    <properties>
-    <property name="id" value="CASTLE_1_room_90"/>
+    <property name="id" value="CASTLE_1_ROOM_90"/>
    </properties>
   </tile>
  </tileset>
