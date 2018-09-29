@@ -288,7 +288,7 @@ for i = 1, 117 do
 			add_displays = {
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=4},
 			},			
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 21 or i == 22 or i == 23 or i == 24 or i == 25 then
 		newEntity{ 
@@ -299,7 +299,7 @@ for i = 1, 117 do
 				class.new{image = "terrain/castle_wall/castle_1_wall__4.png", z=4},
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=5},
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 28 or i == 29 or i == 30 or i == 31 or i == 32 or i == 33 or i == 34 or i == 35 or i == 36 then
 		newEntity{ 
@@ -309,7 +309,7 @@ for i = 1, 117 do
 			add_displays = {
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=4},
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}
 	elseif i == 37 or i == 38 or i == 39 or i == 40 or i == 41 or i == 42 or i == 43 or i == 44 or i == 45 then
 		newEntity{ 
@@ -319,7 +319,7 @@ for i = 1, 117 do
 			add_displays = {
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=4},
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 46 or i == 55 or i == 64 or i == 73 or i == 82 or i == 54 or i == 63 or i == 72 
 		or i == 81 or i == 90 or i == 47 or i == 53 then
@@ -330,7 +330,7 @@ for i = 1, 117 do
 			add_displays = {
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=4},
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 91 or i == 99 then
 		newEntity{ 
@@ -340,7 +340,7 @@ for i = 1, 117 do
 			add_displays = {
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=4},
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}
 	elseif i == 100 or i == 108 then
 		newEntity{ 
@@ -351,7 +351,7 @@ for i = 1, 117 do
 				class.new{image = "terrain/castle_wall/castle_1_wall__39.png", z=4},
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=5}
 			},					
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 109 or i == 110 or i == 111 or i == 115 or i == 116 or i == 117 then
 		newEntity{ 
@@ -399,8 +399,83 @@ for i = 1, 117 do
 			define_as = "CASTLE_1_BUILDING_"..i,
 			image = "terrain/castle_door/castle_1_building__"..i..".png",
 			z = 3,
-			does_block_move = false,
+			does_block_move = true,
 		}
+	end
+end
+
+--装饰品
+for i = 1, 18 do
+	if i == 5 or i == 6 or i == 8 or i == 9 or i == 7 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image="terrain/grass_worldmap/grass_main_01.png",
+			add_displays = {
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=4}
+			},					
+			does_block_move = true,
+		}				
+	elseif i == 10 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_floor/castle_1_floor__2.png",
+			add_displays = {
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=4}
+			},					
+			does_block_move = true,
+		}	
+	elseif i == 1 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_floor/castle_1_floor__1.png",
+			add_displays = {
+				class.new{image = "terrain/castle_wall/castle_1_wall__132.png", z=4},
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=5}
+			},					
+			does_block_move = true,
+		}	
+	elseif i == 4 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_wall/castle_1_wall__138.png",
+			add_displays = {
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=4}
+			},					
+			does_block_move = true,
+		}	
+	elseif i == 15 or i == 14 or i == 16 or i == 18 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_room/castle_1_room_53.png",
+			add_displays = {
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=4}
+			},					
+			does_block_move = true,
+		}	
+	elseif i == 13 or i == 17 then
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_floor/castle_1_floor__2.png",
+			add_displays = {
+				class.new{image = "terrain/castle_room/castle_1_room_55.png", z=4},
+				class.new{image = "terrain/castle_misc/castle_1_misc_"..i..".png", z=5}
+			},					
+			does_block_move = true,
+		}											
+	else
+		newEntity{ 
+			base = "ROOM", 
+			define_as = "CASTLE_1_MISC_"..i,
+			image = "terrain/castle_misc/castle_1_misc_"..i..".png",
+			z = 3,
+			does_block_move = true,
+		}		
 	end
 end
 
