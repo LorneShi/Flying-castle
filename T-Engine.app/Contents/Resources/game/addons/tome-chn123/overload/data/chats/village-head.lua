@@ -17,7 +17,7 @@
 -- Nicolas Casalini "DarkGod"
 -- darkgod@te4.org
 
--- 村长的对话-中文
+--sll 村长的对话-中文
 
 newChat{ id="welcome",
 	text = [[格雷你终于来了！村里消失了好几个人，并且最近后山森林中有好多怪物，这和村民的消失已定脱不了关系！]],

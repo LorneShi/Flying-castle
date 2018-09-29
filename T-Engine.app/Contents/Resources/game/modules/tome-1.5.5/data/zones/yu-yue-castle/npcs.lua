@@ -36,7 +36,13 @@ newEntity{ define_as = "YUYUE_CASTLE_MESSENGER",
 	desc = [[Messenger]],
 	level_range = {30, nil}, 
 	exp_worth = 2,
-
-	-- can_talk = "village-head",
+	never_move = 1,
+	can_talk = "yuyue-castle-messenger",
+	seen_by = function(self, who)
+		if not game.party:hasMember(who) then return end
+		self.seen_by = nil
+		self:doEmote("Help! Help! Help!!!", 120, colors.RED)
+	end,	
 }
+
 
