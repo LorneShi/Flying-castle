@@ -62,5 +62,22 @@ return {
 		-- Update the stairs
 		local spot = game.level:pickSpot{type="portal", subtype="back"}
 		if spot then game.level.map(spot.x, spot.y, engine.Map.TERRAIN).change_zone = game.player.last_wilderness end
+
+		local npc
+		for uid, e in pairs(game.level.entities) do
+			if e.define_as and e.define_as == "YUYUE_CASTLE_MESSENGER" then npc = e break end
+		end
+		if not npc then return end
+		local x, y = util.findFreeGrid(npc.x, npc.y, 10, true, {[engine.Map.ACTOR]=true})
+		if not x or not y then return end
+
+		game.player:move(x, y, true)
+
+		-- local Chat = require"engine.Chat"
+		-- local chat = Chat.new("tarelion-start-archmage", npc, who)
+		-- chat:invoke()		
+
+		-- if old_lev.name == 
+		-- game.player:grantQuest("the-beast-within-forest")
 	end,
 }
