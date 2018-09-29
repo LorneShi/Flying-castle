@@ -120,7 +120,7 @@ for i = 1, 142 do
 			define_as = "CASTLE_1_WALL_"..i,
 			image="terrain/grass_worldmap/grass_main_01.png",
 			add_displays = {class.new{image="terrain/castle_wall/castle_1_wall__"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}		
 	elseif i == 89 or i == 86 or i == 38 or i == 39 or i == 40 or i == 79 or i == 82 or i == 113 
 		or i == 119 or i == 129 or i == 131 or i == 132 or i == 133 or i == 134 or i == 130 or i == 122 
@@ -130,14 +130,14 @@ for i = 1, 142 do
 			define_as = "CASTLE_1_WALL_"..i,
 			image="terrain/castle_floor/castle_1_floor__2.png",
 			add_displays = {class.new{image="terrain/castle_wall/castle_1_wall__"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}			
 	else
 		newEntity{ 
 			base = "ROOM", 
 			define_as = "CASTLE_1_WALL_"..i,
 			image="terrain/castle_wall/castle_1_wall__"..i..".png",
-			does_block_move = false,
+			does_block_move = true,
 		}		
 	end
 end
@@ -159,7 +159,7 @@ for i = 1, 224 do
 			define_as = "CASTLE_1_CASTLE_"..i,
 			image="terrain/castle_floor/castle_1_floor__2.png",
 			add_displays = {class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}			
 	elseif i == 44 or i == 43 or i == 46 or i == 47 or i == 51 or i == 53 or i == 54 or i == 55 
 		or i == 56 then
@@ -171,7 +171,7 @@ for i = 1, 224 do
 				class.new{image="terrain/castle_wall/castle_1_wall__39.png", z=4},
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=5}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 30 or i == 2 or i == 1 or i == 33 or i == 34 or i == 36 or i == 37 or i == 39 or i == 40 then
 		newEntity{ 
@@ -181,7 +181,7 @@ for i = 1, 224 do
 			add_displays = {
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=4}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 16 or i == 17 or i == 18 or i == 19 or i == 20 or i == 21 or i == 22 or i == 23 or i == 24
 		or i == 25 or i == 26 or i == 32 then
@@ -192,7 +192,7 @@ for i = 1, 224 do
 			add_displays = {
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=4}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}
 	elseif i == 3 or i == 4 or i == 5 or i == 6 or i == 7 or i == 8 or i == 9 or i == 10 then
 		newEntity{ 
@@ -202,7 +202,7 @@ for i = 1, 224 do
 			add_displays = {
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=4}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 113 or i == 125 or i == 126 then
 		newEntity{ 
@@ -212,7 +212,7 @@ for i = 1, 224 do
 			add_displays = {
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=4}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 127 or i == 139 or i == 140 then
 		newEntity{ 
@@ -223,7 +223,7 @@ for i = 1, 224 do
 				class.new{image="terrain/castle_wall/castle_1_wall__120.png", z=4},
 				class.new{image="terrain/castle_castle/castle_1_castle__"..i..".png", z=5}
 			},
-			does_block_move = false,
+			does_block_move = true,
 		}												
 	else
 		newEntity{ 
@@ -231,7 +231,7 @@ for i = 1, 224 do
 			define_as = "CASTLE_1_CASTLE_"..i,
 			image = "terrain/castle_castle/castle_1_castle__"..i..".png",
 			z = 3,
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	end	
 end
@@ -244,7 +244,7 @@ for i = 1, 90 do
 			define_as = "CASTLE_1_ROOM_"..i,
 			image = "terrain/castle_castle/castle_1_castle__97.png",
 			add_displays = {class.new{image="terrain/castle_room/castle_1_room_"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}
 	elseif i == 5 or i == 14 or i == 23 or i == 32 or i == 41 or i == 50 or i == 59 or i == 68 
 		or i == 77 or i == 86 or i == 6 or i == 8 or i == 54 or i == 63 or i == 72 or i == 81
@@ -257,7 +257,7 @@ for i = 1, 90 do
 			define_as = "CASTLE_1_ROOM_"..i,
 			image = "terrain/castle_floor/castle_1_floor__2.png",
 			add_displays = {class.new{image="terrain/castle_room/castle_1_room_"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}	
 	elseif i == 87 or i == 88 or i == 89 then
 		newEntity{ 
@@ -265,7 +265,7 @@ for i = 1, 90 do
 			define_as = "CASTLE_1_ROOM_"..i,
 			image = "terrain/castle_floor/castle_1_floor__1.png",
 			add_displays = {class.new{image="terrain/castle_room/castle_1_room_"..i..".png", z=4}},
-			does_block_move = false,
+			does_block_move = true,
 		}																
 	else
 		newEntity{ 
@@ -273,7 +273,7 @@ for i = 1, 90 do
 			define_as = "CASTLE_1_ROOM_"..i,
 			image = "terrain/castle_room/castle_1_room_"..i..".png",
 			z = 3,
-			does_block_move = false,
+			does_block_move = true,
 		}		
 	end
 end
