@@ -28,8 +28,8 @@ newEntity{
 }
 
 newEntity{
-	define_as = "BACK_MOONLIGHT_TOWN",
-	name = "Back to the moonlight town", 
+	define_as = "BACK_YUYUE_CASTLE",
+	name = "Back to the yuyue castle", 
 	image = "terrain/maze_floor.png", 
 	add_displays = {class.new{image="terrain/maze_teleport.png"}},
 	display = '>', 
@@ -37,7 +37,7 @@ newEntity{
 	notice = true, 
 	show_tooltip = true,
 	change_level = 1, 
-	change_zone = "moonlight-town",
+	change_zone = "yu-yue-castle",
 }
 
 local cracks_editer = {method="borders_def", def="blackcracks"}

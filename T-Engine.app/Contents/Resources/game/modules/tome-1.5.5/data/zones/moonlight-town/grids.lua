@@ -74,29 +74,29 @@ newEntity{
 	does_block_move = true,
 }
 
-for i = 1, 144 do
-	newEntity{ base = "ROOM", define_as = "BUILDS_GROUP_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/builds/builds_group_1_"..i..".png", z=4}}}
+for i = 1, 112 do
+	newEntity{ base = "ROOM", define_as = "BUILDS_GROUP_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/village/builds/builds_group_1_"..i..".png", z=4}}}
 end
 
-for i = 1, 80 do
-	newEntity{ base = "ROOM", define_as = "GRASS_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/grass_new/grass_1_"..i..".png", z=4}}}
+-- for i = 1, 80 do
+-- 	newEntity{ base = "ROOM", define_as = "GRASS_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/grass_new/grass_1_"..i..".png", z=4}}}
+-- end
+
+for i = 1, 50 do
+	newEntity{ base = "ROOM", define_as = "ORNAMENTS_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/village/ornaments/ornaments_1_"..i..".png", z=4}}}
 end
 
-for i = 1, 256 do
-	newEntity{ base = "ROOM", define_as = "ORNAMENTS_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/ornaments/ornaments_1_"..i..".png", z=4}}}
-end
-
-for i = 1, 5 do
-	if i == 3 then
+for i = 1, 12 do
+	if i == 5 then
 		newEntity{
 			base = "ROOM", 
 			define_as = "BOX_1_"..i, 
 			image="terrain/grass.png", 
-			add_displays = {class.new{image="terrain/box/box_1_"..i..".png", z=4}},
+			add_displays = {class.new{image="terrain/village/misc/box_1_"..i..".png", z=4}},
 			does_block_move = false,
 		}
 	else
-		newEntity{ base = "ROOM", define_as = "BOX_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/box/box_1_"..i..".png", z=4}}}
+		newEntity{ base = "ROOM", define_as = "BOX_1_"..i, image="terrain/grass.png", add_displays = {class.new{image="terrain/village/misc/box_1_"..i..".png", z=4}}}
 	end
 end
 

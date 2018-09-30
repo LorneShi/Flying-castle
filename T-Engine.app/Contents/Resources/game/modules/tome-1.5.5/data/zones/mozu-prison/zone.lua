@@ -25,8 +25,6 @@ return {
 	decay = {50, 100},
 	actor_adjust_level = function(zone, level, e) return zone.base_level + e:getRankLevelAdjust() + level.level-1 + rng.range(-1,2) end,
 	width = 20, height = 20,
---	all_remembered = true,
---	all_lited = true,
 	persistent = "zone",
 	ambient_music = {"The Ancients.ogg","weather/dungeon_base.ogg"},
 	min_material_level = function() return game.state:isAdvanced() and 2 or 1 end,
@@ -34,7 +32,6 @@ return {
 	generator =  {
 		map = {
 			class = "engine.generator.map.Maze",
-			up = "UP",
 			down = "DOWN",
 			wall = "OLD_WALL",
 			floor = "OLD_FLOOR",
@@ -57,17 +54,13 @@ return {
 	},
 	levels =
 	{
-		[1] = {
-			generator = { map = {
-				up = "UP_WILDERNESS",
-			}, },
-		},
 		[2] = {
 			width = 10, height = 10,
 			generator = { 
 				map = {
+					up = "UP",
 					force_last_stair = true,
-					down = "BACK_MOONLIGHT_TOWN",
+					down = "BACK_YUYUE_CASTLE",
 				}, 
 				actor = {
 					nb_npc = {4, 8},
