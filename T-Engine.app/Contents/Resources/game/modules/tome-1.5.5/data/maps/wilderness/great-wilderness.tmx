@@ -179,14 +179,14 @@
 </data>
  </layer>
  <objectgroup name="addSpot#pops">
-  <object id="1" name="Start: Allied" x="190.03" y="1469.82" width="64" height="64">
+  <object id="1" name="YuYue Castle" x="836.03" y="2433.82" width="64" height="64">
    <properties>
-    <property name="subtype" value="allied"/>
+    <property name="subtype" value="yu-yue-castle"/>
     <property name="type" value="playerpop"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="addZone#zonenames">
+ <objectgroup name="addZone#zonenames" visible="0">
   <object id="2" name="Holy Light City" x="0" y="0" width="3200" height="3200">
    <properties>
     <property name="subtype" value="Holy Light City"/>

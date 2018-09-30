@@ -217,7 +217,7 @@ newBirthDescriptor{
 			{type="weapon", subtype="staff", name="elm staff", autoreq=true, ego_chance=-1000},
 			{type="armor", subtype="cloth", name="linen robe", autoreq=true, ego_chance=-1000},
 		},
-		-- default_wilderness = {"playerpop", "allied"},
+		default_wilderness = {"playerpop", "yu-yue-castle"},
 		starting_zone = "mozu-prison",	
 		starting_intro = "Archmage",	
 	},
