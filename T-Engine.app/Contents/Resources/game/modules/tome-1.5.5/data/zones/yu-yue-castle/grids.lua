@@ -230,6 +230,14 @@ for i = 1, 117 do
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=12},
 			},					
 			does_block_move = false,
+			on_move = function(self, x, y, who)
+				if who == game.player then
+					local spot = game.level:pickSpot{type="door", subtype="exit"}
+					if spot then 
+						who:move(spot.x, spot.y, true)	
+					end
+				end
+			end,			
 		}	
 	elseif i == 28 or i == 29 or i == 30 or i == 31 or i == 32 or i == 33 
 		or i == 34 or i == 35 or i == 36 then
@@ -295,8 +303,7 @@ for i = 1, 117 do
 			},					
 			does_block_move = false,
 		}	
-	elseif i == 94 or i == 95 or i == 96 or i == 103 or i == 104 or i == 105 or i == 112 or i == 113 
-		or i == 114 then
+	elseif i == 94 or i == 95 or i == 96 or i == 103 or i == 104 or i == 105 then
 		newEntity{ 
 			base = "CASTLE_FLOOR", 
 			define_as = "CASTLE_1_BUILDING_"..i,
@@ -305,7 +312,45 @@ for i = 1, 117 do
 				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=3}
 			},					
 			does_block_move = false,
-		}																								
+			on_move = function(self, x, y, who)
+				if who == game.player then
+					local spot = game.level:pickSpot{type="door", subtype="entrance"}
+					if spot then 
+						who:move(spot.x, spot.y, true)	
+					end
+				end
+			end,			
+		}	
+	elseif i == 112 then
+		newEntity{ 
+			base = "CASTLE_FLOOR", 
+			define_as = "CASTLE_1_BUILDING_"..i,
+			image = "terrain/castle_floor/castle_1_floor__3.png",
+			add_displays = {
+				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=3}
+			},					
+			does_block_move = false,		
+		}	
+	elseif i == 113 then
+		newEntity{ 
+			base = "CASTLE_FLOOR", 
+			define_as = "CASTLE_1_BUILDING_"..i,
+			image = "terrain/castle_floor/castle_1_floor__4.png",
+			add_displays = {
+				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=3}
+			},					
+			does_block_move = false,		
+		}	
+	elseif i == 114 then
+		newEntity{ 
+			base = "CASTLE_FLOOR", 
+			define_as = "CASTLE_1_BUILDING_"..i,
+			image = "terrain/castle_floor/castle_1_floor__5.png",
+			add_displays = {
+				class.new{image = "terrain/castle_door/castle_1_building__"..i..".png", z=3}
+			},					
+			does_block_move = false,		
+		}																														
 	else
 		newEntity{ 
 			base = "CASTLE_FLOOR", 
