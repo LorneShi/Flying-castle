@@ -519,6 +519,7 @@ gridCHN["Moonlight town"] = "月色镇"
 gridCHN["Mozu prison"] = "魔族监狱"
 gridCHN["Grain transport channel"] = "粮运通道"
 gridCHN["Secret little black house"] = "秘密小黑屋"
+gridCHN["Foggy forest"] = "迷雾森林"
 
 --sll 魔族监狱出口提示
 gridCHN["Back to the moonlight town"] = "回到月色镇"

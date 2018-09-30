@@ -159,6 +159,7 @@ zoneName["Moonlight town"] = "月色镇"
 zoneName["Mozu prison"] = "魔族监狱"
 zoneName["Grain transport channel"] = "粮运通道"
 zoneName["Secret little black house"] = "秘密小黑屋"
+zoneName["Foggy forest"] = "迷雾森林"
 --------------------------------------------------------------------------------
 --sll 移动城堡各区域名--end
 --------------------------------------------------------------------------------
