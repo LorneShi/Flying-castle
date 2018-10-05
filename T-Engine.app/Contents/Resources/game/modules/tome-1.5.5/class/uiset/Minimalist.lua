@@ -305,7 +305,9 @@ function _M:init()
 		player = {x=296, y=73, name="Player Infos"},
 		resources = {x=fshat[6] / 2 - move_handle[6], y=0, name="Resources"},
 		minimap = {x=208, y=176, name="Minimap"},
-		buffs = {x=40 - move_handle[6], y=0, name="Current Effects"},
+		-- buffs = {x=40 - move_handle[6], y=0, name="Current Effects"},--sll 修改buff移动按钮位置
+		buffs = {x=40 - move_handle[6], y=0, name="Beneficial Effects"},
+		dbuffs = {x=40 - move_handle[6], y=0, name="Detrimental Effects"},		
 		party = {x=portrait[6] - move_handle[6], y=0, name="Party Members"},
 		gamelog = {x=function(self) return self.logdisplay.w - move_handle[6] end, y=function(self) return self.logdisplay.h - move_handle[6] end, name="Game Log"},
 		chatlog = {x=function(self) return profile.chat.w - move_handle[6] end, y=function(self) return profile.chat.h - move_handle[6] end, name="Online Chat Log"},
@@ -334,7 +336,8 @@ function _M:init()
 
 	self.tbbuttons = {inven=0.6, talents=0.6, mainmenu=0.6, lore=0.6, quest=0.6}
 
-	self.buffs_base = UI:makeFrame("ui/icon-frame/frame", 40, 40)
+	-- self.buffs_base = UI:makeFrame("ui/icon-frame/frame", 40, 40)--sll 修改buff框大小
+	self.buffs_base = UI:makeFrame("ui/icon-frame/frame", 32, 32)
 	self:initialize_resources()
 
 	--sll 设置字体，用于显示常用技能快捷键文字
@@ -382,7 +385,9 @@ function _M:resetPlaces()
 		-- resources = {x=0, y=111, scale=1, a=1},
 		resources = {x=0, y=0, scale=1, a=1},--sll 修改生命条，魔法条显示位置
 		minimap = {x=w - 239, y=0, scale=1, a=1},
-		buffs = {x=w - 40, y=200, scale=1, a=1},
+		-- buffs = {x=w - 40, y=200, scale=1, a=1},
+		buffs = {x=(w - 800) / 2 + 114, y=h - th - 55, scale=1, a=1},--sll 修改buffs显示位置
+		dbuffs = {x=(w - 800) / 2 + 600, y=h - th - 55, scale=1, a=1},--sll dbuff位置		
 		party = {x=pf_bg[6], y=0, scale=1, a=1},
 		gamelog = {x=0, y=hup - 210, w=math.floor(w/2), h=200, scale=1, a=1},
 		chatlog = {x=math.floor(w/2), y=hup - 210, w=math.floor(w/2), h=200, scale=1, a=1},
@@ -1170,12 +1175,12 @@ function _M:handleEffect(player, eff_id, e, p, x, y, hs, bx, by, is_first, scale
 		if e.decrease > 0 then
 			local font = e.charges and self.buff_font_small or self.buff_font
 			dur = tostring(dur)
-			txt = font:draw(dur, 40, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
+			txt = font:draw(dur, 32, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
 			txt.fw, txt.fh = font:size(dur)
 		end
 		if e.charges then
 			local font = e.decrease > 0 and self.buff_font_small or self.buff_font
-			txt2 = font:draw(charges, 40, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
+			txt2 = font:draw(charges, 32, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
 			txt2.fw, txt2.fh = font:size(charges)
 			dur = dur..":"..charges
 		end
@@ -1212,10 +1217,10 @@ function _M:handleEffect(player, eff_id, e, p, x, y, hs, bx, by, is_first, scale
 		end
 
 		self.tbuff[eff_id..":"..dur..":"..charges] = {eff_id, "tbuff"..eff_id, function(x, y)
-			core.display.drawQuad(x+4, y+4, 32, 32, 0, 0, 0, 255)
-			e.display_entity:toScreen(self.hotkeys_display_icons.tiles, x+4, y+4, 32, 32)
+			core.display.drawQuad(x+4, y+4, 24, 24, 0, 0, 0, 255)
+			e.display_entity:toScreen(self.hotkeys_display_icons.tiles, x+4, y+4, 24, 24)
 			if e.get_fractional_percent then
-				core.display.drawQuadPart(x +4 , y + 4, 32, 32, e.get_fractional_percent(self, p), 128, 128, 128, 200)
+				core.display.drawQuadPart(x +4 , y + 4, 24, 24, e.get_fractional_percent(self, p), 128, 128, 128, 200)
 			end
 			UI:drawFrame(self.buffs_base, x, y, icon[1], icon[2], icon[3], 1)
 
@@ -1225,42 +1230,42 @@ function _M:handleEffect(player, eff_id, e, p, x, y, hs, bx, by, is_first, scale
 					shader:uniOutlineSize(1, 1)
 					shader:uniTextSize(txt._tex_w, txt._tex_h)
 				else
-					txt._tex:toScreenFull(x+4+2 + (32 - txt.fw)/2, y+4+2 + (32 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
+					txt._tex:toScreenFull(x+4+2 + (24 - txt.fw)/2, y+4+2 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
 				end
-				txt._tex:toScreenFull(x+4 + (32 - txt.fw)/2, y+4 + (32 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h)
+				txt._tex:toScreenFull(x+4 + (24 - txt.fw)/2, y+4 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h)
 			elseif not txt and txt2 then
 				if shader then
 					shader:use(true)
 					shader:uniOutlineSize(1, 1)
 					shader:uniTextSize(txt2._tex_w, txt2._tex_h)
 				else
-					txt2._tex:toScreenFull(x+4+2, y+4+2 + (32 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 0, 0, 0.7)
+					txt2._tex:toScreenFull(x+4+2, y+4+2 + (24 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 0, 0, 0.7)
 				end
-				txt2._tex:toScreenFull(x+4, y+4 + (32 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 1, 0, 1)
+				txt2._tex:toScreenFull(x+4, y+4 + (24 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 1, 0, 1)
 			elseif txt and txt2 then
 				if shader then
 					shader:use(true)
 					shader:uniOutlineSize(1, 1)
 					shader:uniTextSize(txt._tex_w, txt._tex_h)
 				else
-					txt._tex:toScreenFull(x+4+2 + (32 - txt.fw), y+4+2 + (32 - txt.fh)/2-5, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
+					txt._tex:toScreenFull(x+4+2 + (24 - txt.fw), y+4+2 + (24 - txt.fh)/2-5, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
 				end
-				txt._tex:toScreenFull(x+4 + (32 - txt.fw), y+4 + (32 - txt.fh)/2-5, txt.w, txt.h, txt._tex_w, txt._tex_h)
+				txt._tex:toScreenFull(x+4 + (24 - txt.fw), y+4 + (24 - txt.fh)/2-5, txt.w, txt.h, txt._tex_w, txt._tex_h)
 
 				if shader then
 					shader:uniOutlineSize(1, 1)
 					shader:uniTextSize(txt2._tex_w, txt2._tex_h)
 				else
-					txt2._tex:toScreenFull(x+4+2, y+4+2 + (32 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 0, 0, 0.7)
+					txt2._tex:toScreenFull(x+4+2, y+4+2 + (24 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 0, 0, 0.7)
 				end
-				txt2._tex:toScreenFull(x+4, y+4 + (32 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 1, 0, 1)
+				txt2._tex:toScreenFull(x+4, y+4 + (24 - txt2.fh)/2+5, txt2.w, txt2.h, txt2._tex_w, txt2._tex_h, 0, 1, 0, 1)
 			end
 
 			if shader and (txt or txt2) then shader:use(false) end
 
 			if flash > 0 then
-				if e.status ~= "detrimental" then core.display.drawQuad(x+4, y+4, 32, 32, 0, 255, 0, 170 - flash * 30)
-				else core.display.drawQuad(x+4, y+4, 32, 32, 255, 0, 0, 170 - flash * 30)
+				if e.status ~= "detrimental" then core.display.drawQuad(x+4, y+4, 24, 24, 0, 255, 0, 170 - flash * 30)
+				else core.display.drawQuad(x+4, y+4, 24, 24, 255, 0, 0, 170 - flash * 30)
 				end
 				flash = flash - 1
 			end
@@ -2449,6 +2454,222 @@ end
 --sll 生命条，魔法条--end
 --------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------
+--sll buffs显示
+--------------------------------------------------------------------------------
+--buffs
+function _M:displayBuffs(scale, bx, by)
+	local player = game.player
+	local shader = Shader.default.textoutline and Shader.default.textoutline.shad
+
+	if player then
+		if player.changed then
+			for _, d in pairs(self.pbuff) do if not player.sustain_talents[d[1]] then game.mouse:unregisterZone(d[2]) end end
+			for _, d in pairs(self.tbuff) do if not player.tmp[d[1]] then game.mouse:unregisterZone(d[2]) end end
+			self.tbuff = {} self.pbuff = {}
+		end
+
+		local orient = "down"
+		local hs = 32
+		local x, y = 0, 0
+		local is_first = true
+
+		for tid, act in pairs(player.sustain_talents) do
+			if act then
+				if not self.pbuff[tid] or act.__update_display then
+					local t = player:getTalentFromId(tid)
+					if act.__update_display then game.mouse:unregisterZone("pbuff"..tid) end
+					act.__update_display = false
+					local displayName = t.name
+					if t.getDisplayName then displayName = t.getDisplayName(player, t, player:isTalentActive(tid)) end
+
+					local overlay = nil
+					if t.iconOverlay then
+						overlay = {}
+						overlay.fct = function(x, y, overlay)
+							local o, fnt = t.iconOverlay(player, t, act)
+							if not overlay.txt or overlay.str ~= o then
+								overlay.str = o
+
+								local font = self[fnt or "buff_font_small"]
+								txt = font:draw(o, 32, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
+								txt.fw, txt.fh = font:size(o)
+								overlay.txt = txt
+							end
+							local txt = overlay.txt
+							
+							if shader then
+								shader:use(true)
+								shader:uniOutlineSize(1, 1)
+								shader:uniTextSize(txt._tex_w, txt._tex_h)
+							else
+								txt._tex:toScreenFull(x+4+2 + (24 - txt.fw)/2, y+4+2 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
+							end
+							txt._tex:toScreenFull(x+4 + (24 - txt.fw)/2, y+4 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h)
+							if shader then shader:use(false) end
+						end
+					end
+
+					local is_first = is_first
+					local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+						if is_first then
+							if event == "out" then self.mhandle.buffs = nil return
+							else self.mhandle.buffs = true end
+							-- Move handle
+							if not self.locked and bx >= self.mhandle_pos.buffs.x and bx <= self.mhandle_pos.buffs.x + move_handle[6] and by >= self.mhandle_pos.buffs.y and by <= self.mhandle_pos.buffs.y + move_handle[7] then self:uiMoveResize("buffs", button, mx, my, xrel, yrel, bx, by, event) end
+						end
+						local desc = "#GOLD##{bold}#"..displayName.."#{normal}##WHITE#\n"..tostring(player:getTalentFullDescription(t))
+						game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, desc)
+					end
+					self.pbuff[tid] = {tid, "pbuff"..tid, function(x, y)
+						core.display.drawQuad(x+4, y+4, 24, 24, 0, 0, 0, 255)
+						t.display_entity:toScreen(self.hotkeys_display_icons.tiles, x+4, y+4, 24, 24)
+						if overlay then overlay.fct(x, y, overlay) end
+						UI:drawFrame(self.buffs_base, x, y, frames_colors.sustain[1], frames_colors.sustain[2], frames_colors.sustain[3], 1)
+					end, desc_fct}
+				end
+
+				if not game.mouse:updateZone("pbuff"..tid, bx+x*scale, by+y*scale, hs, hs, nil, scale) then
+					game.mouse:unregisterZone("pbuff"..tid)
+					game.mouse:registerZone(bx+x*scale, by+y*scale, hs, hs, self.pbuff[tid][4], nil, "pbuff"..tid, true, scale)
+				end
+
+				self.pbuff[tid][3](x, y)
+
+				is_first = false
+				x, y = self:buffOrientStep(orient, bx, by, scale, x, y, hs, hs)
+			end
+		end
+
+		local good_e, bad_e = {}, {}
+		for eff_id, p in pairs(player.tmp) do
+			local e = player.tempeffect_def[eff_id]
+			if e.status == "detrimental" then bad_e[eff_id] = p else good_e[eff_id] = p end
+		end
+
+		for eff_id, p in pairs(good_e) do
+			local e = player.tempeffect_def[eff_id]
+			self:handleEffect(player, eff_id, e, p, x, y, hs, bx, by, is_first, scale, (e.status == "beneficial" and not e.no_player_remove) or config.settings.cheat)
+			is_first = false
+			x, y = self:buffOrientStep(orient, bx, by, scale, x, y, hs, hs)
+		end
+
+		if orient == "down" or orient == "up" then
+			self:computePadding("buffs", bx, by, bx + x * scale + hs, by + hs)
+		else
+			self:computePadding("buffs", bx, by, bx + hs, by + y * scale + hs)
+		end
+	end
+end
+
+--dbuffs
+function _M:displayDBuffs(scale, bx, by)
+	local player = game.player
+	local shader = Shader.default.textoutline and Shader.default.textoutline.shad
+
+	if player then
+		if player.changed then
+			for _, d in pairs(self.pbuff) do if not player.sustain_talents[d[1]] then game.mouse:unregisterZone(d[2]) end end
+			for _, d in pairs(self.tbuff) do if not player.tmp[d[1]] then game.mouse:unregisterZone(d[2]) end end
+			self.tbuff = {} self.pbuff = {}
+		end
+
+		local orient = "down"
+		local hs = 32
+		local x, y = 0, 0
+		local is_first = true
+
+		for tid, act in pairs(player.sustain_talents) do
+			if act then
+				if not self.pbuff[tid] or act.__update_display then
+					local t = player:getTalentFromId(tid)
+					if act.__update_display then game.mouse:unregisterZone("pbuff"..tid) end
+					act.__update_display = false
+					local displayName = t.name
+					if t.getDisplayName then displayName = t.getDisplayName(player, t, player:isTalentActive(tid)) end
+
+					local overlay = nil
+					if t.iconOverlay then
+						overlay = {}
+						overlay.fct = function(x, y, overlay)
+							local o, fnt = t.iconOverlay(player, t, act)
+							if not overlay.txt or overlay.str ~= o then
+								overlay.str = o
+
+								local font = self[fnt or "buff_font_small"]
+								txt = font:draw(o, 32, colors.WHITE.r, colors.WHITE.g, colors.WHITE.b, true)[1]
+								txt.fw, txt.fh = font:size(o)
+								overlay.txt = txt
+							end
+							local txt = overlay.txt
+							
+							if shader then
+								shader:use(true)
+								shader:uniOutlineSize(1, 1)
+								shader:uniTextSize(txt._tex_w, txt._tex_h)
+							else
+								txt._tex:toScreenFull(x+4+2 + (24 - txt.fw)/2, y+4+2 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h, 0, 0, 0, 0.7)
+							end
+							txt._tex:toScreenFull(x+4 + (24 - txt.fw)/2, y+4 + (24 - txt.fh)/2, txt.w, txt.h, txt._tex_w, txt._tex_h)
+							if shader then shader:use(false) end
+						end
+					end
+
+					local is_first = is_first
+					local desc_fct = function(button, mx, my, xrel, yrel, bx, by, event)
+						if is_first then
+							if event == "out" then self.mhandle.buffs = nil return
+							else self.mhandle.buffs = true end
+							-- Move handle
+							if not self.locked and bx >= self.mhandle_pos.buffs.x and bx <= self.mhandle_pos.buffs.x + move_handle[6] and by >= self.mhandle_pos.buffs.y and by <= self.mhandle_pos.buffs.y + move_handle[7] then self:uiMoveResize("buffs", button, mx, my, xrel, yrel, bx, by, event) end
+						end
+						local desc = "#GOLD##{bold}#"..displayName.."#{normal}##WHITE#\n"..tostring(player:getTalentFullDescription(t))
+						game.tooltip_x, game.tooltip_y = 1, 1; game:tooltipDisplayAtMap(game.w, game.h, desc)
+					end
+					self.pbuff[tid] = {tid, "pbuff"..tid, function(x, y)
+						core.display.drawQuad(x+4, y+4, 24, 24, 0, 0, 0, 255)
+						t.display_entity:toScreen(self.hotkeys_display_icons.tiles, x+4, y+4, 24, 24)
+						if overlay then overlay.fct(x, y, overlay) end
+						UI:drawFrame(self.buffs_base, x, y, frames_colors.sustain[1], frames_colors.sustain[2], frames_colors.sustain[3], 1)
+					end, desc_fct}
+				end
+
+				if not game.mouse:updateZone("pbuff"..tid, bx+x*scale, by+y*scale, hs, hs, nil, scale) then
+					game.mouse:unregisterZone("pbuff"..tid)
+					game.mouse:registerZone(bx+x*scale, by+y*scale, hs, hs, self.pbuff[tid][4], nil, "pbuff"..tid, true, scale)
+				end
+
+				self.pbuff[tid][3](x, y)
+
+				is_first = false
+				x, y = self:buffOrientStep(orient, bx, by, scale, x, y, hs, hs)
+			end
+		end
+
+		local good_e, bad_e = {}, {}
+		for eff_id, p in pairs(player.tmp) do
+			local e = player.tempeffect_def[eff_id]
+			if e.status == "detrimental" then bad_e[eff_id] = p else good_e[eff_id] = p end
+		end
+
+		for eff_id, p in pairs(bad_e) do
+			local e = player.tempeffect_def[eff_id]
+			self:handleEffect(player, eff_id, e, p, x, y, hs, bx, by, is_first, scale, config.settings.cheat)
+			is_first = false
+			x, y = self:buffOrientStep(orient, bx, by, scale, x, y, hs, hs)
+		end
+
+		if orient == "down" or orient == "up" then
+			self:computePadding("buffs", bx, by, bx + x * scale + hs, by + hs)
+		else
+			self:computePadding("buffs", bx, by, bx + hs, by + y * scale + hs)
+		end
+	end
+end
+--------------------------------------------------------------------------------
+--sll buffs显示--end
+--------------------------------------------------------------------------------
+
 function _M:display(nb_keyframes)
 	local d = core.display
 	self.now = core.game.getTime()
@@ -2499,12 +2720,13 @@ function _M:display(nb_keyframes)
 	-- d.glScale()
 	-- d.glTranslate(-self.places.resources.x, -self.places.resources.y, -0)
 
-	-- Buffs
-	d.glTranslate(self.places.buffs.x, self.places.buffs.y, 0)
-	d.glScale(self.places.buffs.scale, self.places.buffs.scale, self.places.buffs.scale)
-	self:displayBuffs(self.places.buffs.scale, self.places.buffs.x, self.places.buffs.y)
-	d.glScale()
-	d.glTranslate(-self.places.buffs.x, -self.places.buffs.y, -0)
+	--sll 去掉原来的buff显示
+	-- -- Buffs
+	-- d.glTranslate(self.places.buffs.x, self.places.buffs.y, 0)
+	-- d.glScale(self.places.buffs.scale, self.places.buffs.scale, self.places.buffs.scale)
+	-- self:displayBuffs(self.places.buffs.scale, self.places.buffs.x, self.places.buffs.y)
+	-- d.glScale()
+	-- d.glTranslate(-self.places.buffs.x, -self.places.buffs.y, -0)
 
 	-- Party
 	d.glTranslate(self.places.party.x, self.places.party.y, 0)
@@ -2552,6 +2774,20 @@ function _M:display(nb_keyframes)
 	self:displayValuebar(self.places.resources.scale, self.places.resources.x, self.places.resources.y, 1)
 	d.glScale()
 	d.glTranslate(-self.places.resources.x, -self.places.resources.y, -0)	
+
+	--sll 新的Buffs显示
+	d.glTranslate(self.places.buffs.x, self.places.buffs.y, 0)
+	d.glScale(self.places.buffs.scale, self.places.buffs.scale, self.places.buffs.scale)
+	self:displayBuffs(self.places.buffs.scale, self.places.buffs.x, self.places.buffs.y)
+	d.glScale()
+	d.glTranslate(-self.places.buffs.x, -self.places.buffs.y, -0)
+
+	--sll DBuffs显示
+	d.glTranslate(self.places.dbuffs.x, self.places.dbuffs.y, 0)
+	d.glScale(self.places.dbuffs.scale, self.places.dbuffs.scale, self.places.dbuffs.scale)
+	self:displayDBuffs(self.places.dbuffs.scale, self.places.dbuffs.x, self.places.dbuffs.y)
+	d.glScale()
+	d.glTranslate(-self.places.dbuffs.x, -self.places.dbuffs.y, -0)		
 
 	-- Display border indicators when possible
 	if self.ui_moving and self.sizes[self.ui_moving] then
