@@ -47,7 +47,11 @@ function _M:init(t)
 	self.scrollbar = t.scrollbar
 	self.scroll_inertia = 0
 
-	-- 未选中时物品的背景及边框
+	-- 选中物品时的边框
+	self.frame_selected = self:makeFrame("ui/selector-sel", self.item_frame_size, 
+										self.item_frame_size)
+	
+	-- 未选中时的边框
 	self.item_bg = self:getUITexture("ui/equipdoll/itemframe48.png")	
 
 	-- 基类初始化
@@ -90,6 +94,8 @@ function _M:setupInput()
 	self.mouse:reset()
 	self.key:reset()
 
+	self.mousezones = {}
+
 	local on_mouse = function(button, x, y, xrel, yrel, bx, by, event)
 		if button == "wheelup" and event == "button" then 
 			if self.scrollbar then 
@@ -100,6 +106,34 @@ function _M:setupInput()
 				self.scroll_inertia = math.max(self.scroll_inertia, 0) + 5 
 			end
 		end
+
+		local done = false
+		for i = 1, #self.mousezones do
+			local mousezone = self.mousezones[i]
+			if x >= mousezone.x1 
+				and x <= mousezone.x2 
+				and y >= mousezone.y1 
+				and y <= mousezone.y2 then
+				if not self.last_mousezone 
+					or mousezone.item ~= self.last_mousezone.item then
+					print("@@@@@@@@@@@@--mousezone.i = "..mousezone.i.."mousezone.j = "..mousezone.j)
+				end
+
+				if event == "button" 
+					and (button == "left" or button == "right") then
+					if mousezone.item.type then
+					else
+					end
+				end
+
+				self.last_mousezone = mousezone
+				self.sel_i = mousezone.i
+				self.sel_j = mousezone.j
+				done = true
+				break
+			end
+		end
+		if not done then game.tooltip_x = nil self.last_mousezone = nil end		
 	end
 
 	self.mouse:registerZone(0, 0, self.w, self.h, on_mouse)
@@ -118,6 +152,8 @@ function _M:generateGrid()
 		self.row = row
 	end
 
+	self.sel_i = 1
+	self.sel_j = 1
 	self.max_h = self.row * self.item_frame_size 
 						+ (self.row - 1) * self.row_spacing
 
@@ -166,10 +202,22 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 		end
 	end	
 
+	local mousezones = {}
+	self.mousezones = mousezones	
+	local dx, dy = 0, -self.scrollbar.pos
+
 	core.display.glScissor(true, screen_x, screen_y, self.w, self.h)
 
+	if self.last_mousezone then
+		if self.focused then
+			self:drawFrame(self.frame_selected, x + self.last_mousezone.x1 - 3, 
+							y + self.last_mousezone.y1 - 3, 1, 1, 1, 1, 
+							self.last_mousezone.x2 - self.last_mousezone.x1 + 6, 
+							self.last_mousezone.y2 - self.last_mousezone.y1 + 6)			
+		end
+	end	
+
 	-- 绘制网格
-	local dx, dy = 0, -self.scrollbar.pos
 	for i = 1, #self.grid do
 		local row = self.grid[i]
 		for j = 1, self.column do
@@ -183,6 +231,12 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 			if row[j] ~= nil then
 				row[j]:toScreen(nil, dx + x, dy + y, self.item_icon_size, 
 					self.item_icon_size)
+
+				mousezones[#mousezones + 1] = {
+					i = i, j = j, item = row[j], x1 = dx, y1 = dy, 
+					x2 = dx + self.item_frame_size, 
+					y2 = dy + self.item_frame_size
+				}
 			end
 
 			dx = dx + self.item_frame_size + self.column_spacing
