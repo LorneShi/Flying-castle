@@ -24,6 +24,7 @@ local ImageList = require "engine.ui.ImageList"
 local ListColumns = require "engine.ui.ListColumns"
 local KeyBind = require "engine.KeyBind"
 local UIGroup = require "engine.ui.UIGroup"
+local InventoryGrid = require "engine.ui.InventoryGrid"
 
 --- A generic inventory, with possible tabs
 -- @classmod engine.ui.Inventory
@@ -143,6 +144,17 @@ function _M:generate()
 	self.c_inven.mouse.delegate_offset_y = self.c_tabs and self.c_tabs.h or 0
 
 	self.uis[#self.uis+1] = {x=0, y=self.c_tabs and self.c_tabs.h or 0, ui=self.c_inven}
+
+	--sll 创建新的背包
+	self.c_inven_grid = InventoryGrid.new{
+		list = {},
+		column = 10,
+	}
+	self.uis[#self.uis+1] = {
+		x=0, 
+		y=self.c_tabs and self.c_tabs.h or 0, 
+		ui=self.c_inven_grid
+	}	
 
 	self:generateList()
 
@@ -275,8 +287,11 @@ function _M:generateList(no_update)
 	self:updateTabFilter()
 
 	-- Makes up the list
+	--sll 添加新的背包数据
+	self.inven_list_new = {}
 	self.inven_list = {}
 	local list = self.inven_list
+	local list_new = self.inven_list_new
 	local chars = {}
 	local i = 1
 	for item, o in ipairs(self.inven) do
@@ -289,11 +304,14 @@ function _M:generateList(no_update)
 			list[#list+1] = { id=#list+1, char=char, name=o:getName(), sortname=o:getName():toString():removeColorCodes(), color=o:getDisplayColor(), object=o, inven=self.actor.INVEN_INVEN, item=item, cat=o.subtype, encumberance=enc, special_bg=self.special_bg }
 			chars[char] = #list
 			i = i + 1
+
+			list_new[#list_new + 1] = o
 		end
 	end
 	list.chars = chars
 
 	if not no_update then
+		self.c_inven_grid:setList(self.inven_list_new)
 		self.c_inven:setList(self.inven_list)
 		if self._last_x then self:display(self._last_x, _last_y, 0, self._last_ox, self._last_oy) end
 	end
