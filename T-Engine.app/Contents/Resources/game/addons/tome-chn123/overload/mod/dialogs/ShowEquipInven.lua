@@ -97,7 +97,14 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		special_bg=function(item) if item.object and item.object.__transmo then return colors.GOLD end end,
 	}
 	
-	self.c_inven.c_inven.on_focus_change = function(ui_self, status) if status == true then self:select(ui_self.list[ui_self.sel], true) end end
+	-- self.c_inven.c_inven.on_focus_change = function(ui_self, status) if status == true then self:select(ui_self.list[ui_self.sel], true) end end
+
+	--sll 添加新物品栏焦点相应
+	self.c_inven.c_inven_grid.on_focus_change = function(ui_self, status) 
+		if status == true then 
+			self:select(ui_self.list[ui_self.sel], true) 
+		end 
+	end
 
 	local uis = {
 		{left=0, top=0, ui=self.c_main_set},
@@ -170,11 +177,11 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		[{"_TAB","shift"}] = function() self:moveFocus(1) end,
 	}
 	self.key:addBinds{
-		ACCEPT = function() if self.focus_ui and self.focus_ui.ui == self.c_inven then self:use(self.c_inven.c_inven.list[self.c_inven.c_inven.sel]) end end,
+		-- ACCEPT = function() if self.focus_ui and self.focus_ui.ui == self.c_inven then self:use(self.c_inven.c_inven.list[self.c_inven.c_inven.sel]) end end,
 		EXIT = function()
-			if self.c_inven.c_inven.scrollbar then
-				self.equip_actor.inv_scroll = self.c_inven.c_inven.scrollbar.pos or 0
-			end
+			-- if self.c_inven.c_inven.scrollbar then
+			-- 	self.equip_actor.inv_scroll = self.c_inven.c_inven.scrollbar.pos or 0
+			-- end
 			game.tooltip.locked = false
 			game:unregisterDialog(self)
 		end,
@@ -184,9 +191,9 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		LOCK_TOOLTIP_COMPARE = lock_tooltip,
 		SCREENSHOT = function() if type(game) == "table" and game.key then game.key:triggerVirtual("SCREENSHOT") end end,
 	}
-	if self.equip_actor.inv_scroll and self.c_inven.c_inven.scrollbar then
-		self.c_inven.c_inven.scrollbar.pos = util.bound(self.equip_actor.inv_scroll, 0, self.c_inven.c_inven.scrollbar.max)
-	end
+	-- if self.equip_actor.inv_scroll and self.c_inven.c_inven.scrollbar then
+	-- 	self.c_inven.c_inven.scrollbar.pos = util.bound(self.equip_actor.inv_scroll, 0, self.c_inven.c_inven.scrollbar.max)
+	-- end
 end
 
 function _M:switchSets(which)
@@ -202,7 +209,7 @@ end
 
 function _M:firstDisplay()
 	self.cur_item = nil
-	self.c_inven.c_inven:onSelect(true)
+	-- self.c_inven.c_inven:onSelect(true)
 end
 
 function _M:on_register()
@@ -219,9 +226,9 @@ function _M:defineHotkey(id)
 	if not self.equip_actor or not self.equip_actor.hotkey then return end
 
 	local item = nil
-	if self.focus_ui and self.focus_ui.ui == self.c_inven then item = self.c_inven.c_inven.list[self.c_inven.c_inven.sel]
-	elseif self.focus_ui and self.focus_ui.ui == self.c_doll then item = {object=self.c_doll:getItem()}
-	end
+	-- if self.focus_ui and self.focus_ui.ui == self.c_inven then item = self.c_inven.c_inven.list[self.c_inven.c_inven.sel]
+	-- elseif self.focus_ui and self.focus_ui.ui == self.c_doll then item = {object=self.c_doll:getItem()}
+	-- end
 	if not item or not item.object then return end
 
 	self.equip_actor.hotkey[id] = {"inventory", item.object:getName{no_add_name=true, no_count=true}}
@@ -236,9 +243,9 @@ function _M:select(item, force)
 end
 
 function _M:use(item, button, event)
-	if self.c_inven.c_inven.scrollbar then
-		self.equip_actor.inv_scroll = self.c_inven.c_inven.scrollbar.pos or 0
-	end
+	-- if self.c_inven.c_inven.scrollbar then
+	-- 	self.equip_actor.inv_scroll = self.c_inven.c_inven.scrollbar.pos or 0
+	-- end
 	if item then
 		if self.action(item.object, item.inven, item.item, button, event) then
 			game:unregisterDialog(self)
@@ -264,9 +271,9 @@ function _M:updateTitle(title)
 		g = util.lerp(green.g, red.g, v),
 		b = util.lerp(green.b, red.b, v),
 	}
-	if self.equip_actor.inv_scroll and self.c_inven.c_inven.scrollbar then
-		self.c_inven.c_inven.scrollbar.pos = util.bound(self.equip_actor.inv_scroll, 0, self.c_inven.c_inven.scrollbar.max)
-	end
+	-- if self.equip_actor.inv_scroll and self.c_inven.c_inven.scrollbar then
+	-- 	self.c_inven.c_inven.scrollbar.pos = util.bound(self.equip_actor.inv_scroll, 0, self.c_inven.c_inven.scrollbar.max)
+	-- end
 end
 
 function _M:onDrag(item)

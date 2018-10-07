@@ -127,33 +127,37 @@ function _M:generate()
 		return 0, 0, 0, 0, 0, 0
 	end
 
-	self.c_inven = ListColumns.new{width=self.w, height=self.h - (self.c_tabs and self.c_tabs.h or 0), sortable=true, scrollbar=true, columns=self.columns or {
-		{name="", width={33,"fixed"}, display_prop="char", sort="id"},
-		{name="", width={24,"fixed"}, display_prop="object", sort="sortname", direct_draw=direct_draw},
-		{name="物品", width=72, display_prop="name", sort="sortname"},
-		{name="分类", width=20, display_prop="cat", sort="cat"},
-		{name="负重", width=10, display_prop="encumberance", sort="encumberance"},
-	}, list={},
-		fct=function(item, sel, button, event) if self.fct then self.fct(item, button, event) end end,
-		select=self.on_select,
-		on_drag=function(item) if self.on_drag then self.on_drag(item) end end,
-		on_drag_end=function() if self.on_drag_end then self.on_drag_end() end end,
-	}
+	-- self.c_inven = ListColumns.new{width=self.w, height=self.h - (self.c_tabs and self.c_tabs.h or 0), sortable=true, scrollbar=true, columns=self.columns or {
+	-- 	{name="", width={33,"fixed"}, display_prop="char", sort="id"},
+	-- 	{name="", width={24,"fixed"}, display_prop="object", sort="sortname", direct_draw=direct_draw},
+	-- 	{name="物品", width=72, display_prop="name", sort="sortname"},
+	-- 	{name="分类", width=20, display_prop="cat", sort="cat"},
+	-- 	{name="负重", width=10, display_prop="encumberance", sort="encumberance"},
+	-- }, list={},
+	-- 	fct=function(item, sel, button, event) if self.fct then self.fct(item, button, event) end end,
+	-- 	select=self.on_select,
+	-- 	on_drag=function(item) if self.on_drag then self.on_drag(item) end end,
+	-- 	on_drag_end=function() if self.on_drag_end then self.on_drag_end() end end,
+	-- }
 
-	self.c_inven.mouse.delegate_offset_x = 0
-	self.c_inven.mouse.delegate_offset_y = self.c_tabs and self.c_tabs.h or 0
+	-- self.c_inven.mouse.delegate_offset_x = 0
+	-- self.c_inven.mouse.delegate_offset_y = self.c_tabs and self.c_tabs.h or 0
 
-	self.uis[#self.uis+1] = {x=0, y=self.c_tabs and self.c_tabs.h or 0, ui=self.c_inven}
+	-- self.uis[#self.uis+1] = {x=0, y=self.c_tabs and self.c_tabs.h or 0, ui=self.c_inven}
 
-	--sll 创建新的背包
+	--sll 创建网格型背包显示
 	self.c_inven_grid = InventoryGrid.new{
 		list = {},
-		column = 10,
+		width = self.w, 
+		height = self.h - (self.c_tabs and self.c_tabs.h or 0),
+		scrollbar = true
 	}
-	self.uis[#self.uis+1] = {
-		x=0, 
-		y=self.c_tabs and self.c_tabs.h or 0, 
-		ui=self.c_inven_grid
+	self.c_inven_grid.mouse.delegate_offset_x = 0
+	self.c_inven_grid.mouse.delegate_offset_y = self.c_tabs and self.c_tabs.h or 0
+	self.uis[#self.uis + 1] = {
+		x = 0, 
+		y = self.c_tabs and self.c_tabs.h or 0, 
+		ui = self.c_inven_grid
 	}	
 
 	self:generateList()
@@ -161,7 +165,7 @@ function _M:generate()
 	self.mouse:registerZone(0, 0, self.w, self.h, function(button, x, y, xrel, yrel, bx, by, event)
 		self:mouseEvent(button, x, y, xrel, yrel, bx, by, event)
 	end)
-	self.key = self.c_inven.key
+	-- self.key = self.c_inven.key
 	self.key:addCommands{
 		_TAB = function() if not self.c_tabs then return end self.c_tabs.sel_j = 1 self.c_tabs.sel_i = util.boundWrap(self.c_tabs.sel_i+1, 1, #self.tabslist) self.c_tabs:onUse("left") self.c_tabs:onSelect("key") end,
 		[{"_TAB","ctrl"}] = function() if not self.c_tabs then return end self.c_tabs.sel_j = 1 self.c_tabs.sel_i = util.boundWrap(self.c_tabs.sel_i-1, 1, #self.tabslist) self.c_tabs:onUse("left", false) self.c_tabs:onSelect("key") end,
@@ -175,15 +179,15 @@ function _M:generate()
 		end
 	end
 
-	self.c_inven:onSelect()
+	-- self.c_inven:onSelect()
 end
 
 function _M:keyTrigger(c)
-	if not self.focus_ui or not self.focus_ui.ui == self.c_inven then return end
+	-- if not self.focus_ui or not self.focus_ui.ui == self.c_inven then return end
 
 	if self.inven_list.chars[c] then
-		self.c_inven.sel = self.inven_list.chars[c]
-		self.c_inven.key:triggerVirtual("ACCEPT")
+		-- self.c_inven.sel = self.inven_list.chars[c]
+		-- self.c_inven.key:triggerVirtual("ACCEPT")
 	end
 end
 
@@ -202,7 +206,7 @@ end
 
 function _M:selectTab(item, how)
 	if self.on_select_tab then self.on_select_tab(item) end
-	if how == "key" then self.c_inven:onSelect() end
+	-- if how == "key" then self.c_inven:onSelect() end
 end
 
 function _M:mouseEvent(button, x, y, xrel, yrel, bx, by, event)
@@ -312,7 +316,7 @@ function _M:generateList(no_update)
 
 	if not no_update then
 		self.c_inven_grid:setList(self.inven_list_new)		
-		self.c_inven:setList(self.inven_list)
+		-- self.c_inven:setList(self.inven_list)
 		if self._last_x then self:display(self._last_x, _last_y, 0, self._last_ox, self._last_oy) end
 	end
 end
