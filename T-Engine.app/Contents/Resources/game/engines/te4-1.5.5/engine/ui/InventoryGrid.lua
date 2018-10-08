@@ -34,6 +34,9 @@ function _M:init(t)
 	-- 网格的高
 	self.h = assert(t.height, "no list height")
 
+	-- 点击单个格子的相应函数
+	self.fct = t.fct
+
 	-- 单个格子的大小
 	self.item_frame_size = t.item_frame_size or 48
 
@@ -120,9 +123,7 @@ function _M:setupInput()
 
 				if event == "button" 
 					and (button == "left" or button == "right") then
-					if mousezone.item.type then
-					else
-					end
+					self:onUse(mousezone.item, button, event)
 				end
 
 				self.last_mousezone = mousezone
@@ -142,6 +143,14 @@ function _M:setupInput()
 
 	self.key:addCommands{
 	}
+end
+
+function _M:onUse(item, button, event)
+	if not item then 
+		return 
+	end
+	self:sound("button")
+	self.fct(item, button, event)
 end
 
 function _M:generateGrid()
@@ -228,7 +237,7 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 
 			-- 绘制物品icon
 			if row[j] ~= nil then
-				row[j]:toScreen(nil, dx + x + self.item_icon_margin, 
+				row[j].object:toScreen(nil, dx + x + self.item_icon_margin, 
 					dy + y + self.item_icon_margin, self.item_icon_size, 
 					self.item_icon_size)
 

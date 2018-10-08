@@ -148,6 +148,11 @@ function _M:generate()
 	--sll 创建网格型背包显示
 	self.c_inven_grid = InventoryGrid.new{
 		list = {},
+		fct = function(item, button, event) 
+			if self.fct then 
+				self.fct(item, button, event) 
+			end 
+		end,
 		width = self.w, 
 		height = self.h - (self.c_tabs and self.c_tabs.h or 0),
 		scrollbar = true
@@ -185,10 +190,10 @@ end
 function _M:keyTrigger(c)
 	-- if not self.focus_ui or not self.focus_ui.ui == self.c_inven then return end
 
-	if self.inven_list.chars[c] then
+	-- if self.inven_list.chars[c] then
 		-- self.c_inven.sel = self.inven_list.chars[c]
 		-- self.c_inven.key:triggerVirtual("ACCEPT")
-	end
+	-- end
 end
 
 function _M:switchTab(filter)
@@ -293,26 +298,30 @@ function _M:generateList(no_update)
 	-- Makes up the list
 	--sll 添加新的背包数据
 	self.inven_list_new = {}	
-	self.inven_list = {}
+	-- self.inven_list = {}
 	local list_new = self.inven_list_new	
-	local list = self.inven_list
-	local chars = {}
+	-- local list = self.inven_list
+	-- local chars = {}
 	local i = 1
 	for item, o in ipairs(self.inven) do
 		if (not self.filter or self.filter(o)) and (not self.tab_filter or self.tab_filter(o)) then
-			local char = self:makeKeyChar(i)
+			-- local char = self:makeKeyChar(i)
 
 			local enc = 0
 			o:forAllStack(function(o) enc=enc+o.encumber end)
 
-			list[#list+1] = { id=#list+1, char=char, name=o:getName(), sortname=o:getName():toString():removeColorCodes(), color=o:getDisplayColor(), object=o, inven=self.actor.INVEN_INVEN, item=item, cat=objectSType[o.subtype] or o.subtype, encumberance=enc, special_bg=self.special_bg }
-			chars[char] = #list
+			-- list[#list+1] = { id=#list+1, char=char, name=o:getName(), sortname=o:getName():toString():removeColorCodes(), color=o:getDisplayColor(), object=o, inven=self.actor.INVEN_INVEN, item=item, cat=objectSType[o.subtype] or o.subtype, encumberance=enc, special_bg=self.special_bg }
+			-- chars[char] = #list
 			i = i + 1
 
-			list_new[#list_new + 1] = o			
+			list_new[#list_new + 1] = {
+				object = o, 
+				inven = self.actor.INVEN_INVEN, 
+				item = item
+			}			
 		end
 	end
-	list.chars = chars
+	-- list.chars = chars
 
 	if not no_update then
 		self.c_inven_grid:setList(self.inven_list_new)		
