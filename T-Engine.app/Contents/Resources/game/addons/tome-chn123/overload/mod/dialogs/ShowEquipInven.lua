@@ -89,8 +89,10 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 	}
 	self.c_inven = Inventory.new{actor=inven_actor, inven=inven_actor:getInven("INVEN") or {}, width=self.iw - vsep.w - self.c_doll.w, height=self.ih - 10, filter=filter,
 		default_last_tabs = "all",
-		fct=function(item, sel, button, event) self:use(item, button, event) end,
-		select=function(item, sel) self:select(item) end,
+		-- fct=function(item, sel, button, event) self:use(item, button, event) end,
+		fct=function(item, button, event) self:use(item, button, event) end,
+		-- select=function(item, sel) self:select(item) end,
+		select=function(item) self:select(item) end,
 		select_tab=function(item) self:select(item) end,
 		on_drag=function(item) self:onDrag(item) end,
 		on_drag_end=function() self:onDragTakeoff() end,

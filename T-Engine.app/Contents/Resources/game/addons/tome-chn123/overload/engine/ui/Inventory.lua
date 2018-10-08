@@ -153,6 +153,7 @@ function _M:generate()
 				self.fct(item, button, event) 
 			end 
 		end,
+		on_select = self.on_select,
 		width = self.w, 
 		height = self.h - (self.c_tabs and self.c_tabs.h or 0),
 		scrollbar = true

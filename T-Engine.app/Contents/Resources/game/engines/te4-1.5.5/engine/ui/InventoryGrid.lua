@@ -37,6 +37,9 @@ function _M:init(t)
 	-- 点击单个格子的相应函数
 	self.fct = t.fct
 
+	-- 鼠标停留在单个格子上的选中相应函数
+	self.on_select = t.on_select	
+
 	-- 单个格子的大小
 	self.item_frame_size = t.item_frame_size or 48
 
@@ -90,6 +93,8 @@ function _M:generate()
 
 	-- 设置鼠标键盘事件
 	self:setupInput()
+
+	self:onSelect()
 end
 
 function _M:setupInput()
@@ -118,7 +123,7 @@ function _M:setupInput()
 				and y <= mousezone.y2 then
 				if not self.last_mousezone 
 					or mousezone.item ~= self.last_mousezone.item then
-					print("@@@@@@@@@@@@--mousezone.i = "..mousezone.i.."mousezone.j = "..mousezone.j)
+					self:onSelect(mousezone.item)
 				end
 
 				if event == "button" 
@@ -150,7 +155,20 @@ function _M:onUse(item, button, event)
 		return 
 	end
 	self:sound("button")
-	self.fct(item, button, event)
+
+	if self.fct then
+		self.fct(item, button, event)
+	end
+end
+
+function _M:onSelect(item)
+	if not item then 
+		return 
+	end
+
+	if self.on_select then
+		self.on_select(item)
+	end
 end
 
 function _M:generateGrid()
@@ -240,6 +258,9 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 				row[j].object:toScreen(nil, dx + x + self.item_icon_margin, 
 					dy + y + self.item_icon_margin, self.item_icon_size, 
 					self.item_icon_size)
+
+				row[j].last_display_x = screen_x
+				row[j].last_display_y = screen_y + self.max_h
 
 				mousezones[#mousezones + 1] = {
 					i = i, j = j, item = row[j], x1 = dx, y1 = dy, 
