@@ -46,11 +46,10 @@ function _M:init(t)
 	-- 滚动条
 	self.scrollbar = t.scrollbar
 	self.scroll_inertia = 0
-
-	-- 选中物品时的边框
-	self.frame_selected = self:makeFrame("ui/selector-sel", self.item_frame_size, 
-										self.item_frame_size)
 	
+	-- 选中物品时的边框
+	self.item_selected_bg = self:getUITexture("ui/equipdoll/itemframe-sel48.png")		
+
 	-- 未选中时的边框
 	self.item_bg = self:getUITexture("ui/equipdoll/itemframe48.png")	
 
@@ -81,7 +80,7 @@ function _M:generate()
 		/ (self.item_frame_size + self.row_spacing))
 
 	-- 计算显示物品图标的大小
-	self.item_icon_size = self.item_frame_size - self.item_icon_margin
+	self.item_icon_size = self.item_frame_size - self.item_icon_margin * 2
 
 	-- 生成网格数据
 	self:generateGrid()
@@ -210,10 +209,11 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 
 	if self.last_mousezone then
 		if self.focused then
-			self:drawFrame(self.frame_selected, x + self.last_mousezone.x1 - 3, 
-							y + self.last_mousezone.y1 - 3, 1, 1, 1, 1, 
-							self.last_mousezone.x2 - self.last_mousezone.x1 + 6, 
-							self.last_mousezone.y2 - self.last_mousezone.y1 + 6)			
+			self.item_selected_bg.t:toScreenPrecise(x + self.last_mousezone.x1, 
+				y + self.last_mousezone.y1, self.item_frame_size, 
+				self.item_frame_size, 0, 
+				self.item_selected_bg.w / self.item_selected_bg.tw, 0, 
+				self.item_selected_bg.h / self.item_selected_bg.th)					
 		end
 	end	
 
@@ -222,14 +222,14 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 		local row = self.grid[i]
 		for j = 1, self.column do
 			-- 绘制背景及边框
-			self.item_bg.t:toScreenPrecise(dx + x, dy + y, 
-				self.item_icon_size, self.item_icon_size, 0, 
-				self.item_bg.w / self.item_bg.tw, 0, 
+			self.item_bg.t:toScreenPrecise(dx + x, dy + y, self.item_frame_size, 
+				self.item_frame_size, 0, self.item_bg.w / self.item_bg.tw, 0, 
 				self.item_bg.h / self.item_bg.th)
 
 			-- 绘制物品icon
 			if row[j] ~= nil then
-				row[j]:toScreen(nil, dx + x, dy + y, self.item_icon_size, 
+				row[j]:toScreen(nil, dx + x + self.item_icon_margin, 
+					dy + y + self.item_icon_margin, self.item_icon_size, 
 					self.item_icon_size)
 
 				mousezones[#mousezones + 1] = {
@@ -248,7 +248,7 @@ function _M:display(x, y, nb_keyframes, screen_x, screen_y, offset_x, offset_y, 
 		if dy >= self.h then 
 			break 
 		end
-	end
+	end	
 
 	core.display.glScissor(false)
 
