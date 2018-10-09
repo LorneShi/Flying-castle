@@ -34,24 +34,38 @@ return {
 	max_material_level = 1,
 	generator =  {
 		map = {
+
+		    -- Normal dungeon
 			class = "engine.generator.map.TileSet",
 			tileset = {"7x7/base", "7x7/tunnel",},
-			['.'] = "FLOOR",
-			['#'] = "WALL",
+      ['.'] = "DUNGEON_FLOOR",
+			['#'] = "DUNGEON_WALL",
 			['+'] = "DOOR",
 			["'"] = "DOOR",
 			up = "UP",
 			down = "DOWN",
 			force_down = true,
+
+			-- Smooth dungeon
+			 --class = "engine.generator.map.TileSet",
+			 --tileset = {"7x7/base", "7x7/tunnel",},
+			 --['.'] = "DUNGEON_FLOOR_SMOOTH",
+			 --['#'] = "DUNGEON_WALL_SMOOTH",
+			 -- ['+'] = "DOOR",
+			 -- ["'"] = "DOOR",
+			 --up = "DUNGEON_SMOOTH_LADDER_UP",
+			-- down = "DUNGEON_SMOOTH_LADDER_DOWN",
+			 --door = "DUNGEON_FLOOR_SMOOTH",
+			 --force_down = true,
 		},
-		actor = {
-			class = "engine.generator.actor.Random",
-			--class = "mod.class.generator.actor.Random",
-			nb_npc = {50, 60},
-			filters = { {max_ood=2}, },
-			nb_spots = 2, on_spot_chance = 35,
-			randelite = 0,
-		},
+		-- actor = {
+		-- 	class = "engine.generator.actor.Random",
+		-- 	--class = "mod.class.generator.actor.Random",
+		-- 	nb_npc = {50, 60},
+		-- 	filters = { {max_ood=2}, },
+		-- 	nb_spots = 2, on_spot_chance = 35,
+		-- 	randelite = 0,
+		-- },
 		object = {
 			class = "engine.generator.object.Random",
 			nb_object = {6, 9},
@@ -66,7 +80,7 @@ return {
 	{
 		[1] = {
 			generator = { map = {
-				up = "FLOOR",
+				up = "UP",
 			}, },
 		},
 		[3] = {

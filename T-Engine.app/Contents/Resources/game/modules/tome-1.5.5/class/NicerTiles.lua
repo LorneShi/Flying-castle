@@ -43,8 +43,10 @@ function _M:getTile(name)
 
 	if type(name) == "table" then
 		local n = name[1]
+		game.log("....name[1]=%s", name[1])
 		if rng.percent(name[2]) then n = n..rng.range(name[3], name[4]) end
 		name = n
+        game.log("....new name=%s", name)
 	end
 
 	local e
@@ -262,6 +264,7 @@ loadfile("/mod/class/NicerTilesOverlays.lua")(_M)
 
 --- Make walls have a pseudo 3D effect
 function _M:niceTileWall3d(level, i, j, g, nt)
+    game.log("niceTileWall3d is called")
 	local s = (level.map:checkEntity(i, j, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j, Map.TERRAIN, "subtype") or "floor")
 	local gn = (level.map:checkEntity(i, j-1, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j-1, Map.TERRAIN, "subtype") or "floor")
 	local gs = (level.map:checkEntity(i, j+1, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j+1, Map.TERRAIN, "subtype") or "floor")
@@ -270,12 +273,21 @@ function _M:niceTileWall3d(level, i, j, g, nt)
 	local dn = level.map:checkEntity(i, j-1, Map.TERRAIN, "is_door")
 	local ds = level.map:checkEntity(i, j+1, Map.TERRAIN, "is_door")
 
+    game.log("s=%s, gn=%s, gs=%s, gw=%s, ge=%s, dn=%s, ds=%s",s, gn, gs, gw,ge, dn, ds)
+    
+
 	if gs ~= s and gn ~= s and gw ~= s and ge ~= s then self:replace(i, j, self:getTile(nt.small_pillar))
-	elseif gs ~= s and gn ~= s and gw ~= s and ge == s then self:replace(i, j, self:getTile(nt.pillar_4))
-	elseif gs ~= s and gn ~= s and gw == s and ge ~= s then self:replace(i, j, self:getTile(nt.pillar_6))
-	elseif gs == s and gn ~= s and gw ~= s and ge ~= s then self:replace(i, j, self:getTile(nt.pillar_8))
-	elseif gs ~= s and gn == s and gw ~= s and ge ~= s then self:replace(i, j, self:getTile(nt.pillar_2))
+	elseif gs ~= s and gn ~= s and gw ~= s and ge == s then self:replace(i, j, self:getTile(nt.west))
+	elseif gs ~= s and gn ~= s and gw == s and ge ~= s then self:replace(i, j, self:getTile(nt.east))
+	elseif gs == s and gn ~= s and gw ~= s and ge ~= s then self:replace(i, j, self:getTile(nt.south))
+	elseif gs ~= s and gn == s and gw ~= s and ge ~= s then self:replace(i, j, self:getTile(nt.south))
+	-- elseif gw == s and gs==s and gn ~=s and ge ~= s then self:replace(i, j, self:getTile(nt.east_north))
+	-- elseif ge == s and gs==s and gn ~=s and gw ~= s then self:replace(i, j, self:getTile(nt.west_north))
 	elseif gs ~= s and gn ~= s then self:replace(i, j, self:getTile(nt.north_south))
+	elseif ge ~= s and gs ~= s then self:replace(i, j, self:getTile(nt.east))
+	elseif gw ~= s and gs ~= s then self:replace(i, j, self:getTile(nt.west))
+	elseif gw ~= s and gn ~= s then self:replace(i, j, self:getTile(nt.west_north))
+	elseif ge ~= s and gn ~= s then self:replace(i, j, self:getTile(nt.east_north))
 	elseif gs == s and ds and gn ~= s then self:replace(i, j, self:getTile(nt.north_south))
 	elseif gs ~= s and gn == s and dn then self:replace(i, j, self:getTile(nt.north_south))
 	elseif gs ~= s then self:replace(i, j, self:getTile(nt.south))
@@ -286,8 +298,16 @@ function _M:niceTileWall3d(level, i, j, g, nt)
 	end
 end
 
+
+function _M:niceTileFloor3d(level, i, j, g, nt)
+	game.log("......niceTileFloor3d is called")
+	self:replace(i, j, self:getTile(nt.inner))
+	
+end
+
 --- Make walls have a more elaborate pseudo 3D effect:
 function _M:niceTileWall3dSus(level, i, j, g, nt)
+	game.log("niceTileWall3dSus is called")
 	local s = (level.map:checkEntity(i, j, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j, Map.TERRAIN, "subtype") or "floor")
 	local gn = (level.map:checkEntity(i, j-1, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j-1, Map.TERRAIN, "subtype") or "floor")
 	local gs = (level.map:checkEntity(i, j+1, Map.TERRAIN, "type") or "wall").."/"..(level.map:checkEntity(i, j+1, Map.TERRAIN, "subtype") or "floor")
@@ -596,6 +616,7 @@ end
 
 --- Make walls have a pseudo 3D effect & rounded corners
 function _M:niceTileRoundwall3d(level, i, j, g, nt)
+	game.log("niceTileRoundwall3d is called")
 	local s = level.map:checkEntity(i, j, Map.TERRAIN, "type") or "wall"
 	local g8 = level.map:checkEntity(i, j-1, Map.TERRAIN, "type") or "wall"
 	local g2 = level.map:checkEntity(i, j+1, Map.TERRAIN, "type") or "wall"
@@ -1203,6 +1224,32 @@ grass_wm = { method="borders", type="grass", forbid={lava=true, rock=true},
 	default7i={add_mos={{image="terrain/grass_worldmap/grass_inner_7_%02d.png", display_x=-1, display_y=-1}}, min=1, max=2},
 	default9i={add_mos={{image="terrain/grass_worldmap/grass_inner_9_%02d.png", display_x=1, display_y=-1}}, min=1, max=2},
 },
+
+
+smooth_dungeon_wall = { method="walls", type="dungeonwall", forbid={}, use_type=true, extended=true,
+	default8={add_displays={{image="terrain/dungeon/dungeon_sandwall_8_1.png", display_y=-1, z=16}}, min=1, max=1},
+	default8p={add_displays={{image="terrain/dungeon/dungeon_sand_V3_pillar_top_01.png", display_y=-1, z=16}}, min=1, max=1},
+	default7={add_displays={{image="terrain/dungeon/dungeon_sand_V3_inner_7_01.png", display_y=-1, z=16}}, min=1, max=1},
+	default9={add_displays={{image="terrain/dungeon/dungeon_sand_V3_inner_9_01.png", display_y=-1, z=16}}, min=1, max=1},
+	default7i={add_displays={{image="terrain/dungeon/dungeon_sand_V3_3_01.png", display_y=-1, z=16}}, min=1, max=1},
+	default8i={add_displays={{image="terrain/dungeon/dungeon_sandwall_8h_1.png", display_y=-1, z=16}}, min=1, max=1},
+	default9i={add_displays={{image="terrain/dungeon/dungeon_sand_V3_1_01.png", display_y=-1, z=16}}, min=1, max=1},
+	default73i={add_displays={{image="terrain/dungeon/dungeon_sandwall_91d_1.png", display_y=-1, z=16}}, min=1, max=1},
+	default91i={add_displays={{image="terrain/dungeon/dungeon_sandwall_73d_1.png", display_y=-1, z=16}}, min=1, max=1},
+
+	default2={image="terrain/dungeon/dungeon_sand_V3_8_01.png", min=1, max=1},
+	default2p={image="terrain/dungeon/dungeon_sand.png", add_mos={{image="terrain/dungeon/dungeon_sand_V3_pillar_bottom_01.png"}}, min=1, max=1},
+	default1={image="terrain/dungeon/dungeon_sand.png", add_mos={{image="terrain/dungeon/dungeon_sand_V3_inner_1_01.png"}}, min=1, max=1},
+	default3={image="terrain/dungeon/dungeon_sand.png", add_mos={{image="terrain/dungeon/dungeon_sand_V3_inner_3_01.png"}}, min=1, max=1},
+	default1i={image="terrain/dungeon/dungeon_sand_V3_7_01.png", min=1, max=1},
+	default2i={image="terrain/dungeon/dungeon_sandwall_2h_1.png", min=1, max=1},
+	default3i={image="terrain/dungeon/dungeon_sand_V3_9_01.png", min=1, max=1},
+	default19i={image="terrain/dungeon/dungeon_sandwall_19d_1.png", min=1, max=1},
+	default37i={image="terrain/dungeon/dungeon_sandwall_37d_1.png", min=1, max=1},
+
+	default4={add_displays={{image="terrain/dungeon/dungeon_sand_ver_edge_left_01.png", display_x=-1}}, min=1, max=1},
+	default6={add_displays={{image="terrain/dungeon/dungeon_sand_ver_edge_right_01.png", display_x=1}}, min=1, max=1},
+},
 }
 _M.generic_borders_defs = defs
 
@@ -1210,6 +1257,8 @@ _M.generic_borders_defs = defs
 --- Make water have nice transition to other stuff
 local gtype = type
 function _M:editTileGenericBorders(level, i, j, g, nt, type)
+    
+    game.log("....xjp editTileGenericBorders is called")
 	local kind
 	if gtype(nt.use_type) == "string" then kind = nt.use_type
 	else kind = nt.use_type and "type" or "subtype"
@@ -1223,6 +1272,9 @@ function _M:editTileGenericBorders(level, i, j, g, nt, type)
 	local g9 = level.map:checkEntity(i+1, j-1, Map.TERRAIN, kind) or type
 	local g1 = level.map:checkEntity(i-1, j+1, Map.TERRAIN, kind) or type
 	local g3 = level.map:checkEntity(i+1, j+1, Map.TERRAIN, kind) or type
+
+ 	game.log("i=%d, j=%d, kind=%s", i,j,kind)
+	game.log(".....1:g1=%s, g2=%s,g3=%s,g4=%s,g5=%s,g6=%s,g7=%s,g8=%s,g9=%s",g1, g2, g3, g4,g5,g6,g7,g8,g9)
 	if nt.forbid then
 		if nt.forbid[g5] then g5 = type end
 		if nt.forbid[g4] then g4 = type end
@@ -1235,7 +1287,12 @@ function _M:editTileGenericBorders(level, i, j, g, nt, type)
 		if nt.forbid[g9] then g9 = type end
 	end
 
+    game.log(".....2:g1=%s, g2=%s,g3=%s,g4=%s,g5=%s,g6=%s,g7=%s,g8=%s,g9=%s",g1, g2, g3, g4,g5,g6,g7,g8,g9)
+
+    -- id=25genbord:WALL,grass,false,true,true,false,true,true,false,false,false
 	local id = rng.range(1,NB_VARIATIONS).."genbord:"..table.concat({g.define_as or "--",type,tostring(g1==g5),tostring(g2==g5),tostring(g3==g5),tostring(g4==g5),tostring(g5==g5),tostring(g6==g5),tostring(g7==g5),tostring(g8==g5),tostring(g9==g5)}, ",")
+
+    game.log("id=%s", id)
 
 	-- Sides
 	if g5 ~= g8 then self:edit(i, j, id, nt[g8.."8"] or nt["default8"]) end
@@ -1255,7 +1312,7 @@ function _M:editTileGenericBorders(level, i, j, g, nt, type)
 end
 
 --- Make water have nice transition to other stuff
-function _M:editTileGenericWalls(level, i, j, g, nt, type)
+function _M:editTileGenericWalls(level, i, j, g, nt, type)  
 	local kind = nt.use_type and "type" or "subtype"
 	local g5 = level.map:checkEntity(i, j,   Map.TERRAIN, kind) or type
 	local g8 = level.map:checkEntity(i, j-1, Map.TERRAIN, kind) or type
