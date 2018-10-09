@@ -34,12 +34,22 @@ return {
 	max_material_level = function() return game.state:isAdvanced() and 5 or 3 end,
 	generator =  {
 		map = {
-			class = "engine.generator.map.Maze",
+			class = "engine.generator.map.TileSet",
+			tileset = {"7x7/base", "7x7/tunnel",},
+      		['.'] = "DUNGEON_FLOOR",
+			['#'] = "DUNGEON_WALL",
+			['+'] = "DOOR",
+			["'"] = "DOOR",
 			down = "DOWN",
-			wall = "OLD_WALL",
-			floor = "OLD_FLOOR",
-			widen_w = 2, 
-			widen_h = 2,
+			force_down = true,	
+
+			-- 迷宫型地图
+			-- class = "engine.generator.map.Maze",
+			-- down = "DOWN",
+			-- wall = "OLD_WALL",
+			-- floor = "OLD_FLOOR",
+			-- widen_w = 2, 
+			-- widen_h = 2,
 		},
 		actor = {
 			class = "mod.class.generator.actor.Random",
@@ -60,15 +70,9 @@ return {
 		level_range = {1, 2},
 		[1] = {
 			generator = { 
-				map = {
-				}, 
 				actor = {
 					nb_npc = {10, 12},
-				}, 
-				object = {
-				},
-				trap = {
-				},				
+				}, 			
 			},
 		},
 		[2] = {
@@ -77,14 +81,11 @@ return {
 			height = 15,
 			generator = { 
 				map = {
-				}, 
+					up = "UP",
+				}, 			
 				actor = {
 					nb_npc = {15, 20},
-				}, 
-				object = {
-				},
-				trap = {
-				},					
+				}, 				
 			},
 		},
 		[3] = {
@@ -99,11 +100,7 @@ return {
 				}, 
 				actor = {
 					nb_npc = {8, 10},
-				}, 
-				object = {
-				},
-				trap = {
-				},				
+				}, 		
 			},
 		},				
 	},
