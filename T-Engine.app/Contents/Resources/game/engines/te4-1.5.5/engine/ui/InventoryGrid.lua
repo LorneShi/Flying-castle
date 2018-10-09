@@ -139,13 +139,10 @@ function _M:setupInput()
 					self:onUse(mousezone.item, button, event)
 				end
 
-				--拖拽
+				--处理拖拽出去的事件
 				if event == "motion" and button == "left" and self.on_drag then 
 					self.on_drag(mousezone.item) 
 				end
-				if button == "drag-end" and self.on_drag_end then 
-					self.on_drag_end(mousezone.item) 
-				end		
 
 				self.last_mousezone = mousezone
 				self.sel_i = mousezone.i
@@ -154,7 +151,16 @@ function _M:setupInput()
 				break
 			end
 		end
-		if not done then game.tooltip_x = nil self.last_mousezone = nil end		
+
+		-- 处理拖拽回来的事件
+		if button == "drag-end" and self.on_drag_end then 
+			self.on_drag_end() 
+		end				
+
+		if not done then 
+			game.tooltip_x = nil 
+			self.last_mousezone = nil 
+		end		
 	end
 
 	self.mouse:registerZone(0, 0, self.w, self.h, on_mouse)
