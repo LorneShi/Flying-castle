@@ -2458,3 +2458,21 @@ npcNameCHN["High Guard Talosis"] = "高阶守卫泰勒西斯"
 npcDescCHN["High Guard Talosis"] = [[这个身穿重甲的蒸汽巨人双手各持一把枪，左手的枪华丽但却陈旧。]]
 npcNameCHN["Yeti Patriarch"] = "雪人族长"
 npcDescCHN["Yeti Patriarch"] = [[这个雪人比他的同胞们搞出一个头。你看到他的眼中充满了其他雪人所没有的狡猾。]]
+
+--sll 新怪物
+--变异蜗牛
+npcNameCHN["Variation snail"] = "变异蜗牛"
+npcDescCHN["Variation snail"] = [[这只张着巨大嘴巴的蜗牛，疯狂起来连狼都怕。食物有多大，嘴巴就有多大。]]
+
+--变异青蛙
+npcNameCHN["Variation frog"] = "变异青蛙"
+npcDescCHN["Variation frog"] = [[这个青蛙头上的触手异常恐怖，会释放暗黑系魔法，所以你别以为躲的远远的就没事。]]
+
+--食人蚯蚓
+npcNameCHN["Earthworm of cannibalism"] = "食人蚯蚓"
+npcDescCHN["Earthworm of cannibalism"] = [[这个食人蚯蚓钻地本领高强，很多冒险者走着走着就成为了它的口中食物，谁能料到 它下一秒会不会从你脚底下钻出来呢?]]
+
+--影魔
+npcNameCHN["Shadow magic"] = "影魔"
+npcDescCHN["Shadow magic"] = [[影魔是居住在黑暗里的怪物，任何光亮都会使他暴躁起来，试图吞噬一切能产生光亮 的东西甚至是拿着火把的人。]]
+
