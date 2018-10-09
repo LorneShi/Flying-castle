@@ -40,6 +40,12 @@ function _M:init(t)
 	-- 鼠标停留在单个格子上的选中相应函数
 	self.on_select = t.on_select	
 
+	-- 开始拖拽相应函数
+	self.on_drag = t.on_drag	
+
+	-- 拖拽结束相应函数
+	self.on_drag_end = t.on_drag_end
+
 	-- 单个格子的大小
 	self.item_frame_size = t.item_frame_size or 48
 
@@ -121,15 +127,25 @@ function _M:setupInput()
 				and x <= mousezone.x2 
 				and y >= mousezone.y1 
 				and y <= mousezone.y2 then
+				--鼠标停在格子上
 				if not self.last_mousezone 
 					or mousezone.item ~= self.last_mousezone.item then
 					self:onSelect(mousezone.item)
 				end
 
+				--左右键点击
 				if event == "button" 
 					and (button == "left" or button == "right") then
 					self:onUse(mousezone.item, button, event)
 				end
+
+				--拖拽
+				if event == "motion" and button == "left" and self.on_drag then 
+					self.on_drag(mousezone.item) 
+				end
+				if button == "drag-end" and self.on_drag_end then 
+					self.on_drag_end(mousezone.item) 
+				end		
 
 				self.last_mousezone = mousezone
 				self.sel_i = mousezone.i

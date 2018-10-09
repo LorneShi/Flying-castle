@@ -154,6 +154,11 @@ function _M:generate()
 			end 
 		end,
 		on_select = self.on_select,
+		on_drag = function(item) 
+			if self.on_drag then 
+				self.on_drag(item) 
+			end 
+		end,
 		width = self.w, 
 		height = self.h - (self.c_tabs and self.c_tabs.h or 0),
 		scrollbar = true
