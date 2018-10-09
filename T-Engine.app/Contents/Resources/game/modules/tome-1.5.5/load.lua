@@ -221,7 +221,7 @@ os.exit()
 Tiles:loadTileset("/data/gfx/ts-gfx-npc.lua")
 Tiles:loadTileset("/data/gfx/ts-gfx-object.lua")
 Tiles:loadTileset("/data/gfx/ts-gfx-trap.lua")
-Tiles:loadTileset("/data/gfx/ts-gfx-terrain.lua")
+-- Tiles:loadTileset("/data/gfx/ts-gfx-terrain.lua")--sll 屏蔽原来的地图资源大图集
 Tiles:loadTileset("/data/gfx/ts-gfx-talents-effects.lua")
 
 -- Factions

@@ -373,6 +373,30 @@ newEntity{
 for i = 1, 6 do newEntity{ base=id.."MOUNTAIN", define_as = id.."MOUNTAIN_WALL"..i, image = "terrain/mountain5_"..i..".png"} end
 end
 
+--sll 增加山峰
+newEntity{ base="WATER_BASE",
+	define_as = "DEEP_WATER_MOUNTAIN",
+	image="terrain/water_grass_5_1.png",
+	shader = "water",
+}
+
+newEntity{
+	base = "DEEP_WATER_MOUNTAIN",
+	define_as = "MOUNTAIN_PEAK_3X3",
+	name = "mountain peak 3x3",
+	does_block_move = true,
+	add_displays = {
+		class.new{
+			z = 17,
+			image = "terrain/mountain_peak/mountain_peak_3x3.png",
+			display_w = 3, 
+			display_h = 3,
+			display_x = -1, 
+			display_y = -1,
+		}
+	},
+}
+
 newEntity{
 	define_as = "GOLDEN_MOUNTAIN",
 	type = "rockwall", subtype = "grass",
