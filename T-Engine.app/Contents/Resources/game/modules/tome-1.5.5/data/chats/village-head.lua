@@ -54,7 +54,7 @@ newChat{ id="accept",
 		{
 			"[teleport]",
 			action=function(npc, player) 
-				game:changeLevel(1, "trollmire", {direct_switch=true}) 
+				game:changeLevel(1, "foggy-forest", {direct_switch=true}) 
 			end
 		},
 	}
