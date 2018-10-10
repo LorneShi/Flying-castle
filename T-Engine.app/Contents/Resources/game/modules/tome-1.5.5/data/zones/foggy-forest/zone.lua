@@ -19,12 +19,12 @@
 
 return {
 	name = "Foggy forest",
-	level_range = {1, 5},
+	level_range = {4, 7},
 	level_scheme = "player",
 	max_level = 3,
 	decay = {300, 800},
 	actor_adjust_level = function(zone, level, e) return zone.base_level + e:getRankLevelAdjust() + level.level-1 + rng.range(-1,2) end,
-	width = 65, height = 40,
+	width = 40, height = 40,
 --	all_remembered = true,
 	all_lited = true,
 	day_night = true,
@@ -61,8 +61,8 @@ return {
 		},
 		actor = {
 			class = "mod.class.generator.actor.OnSpots",
-			nb_npc = {20, 30},
-			filters = { {max_ood=2}, },
+			nb_npc = {12, 30},
+			filters = { {max_ood=4}, },
 			nb_spots = 2, on_spot_chance = 35,
 			guardian = "TROLL_PROX",
 			guardian_spot = {type="guardian", subtype="guardian"},
@@ -80,30 +80,40 @@ return {
 	levels =
 	{
 		[1] = {
-			generator = { map = {
-				up = "GRASS_UP_WILDERNESS",
-			}, },
-		},
-		[3] = {
-			generator = { map = {
-				end_road = true,
-				end_road_room = "zones/prox",
-				force_last_stair = true,
-				down = "GRASS",
-				stew = "STEW",
-			}, },
-		},
-		-- Hidden treasure level
-		[4] = {
-			ambient_music = {"Rainy Day.ogg", "weather/rain.ogg"},
-			generator = {
+			generator = { 
 				map = {
-					class = "engine.generator.map.Static",
-					map = "zones/trollmire-treasure",
-				},
-				trap = { nb_trap = {0, 0} },
-				object = { nb_object = {3, 4} },
-				actor = { nb_npc = {2, 2} },
+					up = "GRASS_UP_WILDERNESS",
+				}, 
+				actor = {
+					nb_npc = {15, 20},
+				},				
+			},
+		},
+		[2] = {
+			width = 20, 
+			height = 20,	
+			generator = { 
+				actor = {
+					nb_npc = {20, 25},
+					filters = { {max_ood=5}, },
+				},				
+			},			
+		},		
+		[3] = {
+			width = 20, 
+			height = 20,
+			generator = { 
+				map = {
+					end_road = true,
+					end_road_room = "zones/prox",
+					force_last_stair = true,
+					down = "GRASS",
+					stew = "STEW",
+				}, 
+				actor = {
+					nb_npc = {10, 12},
+					filters = { {max_ood=6}, },
+				},					
 			},
 		},
 	},
@@ -136,8 +146,5 @@ return {
 	end,
 
 	on_enter = function(lev, old_lev, newzone)
-		if lev == 3 and game.player:hasQuest("trollmire-treasure") then
-			game.player:hasQuest("trollmire-treasure"):enter_level3()
-		end
 	end,
 }
