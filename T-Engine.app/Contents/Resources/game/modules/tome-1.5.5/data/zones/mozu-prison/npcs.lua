@@ -197,7 +197,7 @@ newEntity{
 	color=colors.VIOLET,
 	resolvers.nice_tile{
 		image="invis.png", 
-		add_mos = {{image="npc/shadow_magic.png", display_h = 1, display_y = -1}}
+		add_mos = {{image="npc/shadow_magic.png",}}
 	},
 	desc = [[The Shadow Devil is a monster living in the darkness. Any light will make him violent, trying to devour all the people who can produce light and even the torch.]],
 	killer_message = "and folded out of existence",

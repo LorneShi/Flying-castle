@@ -2476,3 +2476,27 @@ npcDescCHN["Earthworm of cannibalism"] = [[这个食人蚯蚓钻地本领高强�
 npcNameCHN["Shadow magic"] = "影魔"
 npcDescCHN["Shadow magic"] = [[影魔是居住在黑暗里的怪物，任何光亮都会使他暴躁起来，试图吞噬一切能产生光亮 的东西甚至是拿着火把的人。]]
 
+-- 巨型蝎子
+npcNameCHN["Giant scorpion"] = "巨型蝎子"
+npcDescCHN["Giant scorpion"] = [[这只巨大的蝎子光看也知道毒性很强，遇见了千万要躲的远远的。]]
+
+-- 侏儒骷髅法师
+npcNameCHN["Gnomish skeleton mage"] = "侏儒骷髅法师"
+npcDescCHN["Gnomish skeleton mage"] = [[披着紫灰色长袍，拿着把比自己都高的镰刀，没有一点皮毛的面庞，即恐怖又诡异而 且好笑。]]
+
+-- 食人巨蟒
+npcNameCHN["Giant clam cannibalism"] = "食人巨蟒"
+npcDescCHN["Giant clam cannibalism"] = [[一条大蛇，不对 ，一条巨大的大蛇，突然从森林里的树木丛里窜了出来，口中的红信 至少有1米了。]]
+
+-- 食人巨蟒
+npcNameCHN["Shadow wolf"] = "暗影狼"
+npcDescCHN["Shadow wolf"] = [[一头体格强壮、巨大的紫灰色皮毛的狼出现在你的面前，张牙舞抓，似乎在月黑风高 的夜晚它才是森林里的主宰。]]
+
+-- 恶魔法师
+npcNameCHN["Demon mage"] = "恶魔法师"
+npcDescCHN["Demon mage"] = [[长着绿色皮肤的恶魔法师，身边一群黑色乌鸦一直在盘旋，似乎跟着恶魔法师随时就 有肉吃。]]
+
+-- boss 蛮牛怪
+npcNameCHN["Pretty bull"] = "蛮牛怪"
+npcDescCHN["Pretty bull"] = [[一只牛头人身的怪物，高举着大斧子向你砍了过来，它是如此的强壮，任何被它斧头 砍到的东西都会变成碎末。]]
+

@@ -64,7 +64,7 @@ return {
 			nb_npc = {12, 30},
 			filters = { {max_ood=4}, },
 			nb_spots = 2, on_spot_chance = 35,
-			guardian = "TROLL_PROX",
+			guardian = "PRETTY_BULL",
 			guardian_spot = {type="guardian", subtype="guardian"},
 		},
 		object = {
