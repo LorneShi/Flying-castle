@@ -18,13 +18,13 @@
 -- darkgod@te4.org
 
 return {
-	name = "Mozu prison",
-	level_range = {1, 3},
+	name = "Secret little black house",
+	level_range = {6, 12},
 	level_scheme = "player",
-	max_level = 2,
+	max_level = 3,
 	decay = {50, 100},
 	actor_adjust_level = function(zone, level, e) return zone.base_level + e:getRankLevelAdjust() + level.level-1 + rng.range(-1,2) end,
-	width = 20, height = 20,
+	width = 40, height = 40,
 --	all_remembered = true,
 --	all_lited = true,
 	persistent = "zone",
@@ -33,22 +33,26 @@ return {
 	max_material_level = function() return game.state:isAdvanced() and 5 or 3 end,
 	generator =  {
 		map = {
-			class = "engine.generator.map.Maze",
-			up = "UP",
-			down = "DOWN",
-			wall = "OLD_WALL",
-			floor = "OLD_FLOOR",
-			widen_w = 2, widen_h = 2,
+			class = "engine.generator.map.TileSet",
+			tileset = {"7x7/base", "7x7/tunnel",},
+			['.'] = "DUNGEON_FLOOR_SMOOTH",
+			['#'] = "DUNGEON_WALL_SMOOTH",
+      		['+'] = "DOOR",
+			["'"] = "DOOR",
+			up = "DUNGEON_SMOOTH_LADDER_UP",
+			down = "DUNGEON_SMOOTH_LADDER_DOWN",
+			door = "DUNGEON_FLOOR_SMOOTH",
+			force_down = true,		
 		},
 		actor = {
 			class = "mod.class.generator.actor.Random",
-			nb_npc = {5, 10},
+			nb_npc = {16, 30},
 			guardian = "MINOTAUR_MAZE",
 			guardian_alert = true,
 		},
 		object = {
 			class = "engine.generator.object.Random",
-			nb_object = {6, 10},
+			nb_object = {4, 6},
 		},
 		trap = {
 			class = "engine.generator.trap.Random",
@@ -58,25 +62,36 @@ return {
 	levels =
 	{
 		[1] = {
-			generator = { map = {
-				up = "UP_WILDERNESS",
-			}, },
-		},
-		[2] = {
-			width = 10, height = 10,
 			generator = { 
 				map = {
-					force_last_stair = true,
-					down = "BACK_MOONLIGHT_TOWN",
+					up = "UP_WILDERNESS",
 				}, 
+			},
+		},
+		[2] = {
+			width = 30, 
+			height = 30,
+			generator = { 
 				actor = {
-					nb_npc = {4, 8},
+					nb_npc = {20, 25},
 				}, 
 				object = {
-					nb_object = {4, 6},
+					nb_object = {4, 5},
 				},
 			},
 		},
+		[3] = {
+			width = 20, 
+			height = 20,
+			generator = { 
+				actor = {
+					nb_npc = {14, 16},
+				}, 
+				object = {
+					nb_object = {5, 6},
+				},
+			},
+		},				
 	},
 
 	post_process = function(level)

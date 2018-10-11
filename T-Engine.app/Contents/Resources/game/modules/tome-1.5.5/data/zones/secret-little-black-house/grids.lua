@@ -18,6 +18,7 @@
 -- darkgod@te4.org
 
 load("/data/general/grids/basic.lua")
+load("/data/general/grids/dungeon.lua")
 
 newEntity{
 	define_as = "QUICK_EXIT",

@@ -17,13 +17,13 @@
 -- Nicolas Casalini "DarkGod"
 -- darkgod@te4.org
 
-return { one_per_level=true,
-	{name="font-life", minor=true, percent=20},
-	{name="whistling-vortex", minor=true, percent=20},
-	{name="antimagic-bush", minor=true, percent=20},
-	{name="bligthed-soil", minor=true, percent=20},
-	{name="fell-aura", minor=true, percent=20},
-	{name="protective-aura", minor=true, percent=20},
-	{name="spellblaze-scar", minor=true, percent=20},
-	{name="glowing-chest", minor=true, percent=100, max_repeat=3},
-}
+-- return { one_per_level=true,
+-- 	{name="font-life", minor=true, percent=20},
+-- 	{name="whistling-vortex", minor=true, percent=20},
+-- 	{name="antimagic-bush", minor=true, percent=20},
+-- 	{name="bligthed-soil", minor=true, percent=20},
+-- 	{name="fell-aura", minor=true, percent=20},
+-- 	{name="protective-aura", minor=true, percent=20},
+-- 	{name="spellblaze-scar", minor=true, percent=20},
+-- 	{name="glowing-chest", minor=true, percent=100, max_repeat=3},
+-- }

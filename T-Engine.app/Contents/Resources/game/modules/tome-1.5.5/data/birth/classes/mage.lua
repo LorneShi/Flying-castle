@@ -218,7 +218,8 @@ newBirthDescriptor{
 			{type="armor", subtype="cloth", name="linen robe", autoreq=true, ego_chance=-1000},
 		},
 		default_wilderness = {"playerpop", "yu-yue-castle"},
-		starting_zone = "foggy-forest",	
+		-- starting_zone = "foggy-forest",	
+		starting_zone = "secret-little-black-house",	
 		starting_intro = "Archmage",	
 	},
 	copy_add = {

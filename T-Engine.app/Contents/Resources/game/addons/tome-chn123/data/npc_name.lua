@@ -2500,3 +2500,7 @@ npcDescCHN["Demon mage"] = [[长着绿色皮肤的恶魔法师，身边一群黑
 npcNameCHN["Pretty bull"] = "蛮牛怪"
 npcDescCHN["Pretty bull"] = [[一只牛头人身的怪物，高举着大斧子向你砍了过来，它是如此的强壮，任何被它斧头 砍到的东西都会变成碎末。]]
 
+-- 鲤鱼战士
+npcNameCHN["Squid warrior"] = "鲤鱼战士"
+npcDescCHN["Squid warrior"] = [[一个鲤鱼样貌的怪物从水里露出身子来，除了身穿铠甲还手握武器手拿盾牌，毅然一 位身经百战的战士，让人不可小觑。]]
+
