@@ -41,8 +41,9 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 	end
 	Dialog.init(self, title or "Inventory", math.max(800, game.w * 0.8), math.max(600, game.h * 0.8))
 
-	self.c_main_set = Tab.new{title="主武器", default=not equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("main") end end}
-	self.c_off_set = Tab.new{title="副武器", default=equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("off") end end}
+	--sll 屏蔽主副武器标签
+	-- self.c_main_set = Tab.new{title="主武器", default=not equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("main") end end}
+	-- self.c_off_set = Tab.new{title="副武器", default=equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("off") end end}
 
 	local vsep = Separator.new{dir="horizontal", size=self.ih - 10}
 
@@ -109,8 +110,10 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 	end
 
 	local uis = {
-		{left=0, top=0, ui=self.c_main_set},
-		{left=self.c_main_set, top=0, ui=self.c_off_set},
+		--sll 屏蔽主副武器标签
+		-- {left=0, top=0, ui=self.c_main_set},
+		-- {left=self.c_main_set, top=0, ui=self.c_off_set},
+		-- {left=0, top=0, ui=self.c_doll},
 		{left=0, top=self.c_main_set, ui=self.c_doll},
 		{right=0, top=0, ui=self.c_inven},
 		{left=self.c_doll.w, top=5, ui=vsep},
@@ -123,8 +126,9 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 	self:setupUI()
 
 	if not self.equip_actor.quickSwitchWeapons then
-		self:toggleDisplay(self.c_main_set, false)
-		self:toggleDisplay(self.c_off_set, false)
+		--sll 屏蔽主副武器标签
+		-- self:toggleDisplay(self.c_main_set, false)
+		-- self:toggleDisplay(self.c_off_set, false)
 	end
 	
 	local lock_tooltip = function()
@@ -205,8 +209,9 @@ function _M:switchSets(which)
 
 	self.equip_actor:quickSwitchWeapons()
 
-	self.c_main_set.selected = not self.equip_actor.off_weapon_slots
-	self.c_off_set.selected = self.equip_actor.off_weapon_slots
+	--sll 屏蔽主副武器标签
+	-- self.c_main_set.selected = not self.equip_actor.off_weapon_slots
+	-- self.c_off_set.selected = self.equip_actor.off_weapon_slots
 end
 
 function _M:firstDisplay()
