@@ -62,6 +62,7 @@ return {
 	levels =
 	{
 		[1] = {
+			level_range = {6, 8},
 			generator = { 
 				map = {
 					up = "UP_WILDERNESS",
@@ -69,6 +70,7 @@ return {
 			},
 		},
 		[2] = {
+			level_range = {6, 9},
 			width = 30, 
 			height = 30,
 			generator = { 
@@ -81,6 +83,7 @@ return {
 			},
 		},
 		[3] = {
+			level_range = {6, 12},		
 			width = 20, 
 			height = 20,
 			generator = { 

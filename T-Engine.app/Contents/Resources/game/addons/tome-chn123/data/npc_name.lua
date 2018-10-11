@@ -2504,3 +2504,25 @@ npcDescCHN["Pretty bull"] = [[一只牛头人身的怪物，高举着大斧子�
 npcNameCHN["Squid warrior"] = "鲤鱼战士"
 npcDescCHN["Squid warrior"] = [[一个鲤鱼样貌的怪物从水里露出身子来，除了身穿铠甲还手握武器手拿盾牌，毅然一 位身经百战的战士，让人不可小觑。]]
 
+-- 鲤鱼战士
+npcNameCHN["Crocodile soldier"] = "鳄鱼战士"
+npcDescCHN["Crocodile soldier"] = [[一头张着大嘴、拿着斧头和盾牌的一个鳄鱼战士向你冲了过来，挥舞着斧头随时都有 可能和你战斗起来。]]
+
+-- 河蚌女妖
+npcNameCHN["River slut"] = "河蚌女妖"
+npcDescCHN["River slut"] = [[巨大的河蚌突然打开，一个长发女妖卷缩在里面，好像是河蚌刚刚吞下的食物，实则是女妖占据了河蚌。]]
+
+-- 人鱼
+npcNameCHN["Mermaid"] = "人鱼"
+npcDescCHN["Mermaid"] = [[一个绿发碧眼的美人鱼，正想靠近，她却忽然张开了血腥的嘴巴，跟刚才的样子判若 两人。]]
+
+-- 飞天骷髅
+npcNameCHN["Flying skeleton"] = "飞天骷髅"
+npcDescCHN["Flying skeleton"] = [[诡异的一个骷髅竟然长了一双翅膀，月光下飞来飞去说不出的恐怖。]]
+
+-- 飞天骷髅
+npcNameCHN["Snake banshee"] = "蛇发女妖"
+npcDescCHN["Snake banshee"] = [[长着满是蛇的头发以及巨大的蛇尾，手拿着长矛向你冲了过来，你感觉有一阵阵的恶 心。]]
+
+
+
