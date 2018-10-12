@@ -33,8 +33,8 @@ function _M:init(t)
 	local doll = t.equipdoll or t.actor.equipdoll or "default"
 	if type(doll) == "string" then doll = self.actor.equipdolls and self.actor.equipdolls[doll] end
 	self.equipdoll = assert(doll, "no equipdoll for actor ".. self.actor.name)
-	-- doll.doll_w = doll.doll_w or math.ceil(doll.w * 2.6) -- for older actors
-	-- doll.doll_h = doll.doll_h or math.ceil(doll.h * 2.6) -- for older actors
+	doll.doll_w = doll.doll_w or math.ceil(doll.w * 2.6) -- for older actors
+	doll.doll_h = doll.doll_h or math.ceil(doll.h * 2.6) -- for older actors
 
 	self.base_doll_y = t.base_doll_y or 0
 	self.scale = t.scale or 1 -- resize frame, uis and fonts by this factor
@@ -49,46 +49,44 @@ function _M:init(t)
 	self.font = t.font
 	self.font_bold = t.font_bold
 	self.title = t.title
-	self.w = t.w
-	self.h = t.h
-	-- if self.scale ~= 1 then self:ScaleFrame(self.scale) end
+	if self.scale ~= 1 then self:ScaleFrame(self.scale) end
 	
 	Base.init(self, t)
 end
 
--- -- scale the doll frame, uis and size of default fonts
--- function _M:ScaleFrame(scale)
--- --game.log("Scaling equipdoll frame to %d%% size", self.scale*100)
--- 	local scale_doll = table.clone(self.equipdoll, true)
+-- scale the doll frame, uis and size of default fonts
+function _M:ScaleFrame(scale)
+--game.log("Scaling equipdoll frame to %d%% size", self.scale*100)
+	local scale_doll = table.clone(self.equipdoll, true)
 	
--- 	scale_doll.w, scale_doll.h = math.ceil(scale_doll.w*scale), math.ceil(scale_doll.h*scale)
--- 	scale_doll.ix, scale_doll.iy = math.ceil(scale_doll.ix*scale), math.ceil(scale_doll.iy*scale)
--- 	scale_doll.iw, scale_doll.ih = math.ceil(scale_doll.iw*scale), math.ceil(scale_doll.ih*scale)
--- 	if scale_doll.doll_x and scale_doll.doll_y then
--- 		scale_doll.doll_x, scale_doll.doll_y = math.ceil(scale_doll.doll_x*scale), math.ceil(scale_doll.doll_y*scale)
--- 	end
--- 	scale_doll.doll_w, scale_doll.doll_h = math.ceil(scale_doll.doll_w*scale), math.ceil(scale_doll.doll_h*scale)
+	scale_doll.w, scale_doll.h = math.ceil(scale_doll.w*scale), math.ceil(scale_doll.h*scale)
+	scale_doll.ix, scale_doll.iy = math.ceil(scale_doll.ix*scale), math.ceil(scale_doll.iy*scale)
+	scale_doll.iw, scale_doll.ih = math.ceil(scale_doll.iw*scale), math.ceil(scale_doll.ih*scale)
+	if scale_doll.doll_x and scale_doll.doll_y then
+		scale_doll.doll_x, scale_doll.doll_y = math.ceil(scale_doll.doll_x*scale), math.ceil(scale_doll.doll_y*scale)
+	end
+	scale_doll.doll_w, scale_doll.doll_h = math.ceil(scale_doll.doll_w*scale), math.ceil(scale_doll.doll_h*scale)
 	
--- 	for slot, data in pairs(scale_doll.list) do
--- 		for i, spot in ipairs(data) do
--- 			if spot.x then spot.x = math.ceil(spot.x*scale) end
--- 			if spot.y then spot.y = math.ceil(spot.y*scale) end
--- 			--bg, bg_sel, bg_empty scaling handled by ui.Base:getUITexture()
--- 		end
--- 	end
--- 	self.equipdoll = scale_doll
--- 	self.base_doll_y = math.ceil(self.base_doll_y*scale)
--- 	-- update fonts to match
--- 	local fontfile, size
--- 	if self.font == Base.font then -- rescale font size
--- 		fontfile, size = FontPackage:getFont("default")
--- 		self.font = core.display.newFont(fontfile, math.ceil(size*scale))
--- 	end
--- 	if self.font_bold == Base.font_bold then
--- 		fontfile, size = FontPackage:getFont("bold")
--- 		self.font_bold = core.display.newFont(fontfile, math.ceil(size*scale))
--- 	end
--- end
+	for slot, data in pairs(scale_doll.list) do
+		for i, spot in ipairs(data) do
+			if spot.x then spot.x = math.ceil(spot.x*scale) end
+			if spot.y then spot.y = math.ceil(spot.y*scale) end
+			--bg, bg_sel, bg_empty scaling handled by ui.Base:getUITexture()
+		end
+	end
+	self.equipdoll = scale_doll
+	self.base_doll_y = math.ceil(self.base_doll_y*scale)
+	-- update fonts to match
+	local fontfile, size
+	if self.font == Base.font then -- rescale font size
+		fontfile, size = FontPackage:getFont("default")
+		self.font = core.display.newFont(fontfile, math.ceil(size*scale))
+	end
+	if self.font_bold == Base.font_bold then
+		fontfile, size = FontPackage:getFont("bold")
+		self.font_bold = core.display.newFont(fontfile, math.ceil(size*scale))
+	end
+end
 
 function _M:generate()
 	self.mouse:reset()
@@ -96,11 +94,11 @@ function _M:generate()
 
 	self:generateEquipDollFrames()
 
-	-- if self.title ~= false then
-	-- 	self.font_bold:setStyle("bold")
-	-- 	self.title_tex = self:drawFontLine(self.font_bold, self.title or self.actor.name)
-	-- 	self.font_bold:setStyle("normal")
-	-- end
+	if self.title ~= false then
+		self.font_bold:setStyle("bold")
+		self.title_tex = self:drawFontLine(self.font_bold, self.title or self.actor.name)
+		self.font_bold:setStyle("normal")
+	end
 	
 	self.inner_scroll = self:makeFrame("ui/tooltip/", self.w, self.h)
 
@@ -210,8 +208,11 @@ end
 
 -- 	table.sort(uis, function(a,b) return a._weight < b._weight end)
 
--- 	self.w = max_w + math.floor(doll.w * 2.6)
--- 	self.h = max_h + math.floor(doll.h * 2.6)
+-- 	-- self.w = max_w + math.floor(doll.w * 2.6)
+-- 	-- self.h = max_h + math.floor(doll.h * 2.6)
+
+-- 	self.w = 380
+-- 	self.h = 300
 
 -- 	self.chars = {}
 -- 	for i, ui in ipairs(uis) do
@@ -276,6 +277,10 @@ function _M:generateEquipDollFrames()
 
 	table.sort(uis, function(a,b) return a._weight < b._weight end)
 
+	-- 显示的界面的大小
+	self.w = 380
+	self.h = 500
+
 	self.chars = {}
 	for i, ui in ipairs(uis) do
 		ui.y = ui.y + self.base_doll_y
@@ -295,10 +300,10 @@ function _M:display(x, y, nb_keyframes, ox, oy)
 
 	Base.drawFrame(self, self.inner_scroll, x, y + self.base_doll_y, 1, 1, 1, self.focused and 1 or 0.5)
 
-	-- if self.title_tex then
-	-- 	if self.title_shadow then self:textureToScreen(self.title_tex, x + (self.w - self.title_tex.w) / 2 + 2, y + self.base_doll_y + 5 + 2, 0, 0, 0, 0.5) end
-	-- 	self:textureToScreen(self.title_tex, x + (self.w - self.title_tex.w) / 2, y + self.base_doll_y + 5)
-	-- end
+	if self.title_tex then
+		if self.title_shadow then self:textureToScreen(self.title_tex, x + (self.w - self.title_tex.w) / 2 + 2, y + self.base_doll_y + 5 + 2, 0, 0, 0, 0.5) end
+		self:textureToScreen(self.title_tex, x + (self.w - self.title_tex.w) / 2, y + self.base_doll_y + 5)
+	end
 
 	if doll.doll_x and doll.doll_y and doll.doll_x>0 and doll.doll_y>0 then self.actor:toScreen(nil, x + doll.doll_x, y + self.base_doll_y + doll.doll_y, doll.doll_w or doll.w*2.6, doll.doll_h or doll.h*2.6) end
 

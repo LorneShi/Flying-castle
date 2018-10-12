@@ -24,6 +24,8 @@ local Inventory = require "engine.ui.Inventory"
 local Separator = require "engine.ui.Separator"
 local EquipDoll = require "engine.ui.EquipDoll"
 local Tab = require "engine.ui.Tab"
+local Image = require "engine.ui.Image"
+local SurfaceZone = require "engine.ui.SurfaceZone"
 
 module(..., package.seeall, class.inherit(Dialog))
 
@@ -39,13 +41,17 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		print("[ShowEquipInven] initiating inventory INVEN_INVEN for", inven_actor.name, inven_actor.uid)
 		inven_actor.inven[inven_actor.INVEN_INVEN] = {worn=false, id=inven_actor.INVEN_INVEN, name="INVEN", max = 10}
 	end
-	Dialog.init(self, title or "Inventory", math.max(800, game.w * 0.8), math.max(600, game.h * 0.8))
+
+	--sll 背包窗口改为410X600，后续再改为自动适配大小
+	-- Dialog.init(self, nil, math.max(800, game.w * 0.8), math.max(600, game.h * 0.8))	
+	Dialog.init(self, title or "Inventory", 410, 600)
 
 	--sll 屏蔽主副武器标签
 	-- self.c_main_set = Tab.new{title="主武器", default=not equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("main") end end}
 	-- self.c_off_set = Tab.new{title="副武器", default=equip_actor.off_weapon_slots, fct=function() end, on_change=function(s) if s then self:switchSets("off") end end}
 
-	local vsep = Separator.new{dir="horizontal", size=self.ih - 10}
+	--sll 去掉分割线
+	-- local vsep = Separator.new{dir="horizontal", size=self.ih - 10}
 
 	-- Add tooltips
 	self.on_select = function(item)
@@ -58,7 +64,21 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		end
 	end
 
+	-- 大背景部分
+
+	-- 人物大图像部分
+	self.head = Image.new{file="invenhead.png", width=50, height=42}
+
+	-- 人物属性
+	self.mankindDesc = SurfaceZone.new{
+		width=170, 
+		height=300
+	}
+
+	-- 装备穿戴界面部分
 	self.c_doll = EquipDoll.new{
+		w = 220,
+		h = 300,
 		subobject=equip_actor:attr("can_tinker") and "getTinker" or nil,
 		subobject_restrict_slots=equip_actor.tinker_restrict_slots,
 		actor=equip_actor, drag_enable=true, filter=filter,
@@ -88,7 +108,15 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 			self.c_inven:generateList()
 		end
 	}
-	self.c_inven = Inventory.new{actor=inven_actor, inven=inven_actor:getInven("INVEN") or {}, width=self.iw - vsep.w - self.c_doll.w, height=self.ih - 10, filter=filter,
+
+	self.horizontal_margin, self.vertical_margin = 4, 4
+	-- 物品栏部分
+	self.c_inven = Inventory.new{
+		actor=inven_actor, 
+		inven=inven_actor:getInven("INVEN") or {}, 
+		width=self.iw, 
+		height=self.ih - self.c_doll.h - 100, 
+		filter=filter,
 		default_last_tabs = "all",
 		-- fct=function(item, sel, button, event) self:use(item, button, event) end,
 		fct=function(item, button, event) self:use(item, button, event) end,
@@ -113,10 +141,12 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 		--sll 屏蔽主副武器标签
 		-- {left=0, top=0, ui=self.c_main_set},
 		-- {left=self.c_main_set, top=0, ui=self.c_off_set},
-		-- {left=0, top=0, ui=self.c_doll},
-		{left=0, top=self.c_main_set, ui=self.c_doll},
-		{right=0, top=0, ui=self.c_inven},
-		{left=self.c_doll.w, top=5, ui=vsep},
+		-- {left=0, top=self.c_main_set, ui=self.c_doll},
+		{left = (self.iw - self.head.w) / 2, top = 0, ui = self.head},
+		{left = 0, top = 100, ui = self.mankindDesc},
+		{left = 170, top = 100, ui = self.c_doll},
+		{left = 0, top = 400, ui = self.c_inven},
+		-- {left=self.c_doll.w, top=5, ui=vsep},
 	}
 
 	self:triggerHook{"EquipInvenDialog:makeUI", uis=uis}
@@ -124,6 +154,7 @@ function _M:init(title, equip_actor, filter, action, on_select, inven_actor)
 	self:loadUI(uis)
 	self:setFocus(self.c_inven)
 	self:setupUI()
+	self:drawDialog()
 
 	if not self.equip_actor.quickSwitchWeapons then
 		--sll 屏蔽主副武器标签
@@ -325,4 +356,45 @@ end
 
 function _M:findTinkerSpot(tinker)
 	return self.equip_actor:findTinkerSpot(tinker)
+end
+
+-- 绘制人物属性
+function _M:drawDialog()
+	local s = self.mankindDesc.s
+	s:erase(0,0,0,0)
+	local h = 0
+	local w = 0
+	local name =  game.player.name
+	s:drawColorStringBlended(self.font, ("#f7ce06#Name : #ffffff#         ")..(game.player.name), w, h, 0, 200, 255, true) 
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, "#f7ce06#Level : #ffffff#                    "..game.player.level, w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	h = h + self.font_h
+
+	s:drawColorStringBlended(self.font, ("#f7ce06#Strength : #ffffff#               %2d"):format(11), w, h, 255, 255, 255, true)
+	h = h + self.font_h 
+	s:drawColorStringBlended(self.font, ("#f7ce06#Agile : #ffffff#                     %2d"):format(22), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Intelligence : #ffffff#           %2d"):format(19), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Constitution : #ffffff#          %2d"):format(9), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Magic : #ffffff#                    %2d"):format(12), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Spirit : #ffffff#                    %2d"):format(23), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	h = h + self.font_h
+
+	s:drawColorStringBlended(self.font, ("#f7ce06#Spell power : #ffffff#         %2d"):format(123), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Crit rate : #ffffff#             %2d%%"):format(12), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Casting speed : #ffffff#    %2d%%"):format(112), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	s:drawColorStringBlended(self.font, ("#f7ce06#Spell cooling : #ffffff#     %2d%%"):format(100), w, h, 255, 255, 255, true)
+	h = h + self.font_h
+	h = h + self.font_h
+
+	self.mankindDesc:update()
+	self.changed = false
 end

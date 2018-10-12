@@ -190,31 +190,309 @@ ActorInventory:defineInventory("QS_MAINHAND", "Second weapon set: In main hand",
 ActorInventory:defineInventory("QS_OFFHAND", "Second weapon set: In off hand", false, "Weapon Set 2: You can use shields or a second weapon in your off-hand, if you have the talents for it. Press 'x' to switch weapon sets.", true)
 ActorInventory:defineInventory("QS_PSIONIC_FOCUS", "Second weapon set: psionic focus", false, "Weapon Set 2: Object held in your telekinetic grasp. It can be a weapon or some other item to provide a benefit to your psionic powers. Press 'x' to switch weapon sets.", true)
 ActorInventory:defineInventory("QS_QUIVER", "Second weapon set: Quiver", false, "Weapon Set 2: Your readied ammo.", true)
+-- ActorInventory.equipdolls = {
+-- 	default = { w=48, h=48, itemframe="ui/equipdoll/itemframe48.png", itemframe_sel="ui/equipdoll/itemframe-sel48.png", ix=3, iy=3, iw=42, ih=42, doll_x=116, doll_y=168+64, doll_w=128, doll_h=128,
+-- 	list={
+-- 		PSIONIC_FOCUS = {{weight=1, x=48, y=48, subshift="left"}},
+-- 		MAINHAND = {{weight=2, x=48, y=120, subshift="left"}},
+-- 		OFFHAND = {{weight=3, x=48, y=192, subshift="left"}},
+-- 		BODY = {{weight=4, x=48, y=264, subshift="left"}},
+-- 		QUIVER = {{weight=5, x=48, y=336, subshift="left"}},
+-- 		FINGER = {{weight=6, x=48, y=408, subshift="left"}, {weight=7, x=124, y=408, text="bottom", subshift="left"}},
+-- 		LITE = {{weight=8, x=188, y=408, subshift="right"}},
+-- 		TOOL = {{weight=9, x=264, y=408, subshift="right", text="bottom"}},
+-- 		FEET = {{weight=10, x=264, y=336}},
+-- 		BELT = {{weight=11, x=264, y=264}},
+-- 		HANDS = {{weight=12, x=264, y=192}},
+-- 		CLOAK = {{weight=13, x=264, y=120}},
+-- 		NECK = {{weight=14, x=235, y=48, subshift="right", text="topright"}},
+-- 		HEAD = {{weight=15, x=150, y=35, subshift="left", text="bottom"}},
+-- 	}},
+-- 	alchemist_golem = { w=48, h=48, itemframe="ui/equipdoll/itemframe48.png", itemframe_sel="ui/equipdoll/itemframe-sel48.png", ix=3, iy=3, iw=42, ih=42, doll_x=116, doll_y=168+64, doll_w=128, doll_h=128,
+-- 	list={
+-- 		MAINHAND = {{weight=1, x=48, y=120}},
+-- 		OFFHAND = {{weight=2, x=48, y=192}},
+-- 		BODY = {{weight=3, x=48, y=264}},
+-- 		GEM = {{weight=4, x=264, y=120}, {weight=5, x=264, y=192}},
+-- 	}},
+-- }
+
 ActorInventory.equipdolls = {
-	default = { w=48, h=48, itemframe="ui/equipdoll/itemframe48.png", itemframe_sel="ui/equipdoll/itemframe-sel48.png", ix=3, iy=3, iw=42, ih=42, doll_x=116, doll_y=168+64, doll_w=128, doll_h=128,
-	list={
-		PSIONIC_FOCUS = {{weight=1, x=48, y=48, subshift="left"}},
-		MAINHAND = {{weight=2, x=48, y=120, subshift="left"}},
-		OFFHAND = {{weight=3, x=48, y=192, subshift="left"}},
-		BODY = {{weight=4, x=48, y=264, subshift="left"}},
-		QUIVER = {{weight=5, x=48, y=336, subshift="left"}},
-		FINGER = {{weight=6, x=48, y=408, subshift="left"}, {weight=7, x=124, y=408, text="bottom", subshift="left"}},
-		LITE = {{weight=8, x=188, y=408, subshift="right"}},
-		TOOL = {{weight=9, x=264, y=408, subshift="right", text="bottom"}},
-		FEET = {{weight=10, x=264, y=336}},
-		BELT = {{weight=11, x=264, y=264}},
-		HANDS = {{weight=12, x=264, y=192}},
-		CLOAK = {{weight=13, x=264, y=120}},
-		NECK = {{weight=14, x=235, y=48, subshift="right", text="topright"}},
-		HEAD = {{weight=15, x=150, y=35, subshift="left", text="bottom"}},
-	}},
-	alchemist_golem = { w=48, h=48, itemframe="ui/equipdoll/itemframe48.png", itemframe_sel="ui/equipdoll/itemframe-sel48.png", ix=3, iy=3, iw=42, ih=42, doll_x=116, doll_y=168+64, doll_w=128, doll_h=128,
-	list={
-		MAINHAND = {{weight=1, x=48, y=120}},
-		OFFHAND = {{weight=2, x=48, y=192}},
-		BODY = {{weight=3, x=48, y=264}},
-		GEM = {{weight=4, x=264, y=120}, {weight=5, x=264, y=192}},
-	}},
+	default = {
+		HEAD = {
+			{--头
+				weight=1, 
+				w=50, 
+				h=50, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=42, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=85, 
+				y=0
+			}
+		},	
+		NECK = {
+			{--项链
+				weight=2, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=20, 
+				y=20
+			}
+		},
+		BODY = {
+			{--衣服
+				weight=3, 
+				w=60, 
+				h=80, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=52, 
+				ih=72, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=80, 
+				y=52
+			}
+		},	
+		CLOAK = {
+			{--披风
+				weight=4, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=150, 
+				y=20
+			}
+		},		
+		HANDS = {
+			{--手
+				weight=5, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=10, 
+				y=95
+			}
+		},	
+		BELT = {
+			{--腰带
+				weight=6, 
+				w=60, 
+				h=20, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=52, 
+				ih=12, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=80, 
+				y=144
+			}
+		},	
+		LITE = {
+			{--护身符
+				weight=7, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png",
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128, 
+				x=160, 
+				y=95
+			}
+		},	
+		FINGER = {
+			{--左手戒指
+				weight=8, 
+				w=30, 
+				h=30, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=22, 
+				ih=22, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=15, 
+				y=165
+			},
+			{--右手戒指
+				weight=9, 
+				w=30, 
+				h=30, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=22, 
+				ih=22, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=175, 
+				y=165
+			}			
+		},	
+		TOOL = {
+			{--裤子
+				weight=10, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=85, 
+				y=160
+			}
+		},													
+		MAINHAND = {
+			{--武器
+				weight = 11, 
+				w = 50, 
+				h = 100, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw = 42, 
+				ih = 92, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=10, 
+				y=200
+			}
+		},				
+		FEET = {
+			{--脚
+				weight=12, 
+				w=50, 
+				h=70, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=62, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=85, 
+				y=230
+			}
+		},
+		OFFHAND = {
+			{--副手
+				weight=13, 
+				w=50, 
+				h=100, 
+				itemframe="ui/equipdoll/itemframe48.png", 
+				itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+				ix=3, 
+				iy=3, 
+				iw=42, 
+				ih=92, 
+				doll_x=116, 
+				doll_y=168+64, 
+				doll_w=128, 
+				doll_h=128,
+				x=160, 
+				y=200
+			}
+		},
+
+		-- w=60, 
+		-- h=60,
+		-- itemframe="ui/equipdoll/itemframe48.png", 
+		-- itemframe_sel="ui/equipdoll/itemframe-sel48.png", 
+		-- ix=3, 
+		-- iy=3, 
+		-- iw=52, 
+		-- ih=52, 
+		-- doll_x=116, 
+		-- doll_y=168+64, 
+		-- doll_w=128, 
+		-- doll_h=128,
+		-- list={
+		-- 	MAINHAND = {{weight=1, x=160, y=35}},
+		-- 	OFFHAND = {{weight=2, x=50, y=70}},
+		-- 	BODY = {{weight=3, x=270, y=70}},
+		-- 	QUIVER = {{weight=4, x=30, y=160}},
+		-- 	FINGER = {{weight=5, x=150, y=130}},
+		-- 	LITE = {{weight=6, x=290, y=160}},
+		-- 	TOOL = {{weight=7, x=42, y=250}},
+		-- 	FEET = {{weight=8, x=150, y=220}},
+		-- 	BELT = {{weight=9, x=302, y=250}},
+		-- 	HANDS = {{weight=10, x=160, y=300}},
+		-- 	CLOAK = {{weight=11, x=30, y=350}},
+		-- 	NECK = {{weight=12, x=160, y=380}},
+		-- 	HEAD = {{weight=13, x=290, y=350}},
+		-- }
+	},
 }
 
 -- Ingredients

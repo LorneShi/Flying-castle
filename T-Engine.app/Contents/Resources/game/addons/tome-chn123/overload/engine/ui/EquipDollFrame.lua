@@ -176,7 +176,7 @@ function _M:display(x, y, nb_keyframes, ox, oy)
 		self.bg_empty.t:toScreenPrecise(x + self.f_ix, y + self.f_iy, self.f_iw, self.f_ih, 0, self.bg_empty.w/self.bg_empty.tw, 0, self.bg_empty.h/self.bg_empty.th)
 	end
 
-	self:drawItemShortName(o, x, y)
+	-- self:drawItemShortName(o, x, y)
 
 	self.last_display_x = ox
 	self.last_display_y = oy

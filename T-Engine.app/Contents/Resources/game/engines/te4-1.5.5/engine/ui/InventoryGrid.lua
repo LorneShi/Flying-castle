@@ -53,7 +53,7 @@ function _M:init(t)
 	self.item_icon_margin = 1
 
 	-- 格子列间距、行间距
-	self.column_spacing, self.row_spacing = 1, 1	
+	self.column_spacing, self.row_spacing = 2, 2	
 
 	-- 滚动条
 	self.scrollbar = t.scrollbar
