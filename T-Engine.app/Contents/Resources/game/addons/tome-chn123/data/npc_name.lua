@@ -2524,5 +2524,7 @@ npcDescCHN["Flying skeleton"] = [[诡异的一个骷髅竟然长了一双翅膀�
 npcNameCHN["Snake banshee"] = "蛇发女妖"
 npcDescCHN["Snake banshee"] = [[长着满是蛇的头发以及巨大的蛇尾，手拿着长矛向你冲了过来，你感觉有一阵阵的恶 心。]]
 
-
+-- boss 骷髅法师
+npcNameCHN["Skeleton mage"] = "骷髅法师"
+npcDescCHN["Skeleton mage"] = "暗黑系魔法长老，由于年岁已长，身体早已腐朽但是精神能量依然在支配着残破的身 躯进行邪恶的破坏，势要打败世间上所有的光明系魔法。"
 

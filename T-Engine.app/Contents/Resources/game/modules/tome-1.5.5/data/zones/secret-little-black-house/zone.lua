@@ -47,7 +47,7 @@ return {
 		actor = {
 			class = "mod.class.generator.actor.Random",
 			nb_npc = {16, 30},
-			guardian = "MINOTAUR_MAZE",
+			guardian = "NPC_BOSS_SKELETON_MAGE",
 			guardian_alert = true,
 		},
 		object = {
